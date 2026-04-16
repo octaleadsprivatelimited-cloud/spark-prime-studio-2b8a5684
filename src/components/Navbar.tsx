@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { to: "/" as const, label: "Home" },
-  { to: "/about" as const, label: "About" },
+  { to: "/about" as const, label: "About Us" },
   { to: "/services" as const, label: "Services" },
   { to: "/projects" as const, label: "Projects" },
   { to: "/clients" as const, label: "Clients" },
@@ -17,98 +17,89 @@ export function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
   return (
-    <header
-      className={`glass-nav fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-md" : ""}`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <div>
-            <span className="font-heading text-lg font-bold text-foreground leading-tight block">Nataraj</span>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Electricals</span>
-          </div>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "rounded-md px-3 py-2 text-sm font-medium text-primary bg-primary/5" }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            to="/contact"
-            className="btn-gradient ml-3 rounded-lg px-5 py-2.5 text-sm font-semibold"
-          >
-            Get a Quote
-          </Link>
-        </nav>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground md:hidden"
-          aria-label="Toggle menu"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {isOpen ? (
-              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/>
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>
-            )}
-          </svg>
-        </button>
+    <>
+      {/* Announcement Bar */}
+      <div className="announcement-bar hidden items-center justify-center gap-4 px-4 py-2 md:flex">
+        <span className="opacity-70">Government Licensed Class-I Electrical Contractor — Serving Karnataka Since 2008</span>
+        <a href="tel:+919876543210" className="flex items-center gap-1.5 font-semibold opacity-90 hover:opacity-100">
+          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +91 98765 43210
+        </a>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-border md:hidden"
-          >
-            <nav className="flex flex-col gap-1 px-4 py-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary"
-                  activeProps={{ className: "rounded-lg px-4 py-3 text-sm font-medium text-primary bg-primary/5" }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+      {/* Main Nav */}
+      <header className={`nav-main sticky top-0 z-50 ${scrolled ? "scrolled" : ""}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-red">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-brand-red-foreground">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className="leading-tight">
+              <span className="font-heading text-xl font-extrabold tracking-tight text-foreground">NATARAJ</span>
+              <span className="block text-[9px] font-bold uppercase tracking-[0.25em] text-muted-foreground">Electricals</span>
+            </div>
+          </Link>
+
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-0.5 lg:flex">
+            {navLinks.map((link) => (
               <Link
-                to="/contact"
-                className="btn-gradient mt-2 rounded-lg px-5 py-3 text-center text-sm font-semibold"
+                key={link.to}
+                to={link.to}
+                className="px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "px-3 py-2 text-[13px] font-semibold text-brand-red" }}
               >
-                Get a Quote
+                {link.label}
               </Link>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+            ))}
+          </nav>
+
+          {/* Right actions */}
+          <div className="hidden items-center gap-3 lg:flex">
+            <a href="tel:+919876543210" className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              Call Us
+            </a>
+            <Link to="/contact" className="btn-primary !py-2.5 !px-5 !text-xs">
+              Get a Quote
+            </Link>
+          </div>
+
+          {/* Mobile toggle */}
+          <button onClick={() => setIsOpen(!isOpen)} className="flex h-10 w-10 items-center justify-center lg:hidden" aria-label="Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {isOpen ? <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/> : <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>}
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-border lg:hidden">
+              <nav className="flex flex-col px-4 py-3">
+                {navLinks.map((link) => (
+                  <Link key={link.to} to={link.to} className="border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground" activeProps={{ className: "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" }}>
+                    {link.label}
+                  </Link>
+                ))}
+                <Link to="/contact" className="btn-primary mt-4 text-center">Get a Quote</Link>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 }
