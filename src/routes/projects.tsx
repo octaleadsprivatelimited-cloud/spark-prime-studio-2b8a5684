@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
 import { ProjectCard } from "../components/ProjectCard";
@@ -33,39 +33,30 @@ function ProjectsPage() {
 
   return (
     <>
-      <section className="hero-gradient section-padding">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <section className="section-dark">
+        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/60">Our Projects</span>
-            <h1 className="mt-3 max-w-2xl font-heading text-4xl font-bold text-primary-foreground md:text-5xl">
-              Proven Track Record
-            </h1>
-            <p className="mt-4 max-w-xl text-base text-primary-foreground/70">
-              Explore our portfolio of 500+ successfully completed electrical projects.
-            </p>
+            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider opacity-50">
+              <Link to="/" className="hover:opacity-100">Home</Link><span>/</span><span>Projects</span>
+            </div>
+            <h1 className="mt-4 font-heading text-4xl font-extrabold md:text-5xl">Our Projects</h1>
+            <p className="mt-3 max-w-xl text-base opacity-60">500+ successfully completed electrical projects.</p>
           </SectionReveal>
         </div>
       </section>
+      <div className="section-divider" />
 
       <section className="section-padding">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <div className="mb-10 flex flex-wrap gap-2">
+        <div className="mx-auto max-w-7xl px-4 lg:px-6">
+          {/* Filter tabs */}
+          <div className="tab-nav mb-10">
             {categories.map((c) => (
-              <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
-                  filter === c
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
-              >
+              <button key={c} onClick={() => setFilter(c)} className={`tab-item ${filter === c ? "active" : ""}`}>
                 {c}
               </button>
             ))}
           </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p, i) => (
               <ProjectCard key={p.id} {...p} delay={i * 0.05} />
             ))}
@@ -73,7 +64,7 @@ function ProjectsPage() {
         </div>
       </section>
 
-      <CTASection />
+      <CTASection variant="dark" />
     </>
   );
 }
