@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { createFileRoute, Link } from "@tantml/react-router";
-import { SectionReveal } from "../../components/SectionReveal";
-import { CTASection } from "../../components/CTASection";
-import { projectsData } from "../projects";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SectionReveal } from "../components/SectionReveal";
+import { CTASection } from "../components/CTASection";
+import { projectsData } from "./projects";
 
 export const Route = createFileRoute("/projects/$projectId")({
   head: ({ params }) => {
@@ -17,7 +16,11 @@ export const Route = createFileRoute("/projects/$projectId")({
     };
   },
   component: ProjectDetailPage,
-  notFoundComponent: () => (
+  notFoundComponent: ProjectNotFound,
+});
+
+function ProjectNotFound() {
+  return (
     <div className="flex min-h-[60vh] items-center justify-center">
       <div className="text-center">
         <h1 className="font-heading text-4xl font-bold text-foreground">Project Not Found</h1>
@@ -27,24 +30,15 @@ export const Route = createFileRoute("/projects/$projectId")({
         </Link>
       </div>
     </div>
-  ),
-});
+  );
+}
 
 function ProjectDetailPage() {
   const { projectId } = Route.useParams();
   const project = projectsData.find((p) => p.id === projectId);
 
   if (!project) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="font-heading text-4xl font-bold text-foreground">Project Not Found</h1>
-          <Link to="/projects" className="btn-gradient mt-6 inline-flex rounded-xl px-6 py-3 text-sm font-semibold">
-            View All Projects
-          </Link>
-        </div>
-      </div>
-    );
+    return <ProjectNotFound />;
   }
 
   return (

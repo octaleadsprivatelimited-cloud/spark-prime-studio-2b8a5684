@@ -1,5 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { createFileRoute } from "@tantml/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ServiceCard } from "../components/ServiceCard";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
@@ -77,7 +76,7 @@ function ServicesPage() {
           <div className="space-y-16">
             {allServices.map((service, i) => (
               <SectionReveal key={service.title}>
-                <div className={`grid items-center gap-10 md:grid-cols-2 ${i % 2 === 1 ? "md:direction-rtl" : ""}`}>
+                <div className={`grid items-center gap-10 md:grid-cols-2`}>
                   <div className={i % 2 === 1 ? "md:order-2" : ""}>
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       {service.icon}

@@ -1,5 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { createFileRoute, Link } from "@tantml/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
 import { ProjectCard } from "../components/ProjectCard";
@@ -30,7 +29,6 @@ const categories = ["All", "Industrial", "Government", "Commercial"];
 
 function ProjectsPage() {
   const [filter, setFilter] = useState("All");
-
   const filtered = filter === "All" ? projectsData : projectsData.filter((p) => p.category === filter);
 
   return (
@@ -51,7 +49,6 @@ function ProjectsPage() {
 
       <section className="section-padding">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-          {/* Filters */}
           <div className="mb-10 flex flex-wrap gap-2">
             {categories.map((c) => (
               <button
