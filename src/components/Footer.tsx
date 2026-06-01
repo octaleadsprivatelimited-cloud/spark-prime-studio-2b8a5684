@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import logoImg from "../assets/logo.png";
 
 const quickLinks = [
   { to: "/about" as const, label: "About Us" },
@@ -24,16 +25,8 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded bg-brand-red">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-brand-red-foreground">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="leading-tight">
-                <span className="font-heading text-lg font-extrabold tracking-tight">NATARAJ</span>
-                <span className="block text-[8px] font-bold uppercase tracking-[0.25em] opacity-50">Electricals</span>
-              </div>
+            <div className="flex items-center gap-2 mb-5">
+              <img src={logoImg} alt="Nataraj Electricals Logo" className="h-14 w-auto bg-white p-1 rounded shadow-sm" />
             </div>
             <p className="text-sm leading-relaxed opacity-60">
               Government Licensed Class-I Electrical Contractor. Serving Bangalore and Karnataka with excellence since 2008.
@@ -77,15 +70,15 @@ export function Footer() {
             <ul className="space-y-3 text-sm opacity-60">
               <li className="flex items-start gap-2">
                 <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Bangalore, Karnataka, India
+                <span>#243/3/1/, 1st main, 1st cross, BEML layout 5th stage, Rajarajeshwarinagar, Bangalore – 560098</span>
               </li>
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                +91 98765 43210
+                <a href="tel:+919902012565" className="hover:text-foreground">+91 99020 12565</a>
               </li>
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                info@natarajelectricals.com
+                <a href="mailto:Sarveshkumarbc90@gmail.com" className="hover:text-foreground">Sarveshkumarbc90@gmail.com</a>
               </li>
             </ul>
           </div>

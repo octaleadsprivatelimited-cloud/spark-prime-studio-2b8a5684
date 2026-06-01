@@ -22,45 +22,45 @@ export const Route = createFileRoute("/")({
 const services = [
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
-    title: "Electrical Design",
-    description: "Comprehensive system design — load calculations, SLD preparation, and compliance documentation.",
+    title: "Designs",
+    description: "Concurrent designs, engineering analysis early in design, scheduling, quality control and CAD support.",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>,
-    title: "HT/LT Electrification",
-    description: "High and low tension electrification with transformer installation, panel erection, and safety compliance.",
+    title: "Electrification",
+    description: "H.T. and L.T Installations, Industrial wiring, Electrical Designing, Annual Maintenance, and Approvals.",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811z" /></svg>,
-    title: "Power Solutions",
-    description: "DG sets, UPS systems, solar integration, and power quality management for uninterrupted operations.",
+    title: "Complete power solution",
+    description: "Proficient in load audits, code compliance installations, and obtaining pre-commissioning approvals.",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>,
-    title: "Project Management",
-    description: "End-to-end project management from planning and procurement to execution and commissioning.",
+    title: "Project management",
+    description: "End-to-end management, site construction engineering, cable pulling, scaffolding, and light protection.",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.66-5.66M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-    title: "AMC Services",
-    description: "Annual maintenance with preventive care, thermal scanning, and 24/7 emergency response.",
+    title: "AMC management",
+    description: "Preventive, breakdown, and routine maintenance contracts for critical electrical installations.",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
-    title: "BESCOM Approvals",
-    description: "Hassle-free BESCOM approval for new connections, load enhancement, and statutory clearances.",
+    title: "Bescom Approvals",
+    description: "Liaisoning and obtaining inspected approvals from BESCOM for H.T. installations.",
   },
 ];
 
 const featuredProjects = [
-  { id: "1", title: "BEML Factory Electrification", client: "BEML Limited", category: "Industrial", image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80" },
-  { id: "3", title: "Phoenix Mall Electrical", client: "Phoenix Group", category: "Commercial", image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" },
-  { id: "2", title: "Vidhana Soudha Renovation", client: "Govt. of Karnataka", category: "Government", image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80" },
+  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
+  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
+  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
 ];
 
-const serviceCategories = ["All Services", "Industrial", "Commercial", "Government", "Residential"];
+const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 
-const clients = ["Infosys", "Wipro", "HAL", "BEML", "KPTCL", "BEL", "BHEL", "L&T"];
+const clients = ["TVS Motor", "Havells India", "Mettlor Toledo", "Sonata Software", "Gokaldas Exports", "Cyient DLM", "BIAL", "KSSFCL"];
 
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -134,7 +134,7 @@ function HomePage() {
                 Building Trust Through Quality & Reliability
               </h2>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                Since 2008, Nataraj Electricals has been at the forefront of electrical contracting in Karnataka. As a Government Licensed Class-I Contractor, we deliver solutions that meet the highest standards of safety and performance.
+                Founded in 2008 in Bangalore, Nataraj Electricals began with the aim of redefining the infrastructure development domain with new electrical solutions. As Government Licensed Class-I Electrical Contractors, we are an exclusive one-stop solution for all types of electrical services including Design, Planning, Erection, Testing, Commissioning, and AMC for H.T. & L.T works.
               </p>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {[

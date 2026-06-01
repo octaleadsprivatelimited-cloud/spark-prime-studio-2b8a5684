@@ -13,7 +13,7 @@ interface ProjectCardProps {
 export function ProjectCard({ id, title, client, category, image, delay = 0 }: ProjectCardProps) {
   return (
     <SectionReveal delay={delay}>
-      <Link to="/projects/$projectId" params={{ projectId: id }} className="project-card group block border border-border bg-card">
+      <Link to="/projects/$projectId" params={{ projectId: id }} className="project-card group glass">
         <div className="aspect-[4/3] overflow-hidden bg-muted">
           <img src={image} alt={title} className="h-full w-full object-cover" loading="lazy" />
         </div>

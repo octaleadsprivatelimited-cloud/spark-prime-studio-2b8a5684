@@ -52,34 +52,63 @@ function AboutPage() {
       <div className="section-divider" />
 
       {/* Story */}
-      <section className="section-padding">
+      <section className="section-padding overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <SectionReveal>
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Our Story</span>
-              <h2 className="mt-2 font-heading text-3xl font-bold text-foreground">From Humble Beginnings to Industry Leadership</h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                Founded in 2008, Nataraj Electricals began with a vision to provide world-class electrical contracting services in Bangalore. What started as a small operation has grown into a full-scale electrical engineering firm serving industrial, commercial, and government clients.
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                Today, we are proud to be a Government Licensed Class-I Electrical Contractor with ISO certification, 50+ skilled engineers, and over 500 successfully completed projects across Karnataka and beyond.
-              </p>
-            </SectionReveal>
-            <SectionReveal delay={0.1}>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { val: "500+", label: "Projects Delivered" },
-                  { val: "200+", label: "Clients Served" },
-                  { val: "50+", label: "Expert Engineers" },
-                  { val: "15+", label: "Years of Trust" },
-                ].map((s) => (
-                  <div key={s.label} className="rounded border border-border bg-card p-6 text-center">
-                    <div className="font-heading text-3xl font-extrabold text-brand-red">{s.val}</div>
-                    <div className="mt-1 text-xs text-muted-foreground">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </SectionReveal>
+          <div className="grid gap-16 lg:grid-cols-12 items-center">
+            {/* Story Text */}
+            <div className="lg:col-span-7">
+              <SectionReveal>
+                <div className="flex items-center gap-3">
+                  <span className="h-[2px] w-8 bg-brand-red inline-block" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Our Story</span>
+                </div>
+                <h2 className="mt-4 font-heading text-3xl font-extrabold text-foreground md:text-4xl leading-tight">
+                  Redefining Infrastructure Development With Premium Solutions
+                </h2>
+                <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground font-medium">
+                  <p>
+                    With the world’s population expected to expand by three billion people over the next 40 years, efficient electrical power distribution needs to catch up at a blistering pace. To achieve this dream, Nataraj Electricals started with a humble beginning in the year 2008 in the Silicon Valley of India, Bangalore. The company emerged with the aim of redefining the infrastructure development domain with new electrical solutions.
+                  </p>
+                  <p>
+                    We are an exclusive one-stop solution for all types of electrical services. As Government Licensed Class-I Electrical Contractors, we are proficient in Design, Planning, Erection, Testing and Commissioning, AMC for H.T. & L.T Electrical works and execution of large turnkey projects. Having been in the domain for close to 15 years, we have worked with some of the finest projects in versatile segments including Industrial projects, Commercial complexes, Multi-storeyed residential apartments, Software buildings, Power Plants, Switchyards, Sub-stations and more.
+                  </p>
+                  <p>
+                    Owing to our massive experience and relentless service in the field of electrical contracting, we are backed by a supportive, efficient, professional management and human resource team. Our in-house dedicated professionals make use of the best-in-class infrastructure to address every minute detail whether it's design, execution or after-sales service.
+                  </p>
+                  <p>
+                    The core competency of our company lies in achieving excellence between quality management and cost control. Having worked with leading architects and consultants, Nataraj Electricals is well-versed in delivering to your requirement and budget.
+                  </p>
+                </div>
+              </SectionReveal>
+            </div>
+
+            {/* Stats Layered Stack */}
+            <div className="lg:col-span-5 relative">
+              <SectionReveal delay={0.15}>
+                {/* Background decorative gradient glow */}
+                <div className="absolute -inset-4 rounded-xl bg-gradient-to-tr from-brand-red/10 to-transparent opacity-70 blur-2xl -z-10" />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { val: "500+", label: "Projects Delivered", desc: "Successful handovers", accent: "from-brand-red/20" },
+                    { val: "200+", label: "Clients Served", desc: "Long-term relationships", accent: "from-blue-500/10" },
+                    { val: "50+", label: "Expert Engineers", desc: "Skilled specialists", accent: "from-emerald-500/10" },
+                    { val: "15+", label: "Years of Trust", desc: "Since 2008 foundations", accent: "from-amber-500/10" },
+                  ].map((s, idx) => (
+                    <div 
+                      key={s.label} 
+                      className={`relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-brand-red/30 ${idx % 2 === 1 ? "mt-4 sm:mt-8" : ""}`}
+                    >
+                      {/* Gradient card accent */}
+                      <div className={`absolute -right-10 -bottom-10 h-28 w-28 rounded-full bg-gradient-to-br ${s.accent} to-transparent blur-xl -z-10`} />
+                      <div className="font-heading text-4xl font-extrabold text-brand-red tracking-tight">{s.val}</div>
+                      <div className="mt-2 text-sm font-bold text-foreground">{s.label}</div>
+                      <div className="mt-1 text-xs text-muted-foreground">{s.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </SectionReveal>
+            </div>
           </div>
         </div>
       </section>
@@ -89,51 +118,156 @@ function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <div className="grid gap-6 md:grid-cols-2">
             <SectionReveal>
-              <div className="rounded border border-border bg-card p-8">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-brand-red/10 text-brand-red">
+              <div className="rounded-xl border border-border bg-card p-8 shadow-sm transition-all hover:border-brand-red/20">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-brand-red/10 text-brand-red">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
                 <h3 className="font-heading text-xl font-bold text-foreground">Our Vision</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">To be India's most trusted electrical contracting company, known for excellence, safety, and sustainable solutions.</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">To achieve the dream of redefining infrastructure development with state-of-the-art electrical solutions, enabling efficient and safe power distribution across all sectors.</p>
               </div>
             </SectionReveal>
             <SectionReveal delay={0.1}>
-              <div className="rounded border border-border bg-card p-8">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-brand-red/10 text-brand-red">
+              <div className="rounded-xl border border-border bg-card p-8 shadow-sm transition-all hover:border-brand-red/20">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-brand-red/10 text-brand-red">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg>
                 </div>
                 <h3 className="font-heading text-xl font-bold text-foreground">Our Mission</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">To deliver safe, reliable, and cost-effective electrical solutions while maintaining the highest standards of workmanship and customer satisfaction.</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">To deliver safety, reliability, and cost-effectiveness in every project, maintaining the highest quality standards from design to commissioning and AMC services.</p>
               </div>
             </SectionReveal>
           </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-3xl px-4 lg:px-6">
+      {/* Strengths Section */}
+      <section className="section-padding bg-surface">
+        <div className="mx-auto max-w-7xl px-4 lg:px-6">
+          <div className="grid gap-12 lg:grid-cols-12 items-start">
+            {/* Sticky Intro Side */}
+            <div className="lg:col-span-4 lg:sticky lg:top-24">
+              <SectionReveal>
+                <div className="flex items-center gap-3">
+                  <span className="h-[2px] w-8 bg-brand-red inline-block" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Core Assets</span>
+                </div>
+                <h2 className="mt-4 font-heading text-3xl font-extrabold text-foreground md:text-4xl leading-tight">
+                  Our Pillars of Strength
+                </h2>
+                <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+                  Our massive experience and relentless service in the field of electrical contracting is built upon robust competencies.
+                </p>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                  Through quality management, cost control, and deep engineering analysis, we deliver excellence tailored to every budget.
+                </p>
+              </SectionReveal>
+            </div>
+
+            {/* Strengths Cards Side */}
+            <div className="lg:col-span-8">
+              <div className="grid gap-6 sm:grid-cols-2">
+                {[
+                  { 
+                    title: "Leadership skills", 
+                    desc: "Visionary leadership guiding complex turnkey electrical projects to successful execution.", 
+                    icon: (
+                      <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        <circle cx="12" cy="12" r="1" fill="currentColor" />
+                      </svg>
+                    ), 
+                    color: "border-l-4 border-l-red-500" 
+                  },
+                  { 
+                    title: "Customer focus & Satisfaction", 
+                    desc: "Prioritizing client requirements, delivering on-budget solutions and high-satisfaction service.", 
+                    icon: (
+                      <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.708a3 3 0 012.94 3.582l-1.32 6A3 3 0 0117.382 22H7m7-12V3a1 1 0 00-1-1H9a1 1 0 00-1 1v7m0 0H3.3a1 1 0 00-1 1v7a1 1 0 001 1h3M14 10a1 1 0 00-1 1v7a1 1 0 001 1h3.382a1 1 0 00.894-.553l1.32-6A1 1 0 0018.708 11H14" />
+                      </svg>
+                    ), 
+                    color: "border-l-4 border-l-blue-500" 
+                  },
+                  { 
+                    title: "Environment, Health & Safety", 
+                    desc: "Strict adherence to safety guidelines, code compliances, and zero-compromise security protocols.", 
+                    icon: (
+                      <svg className="h-6 w-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    ), 
+                    color: "border-l-4 border-l-emerald-500" 
+                  },
+                  { 
+                    title: "Corporate image", 
+                    desc: "Close to 15 years of built-up credibility, trust, and professional licensed contracting status.", 
+                    icon: (
+                      <svg className="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    ), 
+                    color: "border-l-4 border-l-amber-500" 
+                  },
+                  { 
+                    title: "Team spirit & Team work", 
+                    desc: "A supportive, efficient management and dedicated team of in-house specialists working in harmony.", 
+                    icon: (
+                      <svg className="h-6 w-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    ), 
+                    color: "border-l-4 border-l-indigo-500" 
+                  },
+                ].map((strength, i) => (
+                  <SectionReveal key={strength.title} delay={i * 0.06}>
+                    <div className={`group flex flex-col p-6 rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-brand-red/35 ${strength.color}`}>
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-card border border-border shadow-sm group-hover:border-brand-red/20 group-hover:shadow-md transition-all duration-300">
+                          {strength.icon}
+                        </div>
+                        <h3 className="font-heading text-base font-bold text-foreground transition-colors group-hover:text-brand-red">{strength.title}</h3>
+                      </div>
+                      <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-medium">{strength.desc}</p>
+                    </div>
+                  </SectionReveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline / Our Journey in Grid View */}
+      <section className="section-padding bg-surface-elevated">
+        <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <SectionReveal>
-            <div className="text-center">
+            <div className="text-center mb-12">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Our Journey</span>
-              <h2 className="mt-2 font-heading text-3xl font-bold text-foreground">Key Milestones</h2>
+              <h2 className="mt-2 font-heading text-3xl font-extrabold text-foreground md:text-4xl">Key Milestones</h2>
+              <p className="mt-2 text-sm text-muted-foreground">The growth and accomplishments of Nataraj Electricals since 2008</p>
+              <div className="h-1 w-12 bg-brand-red mx-auto mt-4 rounded" />
             </div>
           </SectionReveal>
-          <div className="mt-12">
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {timeline.map((item, i) => (
               <SectionReveal key={item.year} delay={i * 0.05}>
-                <div className="relative flex gap-6 pb-8 last:pb-0">
-                  <div className="flex flex-col items-center">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-brand-red text-xs font-bold text-brand-red-foreground">
-                      {item.year.slice(2)}
-                    </div>
-                    {i < timeline.length - 1 && <div className="w-px flex-1 bg-border" />}
+                <div className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-brand-red/30">
+                  {/* Glowing background hint */}
+                  <div className="absolute -right-6 -bottom-6 h-20 w-20 rounded-full bg-brand-red/5 blur-lg transition-colors group-hover:bg-brand-red/10" />
+                  
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="inline-flex items-center justify-center rounded-lg bg-brand-red/10 px-3 py-1 text-xs font-extrabold text-brand-red">
+                      {item.year}
+                    </span>
+                    <span className="text-xs font-bold opacity-30">Phase 0{i + 1}</span>
                   </div>
-                  <div className="pb-4">
-                    <div className="text-xs font-bold text-brand-red">{item.year}</div>
-                    <h3 className="font-heading text-base font-bold text-foreground">{item.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.desc}</p>
-                  </div>
+                  
+                  <h3 className="font-heading text-lg font-bold text-foreground transition-colors group-hover:text-brand-red">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed font-medium">
+                    {item.desc}
+                  </p>
                 </div>
               </SectionReveal>
             ))}
@@ -142,22 +276,22 @@ function AboutPage() {
       </section>
 
       {/* Certifications */}
-      <section className="section-padding bg-surface-elevated">
+      <section className="section-padding bg-surface">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <SectionReveal>
             <div className="text-center">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Certifications</span>
-              <h2 className="mt-2 font-heading text-3xl font-bold text-foreground">Licenses & Accreditations</h2>
+              <h2 className="mt-2 font-heading text-3xl font-extrabold text-foreground">Licenses & Accreditations</h2>
             </div>
           </SectionReveal>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {certifications.map((s, i) => (
               <SectionReveal key={s} delay={i * 0.05}>
-                <div className="flex items-center gap-3 rounded border border-border bg-card p-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-brand-red text-brand-red-foreground">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <div className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:border-brand-red/20 hover:shadow-md">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-red/10 text-brand-red">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                   </div>
-                  <span className="text-sm font-medium text-foreground">{s}</span>
+                  <span className="text-sm font-bold text-foreground">{s}</span>
                 </div>
               </SectionReveal>
             ))}

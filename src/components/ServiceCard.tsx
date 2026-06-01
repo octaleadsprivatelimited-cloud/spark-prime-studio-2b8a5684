@@ -11,7 +11,7 @@ interface ServiceCardProps {
 export function ServiceCard({ icon, title, description, delay = 0 }: ServiceCardProps) {
   return (
     <SectionReveal delay={delay}>
-      <div className="service-card group">
+    <div className="service-card group glass">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-brand-red/10 text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-brand-red-foreground">
           {icon}
         </div>

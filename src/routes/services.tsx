@@ -16,34 +16,34 @@ export const Route = createFileRoute("/services")({
 
 const allServices = [
   {
-    title: "Electrical Design",
-    description: "Complete electrical system design including load calculations, SLD preparation, equipment selection, and compliance documentation for projects of any scale.",
-    useCases: ["Factory layouts", "Commercial complexes", "Residential townships", "Hospital electrical systems"],
+    title: "Designs",
+    description: "Our engineers offer valuable design assistance. Keeping in mind today’s hi-tech construction challenges, our experienced team provides timely solutions to owners and general contractors. We offer reduced project duration through concurrent designs, valuable engineering analysis early in the design process, scheduling, quality control, project peer reviews and CAD design support.",
+    useCases: ["Concurrent designs", "Value engineering analysis", "Scheduling & Quality control", "Project peer reviews", "CAD design support"],
   },
   {
-    title: "HT/LT Electrification",
-    description: "High tension (11kV/33kV/66kV) and low tension electrification including transformer installation, panel erection, cable laying, and commissioning.",
-    useCases: ["Industrial plants", "Power distribution", "Substation erection", "Cable networks"],
+    title: "Electrification",
+    description: "In terms of electrical contracting, we provide all types of electrical and related services to our clients ranging from H.T. and L.T Electrical Installations, Industrial wiring, Electrical Designing, Annual Maintenance, Approvals and the complete power solution.",
+    useCases: ["H.T. & L.T. Electrical Installations", "Industrial wiring", "Electrical Designing", "Annual Maintenance", "Approvals & Liaisoning"],
   },
   {
-    title: "Power Solutions",
-    description: "Comprehensive power backup — DG set installation, UPS systems, solar integration, and power quality management for uninterrupted operations.",
-    useCases: ["DG sets", "UPS systems", "Solar plants", "Power factor correction"],
+    title: "Complete power solution",
+    description: "Not just electrical installations, we are also proficient in delivering complete power solutions for industrial, residential and commercial buildings. We carry out load audits, offer complete installation as per code compliance and obtain approvals before commissioning.",
+    useCases: ["Load audits", "Code compliance check", "Industrial buildings", "Commercial & residential complexes", "Pre-commissioning approvals"],
   },
   {
-    title: "Project Management",
-    description: "End-to-end electrical project management from planning, estimation, and procurement to execution, testing, and commissioning.",
-    useCases: ["Turnkey projects", "Multi-site rollouts", "Government tenders", "Infrastructure"],
+    title: "Project management",
+    description: "We provide complete project management from installation to planning, inspection and testing. Our site-based management personnel take care of every requirement. Our site engineer handles the entire construction activities and takes major decisions on contract works. We also have sub-contractors that handle cable pulling, scaffolding, heavy lifting, lightning protection, wiring, and slab work.",
+    useCases: ["Site-based management", "Cable pulling & wiring", "Heavy lifting & scaffolding", "Lightning protection", "Slab work"],
   },
   {
-    title: "AMC Services",
-    description: "Annual maintenance contracts with preventive and breakdown maintenance, periodic inspections, thermal scanning, and 24/7 emergency response.",
-    useCases: ["Preventive maintenance", "Breakdown response", "Thermal scanning", "System audits"],
+    title: "AMC management",
+    description: "Besides the service of electrical installations, we at Nataraj Electricals also provide regular maintenance services through our Annual Maintenance Contract (AMC) Services program. We provide AMC for all the services offered by us. We believe preventive, breakdown and routine maintenance is a must for critical electrical installations.",
+    useCases: ["Preventive maintenance", "Breakdown maintenance", "Routine inspections", "Custom AMC packages"],
   },
   {
-    title: "BESCOM Approvals",
-    description: "Complete assistance for BESCOM approvals — new connections, load enhancement, CT/PT metering, and statutory clearances with documentation support.",
-    useCases: ["New connections", "Load enhancement", "CT/PT metering", "Clearances"],
+    title: "Bescom Approvals",
+    description: "Every infrastructure or government project we handle is only undertaken after electrical inspected approval from BESCOM (Bangalore Electricity Supply Company Limited) for HT connections.",
+    useCases: ["BESCOM HT approvals", "Liaisoning with inspectors", "Statutory clearances", "Inspection audits"],
   },
 ];
 
