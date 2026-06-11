@@ -108,7 +108,7 @@ export function Navbar() {
                 {navLinks.map((link) => (
                   <NavLink key={link.to} to={link.to} end={link.to === "/"} className={({ isActive }) => isActive ? "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" : "border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground"}>
                     {link.label}
-                  </Link>
+                  </NavLink>
                 ))}
                 <Link to="/contact" className="btn-primary mt-4 text-center">Get a Quote</Link>
               </nav>
