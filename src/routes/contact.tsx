@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
+import { submitContactForm, trackEvent } from "../lib/firebase";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -17,10 +18,22 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError("");
+    try {
+      await submitContactForm(form);
+      trackEvent("contact_form_submit", { name: form.name });
+      setSubmitted(true);
+    } catch {
+      setError("Failed to send message. Please try again or contact us directly.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -76,7 +89,10 @@ function ContactPage() {
                         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                         <textarea required maxLength={1000} rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full resize-none rounded border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-brand-red focus:ring-1 focus:ring-brand-red/20" placeholder="Tell us about your project..." />
                       </div>
-                      <button type="submit" className="btn-primary w-full justify-center">Send Message</button>
+                      {error && <p className="text-sm text-red-500">{error}</p>}
+                      <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-60">
+                        {submitting ? "Sending..." : "Send Message"}
+                      </button>
                     </form>
                   )}
                 </div>
