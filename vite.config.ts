@@ -8,23 +8,15 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { designTokens } from "./src/lib/designTokens";
 
 export default defineConfig({
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        brandRed: designTokens.colors.brandRed,
-        brandDark: designTokens.colors.brandDark,
-        accent: designTokens.colors.accent,
-      },
-      borderRadius: {
-        sm: designTokens.radius.sm,
-        md: designTokens.radius.md,
-        lg: designTokens.radius.lg,
-        xl: designTokens.radius.xl,
-      },
-      fontFamily: {
-        heading: [designTokens.fonts.heading],
-        body: [designTokens.fonts.body],
+  tailwind: {
+    config: {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: designTokens.colors,
+          borderRadius: designTokens.radius,
+          fontFamily: designTokens.fonts,
+        },
       },
     },
   },
