@@ -1,49 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import hero1 from "../assets/hero-1.jpg";
-import hero2 from "../assets/hero-2.jpg";
-import hero3 from "../assets/hero-3.jpg";
-
-const slides = [
-  {
-    image: hero1,
-    subtitle: "Government Licensed Class-I Contractor",
-    title: "Powering India's\nInfrastructure",
-    description: "Premium electrical contracting for industrial, commercial, and government projects across Karnataka.",
-    cta: "Get a Quote",
-    ctaLink: "/contact" as const,
-  },
-  {
-    image: hero2,
-    subtitle: "HT/LT Electrification Experts",
-    title: "Precision.\nPerformance.\nPower.",
-    description: "State-of-the-art switchgear and panel solutions with certified safety compliance.",
-    cta: "Our Services",
-    ctaLink: "/services" as const,
-  },
-  {
-    image: hero3,
-    subtitle: "15+ Years of Excellence",
-    title: "Expert Team.\nExpert Solutions.",
-    description: "50+ skilled engineers delivering end-to-end electrical project management.",
-    cta: "View Projects",
-    ctaLink: "/projects" as const,
-  },
-];
+import { useHeroSlides } from "../lib/content";
 
 export function HeroCarousel() {
+  const { items: slides } = useHeroSlides();
   const [current, setCurrent] = useState(0);
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
   }, [next]);
 
+  if (slides.length === 0) return <section className="h-[85vh] min-h-[500px] bg-brand-dark" />;
   const slide = slides[current];
 
   return (
