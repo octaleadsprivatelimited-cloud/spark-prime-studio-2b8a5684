@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getAnalytics, logEvent, isSupported } from "firebase/analytics";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBd7ADR95FIJ-mDbGY77zqNYeP5DG6UclQ",
@@ -22,6 +23,7 @@ isSupported().then((supported) => {
 });
 
 export const db = getFirestore(app);
+export const auth = getAuth(app);
 
 export function trackEvent(eventName: string, params?: Record<string, unknown>) {
   if (analytics) {
