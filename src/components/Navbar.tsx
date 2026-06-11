@@ -106,7 +106,7 @@ export function Navbar() {
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-border lg:hidden">
               <nav className="flex flex-col px-4 py-3">
                 {navLinks.map((link) => (
-                  <Link key={link.to} to={link.to} className="border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground" activeProps={{ className: "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" }}>
+                  <NavLink key={link.to} to={link.to} end={link.to === "/"} className={({ isActive }) => isActive ? "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" : "border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground"}>
                     {link.label}
                   </Link>
                 ))}
