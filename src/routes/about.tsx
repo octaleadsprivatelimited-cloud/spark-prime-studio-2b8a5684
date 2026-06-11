@@ -1,18 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
-
-export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About Us — Nataraj Electricals" },
-      { name: "description", content: "Learn about Nataraj Electricals — our journey since 2008, mission, vision, and commitment to quality." },
-      { property: "og:title", content: "About Us — Nataraj Electricals" },
-      { property: "og:description", content: "Government Licensed Class-I Electrical Contractor serving Karnataka since 2008." },
-    ],
-  }),
-  component: AboutPage,
-});
 
 const timeline = [
   { year: "2008", title: "Company Founded", desc: "Started operations in Bangalore with a dedicated team." },
@@ -35,6 +24,8 @@ const certifications = [
 function AboutPage() {
   return (
     <>
+      <PageHead title="About Us — Nataraj Electricals" description="Learn about Nataraj Electricals — our journey since 2008, mission, vision, and commitment to quality." />
+
       {/* Page Header */}
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
@@ -303,3 +294,5 @@ function AboutPage() {
     </>
   );
 }
+
+export default AboutPage;

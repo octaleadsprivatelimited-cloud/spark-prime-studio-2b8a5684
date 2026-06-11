@@ -1,23 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, useParams } from "react-router-dom";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
+import { PageHead } from "../components/PageHead";
 import { projectsData } from "./projects";
-
-export const Route = createFileRoute("/projects/$projectId")({
-  head: ({ params }) => {
-    const project = projectsData.find((p) => p.id === params.projectId);
-    return {
-      meta: [
-        { title: `${project?.title ?? "Project"} — Nataraj Electricals` },
-        { name: "description", content: project?.description ?? "View project details" },
-        { property: "og:title", content: `${project?.title ?? "Project"} — Nataraj Electricals` },
-        { property: "og:description", content: project?.description ?? "" },
-      ],
-    };
-  },
-  component: ProjectDetailPage,
-  notFoundComponent: ProjectNotFound,
-});
 
 function ProjectNotFound() {
   return (
@@ -30,13 +15,18 @@ function ProjectNotFound() {
   );
 }
 
-function ProjectDetailPage() {
-  const { projectId } = Route.useParams();
+export default function ProjectDetailPage() {
+  const { projectId } = useParams<{ projectId: string }>();
   const project = projectsData.find((p) => p.id === projectId);
   if (!project) return <ProjectNotFound />;
 
   return (
     <>
+      <PageHead
+        title={`${project.title} — Nataraj Electricals`}
+        description={project.description}
+        image={project.image}
+      />
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>

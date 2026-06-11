@@ -1,20 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
 import { ProjectCard } from "../components/ProjectCard";
 import { CTASection } from "../components/CTASection";
-
-export const Route = createFileRoute("/projects")({
-  head: () => ({
-    meta: [
-      { title: "Our Projects — Nataraj Electricals" },
-      { name: "description", content: "Explore our portfolio of industrial, government, and commercial electrical projects across Karnataka." },
-      { property: "og:title", content: "Our Projects — Nataraj Electricals" },
-      { property: "og:description", content: "500+ completed electrical projects across industrial, commercial, and government sectors." },
-    ],
-  }),
-  component: ProjectsPage,
-});
 
 export const projectsData = [
   // Ongoing
@@ -64,6 +53,8 @@ function ProjectsPage() {
 
   return (
     <>
+      <PageHead title="Our Projects — Nataraj Electricals" description="Explore our portfolio of industrial, government, and commercial electrical projects across Karnataka." />
+
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>
@@ -99,3 +90,5 @@ function ProjectsPage() {
     </>
   );
 }
+
+export default ProjectsPage;

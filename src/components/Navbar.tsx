@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "../assets/logo.png";
@@ -47,14 +47,18 @@ export function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-0.5 lg:flex">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.to}
                 to={link.to}
-                className="px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
-                activeProps={{ className: "px-3 py-2 text-[13px] font-semibold text-brand-red" }}
+                end={link.to === "/"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "px-3 py-2 text-[13px] font-semibold text-brand-red"
+                    : "px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                }
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 
@@ -102,9 +106,9 @@ export function Navbar() {
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-border lg:hidden">
               <nav className="flex flex-col px-4 py-3">
                 {navLinks.map((link) => (
-                  <Link key={link.to} to={link.to} className="border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground" activeProps={{ className: "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" }}>
+                  <NavLink key={link.to} to={link.to} end={link.to === "/"} className={({ isActive }) => isActive ? "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" : "border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground"}>
                     {link.label}
-                  </Link>
+                  </NavLink>
                 ))}
                 <Link to="/contact" className="btn-primary mt-4 text-center">Get a Quote</Link>
               </nav>
