@@ -335,7 +335,12 @@ function ProjectEditor({ initial, onClose }: { initial: Project; onClose: () => 
             <option>Ongoing</option>
           </select>
         </div>
-        <div><Label>Image URL</Label><Input value={p.image} onChange={(e) => setP({ ...p, image: e.target.value })} placeholder="https://..." /></div>
+        <ImageUploadField
+          label="Project Image"
+          value={p.image}
+          onChange={(v) => setP({ ...p, image: v })}
+          compress={{ maxWidth: 1280, maxHeight: 900, quality: 0.78 }}
+        />
         <div><Label>Description</Label><TextArea rows={4} value={p.description} onChange={(e) => setP({ ...p, description: e.target.value })} /></div>
         <div><Label>Order</Label><Input type="number" value={p.order ?? 0} onChange={(e) => setP({ ...p, order: Number(e.target.value) })} /></div>
       </div>
@@ -445,6 +450,13 @@ function ClientForm({ initial, onClose }: { initial: Client; onClose: () => void
       {error && <ErrorBox message={error} />}
       <div className="space-y-3">
         <div><Label>Name</Label><Input value={c.name} onChange={(e) => setC({ ...c, name: e.target.value })} /></div>
+        <ImageUploadField
+          label="Logo (optional)"
+          value={c.logo ?? ""}
+          onChange={(v) => setC({ ...c, logo: v })}
+          aspect="square"
+          compress={{ maxWidth: 400, maxHeight: 400, quality: 0.85, mimeType: "image/webp" }}
+        />
         <div><Label>Order</Label><Input type="number" value={c.order ?? 0} onChange={(e) => setC({ ...c, order: Number(e.target.value) })} /></div>
       </div>
       <ModalActions onCancel={onClose} saving={saving} onSave={() => run(async () => { await saveDoc("site_clients", c); onClose(); })} />
@@ -545,7 +557,13 @@ function HeroEditor({ initial, onClose }: { initial: HeroSlide; onClose: () => v
     <Modal title={initial.title ? "Edit Slide" : "Add Slide"} onClose={onClose}>
       {error && <ErrorBox message={error} />}
       <div className="space-y-3">
-        <div><Label>Image URL</Label><Input value={h.image} onChange={(e) => setH({ ...h, image: e.target.value })} /></div>
+        <ImageUploadField
+          label="Slide Image"
+          value={h.image}
+          onChange={(v) => setH({ ...h, image: v })}
+          aspect="wide"
+          compress={{ maxWidth: 1600, maxHeight: 900, quality: 0.78 }}
+        />
         <div><Label>Subtitle (small tag)</Label><Input value={h.subtitle} onChange={(e) => setH({ ...h, subtitle: e.target.value })} /></div>
         <div><Label>Title (use \n for line breaks)</Label><TextArea rows={3} value={h.title} onChange={(e) => setH({ ...h, title: e.target.value })} /></div>
         <div><Label>Description</Label><TextArea rows={3} value={h.description} onChange={(e) => setH({ ...h, description: e.target.value })} /></div>
