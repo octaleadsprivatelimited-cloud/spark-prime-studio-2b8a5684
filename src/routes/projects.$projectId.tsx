@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
 import { PageHead } from "../components/PageHead";
-import { projectsData } from "./projects";
+import { useProjects } from "../lib/content";
 
 function ProjectNotFound() {
   return (
@@ -17,7 +17,9 @@ function ProjectNotFound() {
 
 export default function ProjectDetailPage() {
   const { projectId } = useParams<{ projectId: string }>();
+  const { items: projectsData, loading } = useProjects();
   const project = projectsData.find((p) => p.id === projectId);
+  if (loading && !project) return <div className="min-h-[60vh]" />;
   if (!project) return <ProjectNotFound />;
 
   return (

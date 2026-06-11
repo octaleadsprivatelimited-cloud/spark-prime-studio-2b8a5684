@@ -2,21 +2,11 @@ import { Link } from "react-router-dom";
 import { PageHead } from "../components/PageHead";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
-
-const clientLogos = [
-  "Infosys", "Wipro", "HAL", "BEML", "KPTCL", "BEL",
-  "BHEL", "L&T", "Embassy Group", "Phoenix Group",
-  "Prestige Group", "Brigade Group", "Govt. of Karnataka",
-  "Indian Railways", "DRDO", "Biocon",
-];
-
-const testimonials = [
-  { quote: "Nataraj Electricals delivered our factory electrification on time and within budget. Their HT systems expertise is unmatched.", name: "Rajesh Kumar", role: "Plant Manager, BEML" },
-  { quote: "Professional, reliable, and safety-conscious. They've handled our AMC for 5 years with zero downtime.", name: "Priya Sharma", role: "Facilities Head, Embassy Group" },
-  { quote: "From design to commissioning, their project management made our IT park electrification seamless.", name: "Arun Patel", role: "CTO, Techpark Solutions" },
-];
+import { useClients, useTestimonials } from "../lib/content";
 
 function ClientsPage() {
+  const { items: clientLogosList } = useClients();
+  const { items: testimonials } = useTestimonials();
   return (
     <>
       <PageHead title="Our Clients — Nataraj Electricals" description="Trusted by 200+ leading organizations including government bodies, industrial giants, and commercial enterprises." />
@@ -38,10 +28,10 @@ function ClientsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <SectionReveal><h2 className="text-center font-heading text-3xl font-bold text-foreground">Organizations We Serve</h2></SectionReveal>
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {clientLogos.map((name, i) => (
-              <SectionReveal key={name} delay={i * 0.03}>
+            {clientLogosList.map((c, i) => (
+              <SectionReveal key={c.id} delay={i * 0.03}>
                 <div className="flex h-24 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/20 hover:shadow-sm">
-                  <span className="font-heading text-base font-bold text-muted-foreground">{name}</span>
+                  <span className="font-heading text-base font-bold text-muted-foreground">{c.name}</span>
                 </div>
               </SectionReveal>
             ))}
@@ -59,7 +49,7 @@ function ClientsPage() {
           </SectionReveal>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {testimonials.map((t, i) => (
-              <SectionReveal key={t.name} delay={i * 0.1}>
+              <SectionReveal key={t.id} delay={i * 0.1}>
                 <div className="rounded border border-border bg-card p-6">
                   <div className="mb-3 flex gap-1">
                     {[...Array(5)].map((_, j) => (
