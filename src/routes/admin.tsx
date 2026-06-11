@@ -23,6 +23,8 @@ import {
   HeroSlide,
 } from "../lib/content";
 import { PageHead } from "../components/PageHead";
+import { compressImage, CompressOptions } from "../lib/imageUpload";
+import { useRef } from "react";
 
 type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inquiries";
 
@@ -116,6 +118,91 @@ function TextArea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
       {...props}
       className={`mt-1 w-full rounded border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-brand-red ${props.className ?? ""}`}
     />
+  );
+}
+
+// ============= Image upload (auto-compress) =============
+function ImageUploadField({
+  label = "Image",
+  value,
+  onChange,
+  compress,
+  aspect = "video",
+}: {
+  label?: string;
+  value: string;
+  onChange: (v: string) => void;
+  compress?: CompressOptions;
+  aspect?: "video" | "square" | "wide";
+}) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+
+  async function handleFile(file: File | undefined) {
+    if (!file) return;
+    setErr(null);
+    setBusy(true);
+    try {
+      const dataUrl = await compressImage(file, compress);
+      onChange(dataUrl);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const aspectClass =
+    aspect === "square" ? "aspect-square" : aspect === "wide" ? "aspect-[21/9]" : "aspect-video";
+
+  return (
+    <div>
+      <Label>{label}</Label>
+      <div className="mt-1 space-y-2">
+        {value && (
+          <div className={`relative overflow-hidden rounded border border-border bg-muted ${aspectClass}`}>
+            <img src={value} alt="" className="h-full w-full object-cover" />
+          </div>
+        )}
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFile(e.target.files?.[0])}
+          />
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={busy}
+            className="rounded border border-border bg-background px-3 py-1.5 text-xs font-medium hover:bg-muted disabled:opacity-50"
+          >
+            {busy ? "Compressing…" : value ? "Replace image" : "Upload image"}
+          </button>
+          {value && (
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="rounded border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted"
+            >
+              Remove
+            </button>
+          )}
+        </div>
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="Or paste image URL"
+          className="w-full rounded border border-border bg-background px-3 py-2 text-xs text-foreground outline-none focus:border-brand-red"
+        />
+        {err && <p className="text-xs text-brand-red">{err}</p>}
+        <p className="text-[10px] text-muted-foreground">
+          Images are auto-compressed in your browser before saving.
+        </p>
+      </div>
+    </div>
   );
 }
 
