@@ -3,6 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { ScrollProgress } from "../components/ScrollProgress";
 import { WhatsAppButton } from "../components/WhatsAppButton";
+import { usePageTracking } from "../lib/analytics";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
