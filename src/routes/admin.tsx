@@ -25,17 +25,40 @@ import {
 import { PageHead } from "../components/PageHead";
 import { compressImage, CompressOptions } from "../lib/imageUpload";
 import { useRef } from "react";
+import {
+  LayoutGrid,
+  Wrench,
+  Users,
+  MessageSquareQuote,
+  Image as ImageIcon,
+  Inbox,
+  Search,
+  Bell,
+  Settings,
+  HelpCircle,
+  LogOut,
+  ExternalLink,
+} from "lucide-react";
 
 type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inquiries";
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: "projects", label: "Projects" },
-  { id: "services", label: "Services" },
-  { id: "clients", label: "Clients" },
-  { id: "testimonials", label: "Testimonials" },
-  { id: "hero", label: "Hero Slides" },
-  { id: "inquiries", label: "Inquiries" },
+const TABS: { id: Tab; label: string; icon: typeof LayoutGrid }[] = [
+  { id: "projects", label: "Projects", icon: LayoutGrid },
+  { id: "services", label: "Services", icon: Wrench },
+  { id: "clients", label: "Clients", icon: Users },
+  { id: "testimonials", label: "Reviews", icon: MessageSquareQuote },
+  { id: "hero", label: "Hero", icon: ImageIcon },
+  { id: "inquiries", label: "Inquiries", icon: Inbox },
 ];
+
+// Microsoft Teams brand palette
+const TEAMS = {
+  rail: "#3d3e66",       // deep indigo rail
+  railActive: "#4b53bc", // active purple
+  topbar: "#5b5fc7",     // header purple
+  panel: "#f5f5f5",      // app background
+  card: "#ffffff",
+};
 
 export default function AdminPage() {
   const { user, loading } = useAuthUser();
@@ -44,51 +67,144 @@ export default function AdminPage() {
   if (loading) return <div className="min-h-screen" />;
   if (!user) return <Navigate to="/admin/login" replace />;
 
+  const ActiveTab = TABS.find((t) => t.id === tab)!;
+
   return (
     <>
       <PageHead title="Admin — Nataraj Electricals" description="Content management" />
-      <div className="min-h-screen bg-surface-elevated">
-        <header className="border-b border-border bg-card">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-6">
-            <div className="flex items-center gap-3">
-              <Link to="/" className="font-heading text-lg font-extrabold text-foreground">Nataraj Admin</Link>
-              <span className="rounded bg-brand-red/10 px-2 py-0.5 text-xs font-bold text-brand-red">CMS</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="hidden text-xs text-muted-foreground sm:inline">{user.email}</span>
-              <Link to="/" className="text-xs font-medium text-muted-foreground hover:text-foreground">View Site</Link>
-              <button onClick={() => adminSignOut()} className="rounded border border-border bg-background px-3 py-1.5 text-xs font-medium hover:bg-muted">
-                Sign Out
-              </button>
-            </div>
+      <div className="flex h-screen w-full flex-col overflow-hidden" style={{ background: TEAMS.panel }}>
+        {/* Top command bar */}
+        <header
+          className="flex h-12 shrink-0 items-center gap-3 px-3 text-white"
+          style={{ background: TEAMS.topbar }}
+        >
+          <Link to="/" className="flex items-center gap-2 pr-3 font-semibold tracking-tight">
+            <span className="grid h-7 w-7 place-items-center rounded bg-white/15 text-[11px] font-extrabold">
+              N
+            </span>
+            <span className="hidden sm:inline">Nataraj Workspace</span>
+          </Link>
+          <div className="mx-auto flex max-w-xl flex-1 items-center gap-2 rounded bg-white/15 px-3 py-1.5 text-sm text-white/90 focus-within:bg-white focus-within:text-foreground">
+            <Search className="h-4 w-4" />
+            <input
+              placeholder="Search"
+              className="w-full bg-transparent text-sm placeholder-white/70 outline-none focus:placeholder-muted-foreground"
+            />
           </div>
-          <nav className="mx-auto max-w-7xl overflow-x-auto px-4 lg:px-6">
-            <div className="flex gap-1 pb-1">
-              {TABS.map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
-                  className={`whitespace-nowrap rounded-t px-4 py-2 text-sm font-medium transition-colors ${
-                    tab === t.id
-                      ? "border-b-2 border-brand-red text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-          </nav>
+          <button className="grid h-8 w-8 place-items-center rounded hover:bg-white/15" title="Notifications">
+            <Bell className="h-4 w-4" />
+          </button>
+          <button className="grid h-8 w-8 place-items-center rounded hover:bg-white/15" title="Settings">
+            <Settings className="h-4 w-4" />
+          </button>
+          <Link
+            to="/"
+            className="hidden items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-white/15 sm:flex"
+            title="View site"
+          >
+            <ExternalLink className="h-3.5 w-3.5" /> View site
+          </Link>
+          <div
+            className="grid h-8 w-8 place-items-center rounded-full bg-white/20 text-xs font-bold uppercase"
+            title={user.email ?? ""}
+          >
+            {(user.email ?? "?").slice(0, 1)}
+          </div>
         </header>
 
-        <main className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-          {tab === "projects" && <ProjectsAdmin />}
-          {tab === "services" && <ServicesAdmin />}
-          {tab === "clients" && <ClientsAdmin />}
-          {tab === "testimonials" && <TestimonialsAdmin />}
-          {tab === "hero" && <HeroAdmin />}
-          {tab === "inquiries" && <InquiriesAdmin />}
-        </main>
+        {/* Main shell: left rail + content */}
+        <div className="flex min-h-0 flex-1">
+          {/* Activity rail (Teams style) */}
+          <nav
+            className="flex w-[68px] shrink-0 flex-col items-stretch justify-between py-2 text-white"
+            style={{ background: TEAMS.rail }}
+          >
+            <ul className="flex flex-col">
+              {TABS.map((t) => {
+                const Icon = t.icon;
+                const active = tab === t.id;
+                return (
+                  <li key={t.id} className="relative">
+                    {active && (
+                      <span
+                        className="absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 rounded-r"
+                        style={{ background: "#ffffff" }}
+                      />
+                    )}
+                    <button
+                      onClick={() => setTab(t.id)}
+                      className={`flex w-full flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
+                        active ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
+                      <span className="leading-tight">{t.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <ul className="flex flex-col">
+              <li>
+                <a
+                  href="https://console.firebase.google.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex w-full flex-col items-center gap-1 py-2.5 text-[11px] font-medium text-white/80 hover:bg-white/5 hover:text-white"
+                  title="Help"
+                >
+                  <HelpCircle className="h-5 w-5" strokeWidth={1.8} />
+                  <span>Help</span>
+                </a>
+              </li>
+              <li>
+                <button
+                  onClick={() => adminSignOut()}
+                  className="flex w-full flex-col items-center gap-1 py-2.5 text-[11px] font-medium text-white/80 hover:bg-white/5 hover:text-white"
+                >
+                  <LogOut className="h-5 w-5" strokeWidth={1.8} />
+                  <span>Sign out</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Content surface */}
+          <section className="flex min-w-0 flex-1 flex-col">
+            {/* Subheader (channel header in Teams) */}
+            <div
+              className="flex h-14 shrink-0 items-center justify-between border-b px-6"
+              style={{ background: TEAMS.card, borderColor: "#e1e1e1" }}
+            >
+              <div className="flex items-center gap-3">
+                <ActiveTab.icon className="h-5 w-5" style={{ color: TEAMS.topbar }} />
+                <div>
+                  <h1 className="text-[15px] font-semibold leading-tight text-foreground">
+                    {ActiveTab.label}
+                  </h1>
+                  <p className="text-[11px] leading-tight text-muted-foreground">
+                    Manage your {ActiveTab.label.toLowerCase()} content
+                  </p>
+                </div>
+              </div>
+              <span className="hidden text-[11px] text-muted-foreground md:inline">
+                Signed in as <span className="font-medium text-foreground">{user.email}</span>
+              </span>
+            </div>
+
+            {/* Scroll body */}
+            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+              <div className="mx-auto max-w-6xl">
+                {tab === "projects" && <ProjectsAdmin />}
+                {tab === "services" && <ServicesAdmin />}
+                {tab === "clients" && <ClientsAdmin />}
+                {tab === "testimonials" && <TestimonialsAdmin />}
+                {tab === "hero" && <HeroAdmin />}
+                {tab === "inquiries" && <InquiriesAdmin />}
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </>
   );
