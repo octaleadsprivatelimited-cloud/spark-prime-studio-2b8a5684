@@ -89,7 +89,10 @@ function ContactPage() {
                         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                         <textarea required maxLength={1000} rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full resize-none rounded border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-brand-red focus:ring-1 focus:ring-brand-red/20" placeholder="Tell us about your project..." />
                       </div>
-                      <button type="submit" className="btn-primary w-full justify-center">Send Message</button>
+                      {error && <p className="text-sm text-red-500">{error}</p>}
+                      <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-60">
+                        {submitting ? "Sending..." : "Send Message"}
+                      </button>
                     </form>
                   )}
                 </div>
