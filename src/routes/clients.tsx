@@ -31,7 +31,16 @@ function ClientsPage() {
             {clientLogosList.map((c, i) => (
               <SectionReveal key={c.id} delay={i * 0.03}>
                 <div className="flex h-24 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/20 hover:shadow-sm">
-                  <span className="font-heading text-base font-bold text-muted-foreground">{c.name}</span>
+                  {c.logo ? (
+                    <img
+                      src={c.logo}
+                      alt={c.name}
+                      className="max-h-16 max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className="font-heading text-base font-bold text-muted-foreground">{c.name}</span>
+                  )}
                 </div>
               </SectionReveal>
             ))}

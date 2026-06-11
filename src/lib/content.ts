@@ -38,6 +38,7 @@ export type Service = {
 export type Client = {
   id: string;
   name: string;
+  logo?: string; // data URL or remote URL
   order?: number;
 };
 
