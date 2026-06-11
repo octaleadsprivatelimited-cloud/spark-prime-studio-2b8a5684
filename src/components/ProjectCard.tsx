@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { SectionReveal } from "./SectionReveal";
 
 interface ProjectCardProps {
@@ -13,7 +13,7 @@ interface ProjectCardProps {
 export function ProjectCard({ id, title, client, category, image, delay = 0 }: ProjectCardProps) {
   return (
     <SectionReveal delay={delay}>
-      <Link to="/projects/$projectId" params={{ projectId: id }} className="project-card group glass">
+      <Link to={`/projects/${id}`} className="project-card group glass">
         <div className="aspect-[4/3] overflow-hidden bg-muted">
           <img src={image} alt={title} className="h-full w-full object-cover" loading="lazy" />
         </div>
