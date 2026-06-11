@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { useState } from "react";
 import { HeroCarousel } from "../components/HeroCarousel";
 import { SectionReveal } from "../components/SectionReveal";
@@ -6,18 +7,6 @@ import { ServiceCard } from "../components/ServiceCard";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { ProjectCard } from "../components/ProjectCard";
 import { CTASection } from "../components/CTASection";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Nataraj Electricals — Premium Electrical Contractor in Bangalore" },
-      { name: "description", content: "Government Licensed Class-I Electrical Contractor in Bangalore. HT/LT electrification, power solutions, BESCOM approvals, and AMC services since 2008." },
-      { property: "og:title", content: "Nataraj Electricals — Premium Electrical Contractor in Bangalore" },
-      { property: "og:description", content: "Government Licensed Class-I Electrical Contractor specializing in industrial and commercial electrical solutions." },
-    ],
-  }),
-  component: HomePage,
-});
 
 const services = [
   {
@@ -67,6 +56,8 @@ function HomePage() {
 
   return (
     <>
+      <PageHead title="Nataraj Electricals — Premium Electrical Contractor in Bangalore" description="Government Licensed Class-I Electrical Contractor in Bangalore. HT/LT electrification, power solutions, BESCOM approvals, and AMC services since 2008." />
+
       {/* Hero Carousel */}
       <HeroCarousel />
 
@@ -260,3 +251,5 @@ function HomePage() {
     </>
   );
 }
+
+export default HomePage;

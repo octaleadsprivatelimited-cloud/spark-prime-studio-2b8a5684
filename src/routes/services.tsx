@@ -1,18 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
-
-export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Our Services — Nataraj Electricals" },
-      { name: "description", content: "Comprehensive electrical services: HT/LT electrification, power solutions, electrical design, project management, AMC, and BESCOM approvals." },
-      { property: "og:title", content: "Our Services — Nataraj Electricals" },
-      { property: "og:description", content: "Full-range electrical contracting services for industrial, commercial, and government projects." },
-    ],
-  }),
-  component: ServicesPage,
-});
 
 const allServices = [
   {
@@ -50,6 +39,8 @@ const allServices = [
 function ServicesPage() {
   return (
     <>
+      <PageHead title="Our Services — Nataraj Electricals" description="Comprehensive electrical services: HT/LT electrification, power solutions, electrical design, project management, AMC, and BESCOM approvals." />
+
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>
@@ -104,3 +95,5 @@ function ServicesPage() {
     </>
   );
 }
+
+export default ServicesPage;

@@ -1,18 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
-
-export const Route = createFileRoute("/clients")({
-  head: () => ({
-    meta: [
-      { title: "Our Clients — Nataraj Electricals" },
-      { name: "description", content: "Trusted by 200+ leading organizations including government bodies, industrial giants, and commercial enterprises." },
-      { property: "og:title", content: "Our Clients — Nataraj Electricals" },
-      { property: "og:description", content: "Trusted by leading organizations across India." },
-    ],
-  }),
-  component: ClientsPage,
-});
 
 const clientLogos = [
   "Infosys", "Wipro", "HAL", "BEML", "KPTCL", "BEL",
@@ -30,6 +19,8 @@ const testimonials = [
 function ClientsPage() {
   return (
     <>
+      <PageHead title="Our Clients — Nataraj Electricals" description="Trusted by 200+ leading organizations including government bodies, industrial giants, and commercial enterprises." />
+
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>
@@ -91,3 +82,5 @@ function ClientsPage() {
     </>
   );
 }
+
+export default ClientsPage;

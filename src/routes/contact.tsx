@@ -1,19 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { PageHead } from "../components/PageHead";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
 import { submitContactForm, trackEvent } from "../lib/firebase";
-
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact Us — Nataraj Electricals" },
-      { name: "description", content: "Get in touch with Nataraj Electricals for electrical contracting in Bangalore. Free quote available." },
-      { property: "og:title", content: "Contact Us — Nataraj Electricals" },
-      { property: "og:description", content: "Contact us for a free consultation and project estimate." },
-    ],
-  }),
-  component: ContactPage,
-});
 
 function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
@@ -38,6 +27,8 @@ function ContactPage() {
 
   return (
     <>
+      <PageHead title="Contact Us — Nataraj Electricals" description="Get in touch with Nataraj Electricals for electrical contracting in Bangalore. Free quote available." />
+
       <section className="section-dark">
         <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
           <SectionReveal>
@@ -166,3 +157,5 @@ function ContactPage() {
     </>
   );
 }
+
+export default ContactPage;
