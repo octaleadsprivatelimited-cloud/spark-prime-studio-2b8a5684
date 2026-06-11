@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "../assets/logo.png";
@@ -47,14 +47,18 @@ export function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-0.5 lg:flex">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.to}
                 to={link.to}
-                className="px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
-                activeProps={{ className: "px-3 py-2 text-[13px] font-semibold text-brand-red" }}
+                end={link.to === "/"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "px-3 py-2 text-[13px] font-semibold text-brand-red"
+                    : "px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                }
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 
