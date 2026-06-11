@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollProgress } from "./components/ScrollProgress";
@@ -12,6 +12,8 @@ import ClientsPage from "./routes/clients";
 import ContactPage from "./routes/contact";
 import ProjectsPage from "./routes/projects";
 import ProjectDetailPage from "./routes/projects.$projectId";
+import AdminPage from "./routes/admin";
+import AdminLoginPage from "./routes/admin.login";
 
 function NotFound() {
   return (
@@ -28,10 +30,12 @@ function NotFound() {
 
 export default function App() {
   usePageTracking();
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
   return (
     <>
-      <ScrollProgress />
-      <Navbar />
+      {!isAdmin && <ScrollProgress />}
+      {!isAdmin && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -41,11 +45,13 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
-      <WhatsAppButton />
+      {!isAdmin && <Footer />}
+      {!isAdmin && <WhatsAppButton />}
     </>
   );
 }
