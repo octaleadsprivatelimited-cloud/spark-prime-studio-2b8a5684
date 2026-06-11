@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
+import { submitContactForm, trackEvent } from "../lib/firebase";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
