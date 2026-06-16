@@ -1,4 +1,4 @@
-import { useState, useMemo, FormEvent } from "react";
+import { useState, useMemo, FormEvent, createContext, useContext } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useAuthUser, adminSignOut } from "../lib/adminAuth";
 import {
@@ -25,6 +25,15 @@ import {
 import { PageHead } from "../components/PageHead";
 import { compressImage, CompressOptions } from "../lib/imageUpload";
 import { useRef } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "../components/ui/dropdown-menu";
+import { Popover, PopoverTrigger, PopoverContent } from "../components/ui/popover";
 import {
   LayoutGrid,
   Wrench,
@@ -60,14 +69,32 @@ const TEAMS = {
   card: "#ffffff",
 };
 
+// Search query shared across tabs
+const SearchCtx = createContext<string>("");
+const useSearchQuery = () => useContext(SearchCtx);
+
 export default function AdminPage() {
   const { user, loading } = useAuthUser();
   const [tab, setTab] = useState<Tab>("projects");
+  const [query, setQuery] = useState("");
+  const { items: inquiryItems } = useInquiries();
+  const unread = inquiryItems.length;
 
   if (loading) return <div className="min-h-screen" />;
   if (!user) return <Navigate to="/admin/login" replace />;
 
   const ActiveTab = TABS.find((t) => t.id === tab)!;
+
+  async function seedAll() {
+    await Promise.all([
+      seedCollection("site_projects", DEFAULT_PROJECTS as never),
+      seedCollection("site_services", DEFAULT_SERVICES as never),
+      seedCollection("site_clients", DEFAULT_CLIENTS as never),
+      seedCollection("site_testimonials", DEFAULT_TESTIMONIALS as never),
+      seedCollection("site_hero_slides", DEFAULT_HERO_SLIDES as never),
+    ]);
+    alert("Seeded all default content.");
+  }
 
   return (
     <>
@@ -87,16 +114,95 @@ export default function AdminPage() {
           <div className="mx-auto flex max-w-xl flex-1 items-center gap-2 rounded bg-white/15 px-3 py-1.5 text-sm text-white/90 focus-within:bg-white focus-within:text-foreground">
             <Search className="h-4 w-4" />
             <input
-              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={`Search ${ActiveTab.label.toLowerCase()}…`}
               className="w-full bg-transparent text-sm placeholder-white/70 outline-none focus:placeholder-muted-foreground"
             />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                className="text-xs opacity-70 hover:opacity-100"
+                title="Clear"
+              >
+                ✕
+              </button>
+            )}
           </div>
-          <button className="grid h-8 w-8 place-items-center rounded hover:bg-white/15" title="Notifications">
-            <Bell className="h-4 w-4" />
-          </button>
-          <button className="grid h-8 w-8 place-items-center rounded hover:bg-white/15" title="Settings">
-            <Settings className="h-4 w-4" />
-          </button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                className="relative grid h-8 w-8 place-items-center rounded hover:bg-white/15"
+                title="Notifications"
+              >
+                <Bell className="h-4 w-4" />
+                {unread > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-brand-red px-1 text-[10px] font-bold leading-none text-white">
+                    {unread > 9 ? "9+" : unread}
+                  </span>
+                )}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-80 p-0">
+              <div className="flex items-center justify-between border-b px-3 py-2">
+                <p className="text-sm font-semibold">Notifications</p>
+                <button
+                  onClick={() => setTab("inquiries")}
+                  className="text-xs text-primary hover:underline"
+                >
+                  View all
+                </button>
+              </div>
+              <div className="max-h-72 overflow-y-auto">
+                {inquiryItems.length === 0 && (
+                  <p className="px-3 py-6 text-center text-xs text-muted-foreground">
+                    No new inquiries.
+                  </p>
+                )}
+                {inquiryItems.slice(0, 6).map((i) => (
+                  <button
+                    key={i.id}
+                    onClick={() => setTab("inquiries")}
+                    className="block w-full border-b px-3 py-2 text-left hover:bg-muted"
+                  >
+                    <p className="text-xs font-semibold text-foreground">{i.name}</p>
+                    <p className="line-clamp-1 text-[11px] text-muted-foreground">{i.message}</p>
+                  </button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="grid h-8 w-8 place-items-center rounded hover:bg-white/15"
+                title="Settings"
+              >
+                <Settings className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Workspace settings</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={seedAll}>
+                <LayoutGrid className="h-4 w-4" /> Seed all defaults
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/">
+                  <ExternalLink className="h-4 w-4" /> View site
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="https://console.firebase.google.com/" target="_blank" rel="noreferrer">
+                  <HelpCircle className="h-4 w-4" /> Firebase console
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => adminSignOut()}>
+                <LogOut className="h-4 w-4" /> Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link
             to="/"
             className="hidden items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-white/15 sm:flex"
@@ -104,12 +210,31 @@ export default function AdminPage() {
           >
             <ExternalLink className="h-3.5 w-3.5" /> View site
           </Link>
-          <div
-            className="grid h-8 w-8 place-items-center rounded-full bg-white/20 text-xs font-bold uppercase"
-            title={user.email ?? ""}
-          >
-            {(user.email ?? "?").slice(0, 1)}
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="grid h-8 w-8 place-items-center rounded-full bg-white/20 text-xs font-bold uppercase hover:bg-white/30"
+                title={user.email ?? ""}
+              >
+                {(user.email ?? "?").slice(0, 1)}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-60">
+              <div className="px-2 py-2">
+                <p className="text-sm font-semibold text-foreground">Signed in</p>
+                <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/">
+                  <ExternalLink className="h-4 w-4" /> View site
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => adminSignOut()}>
+                <LogOut className="h-4 w-4" /> Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </header>
 
         {/* Main shell: left rail + content */}
@@ -195,12 +320,14 @@ export default function AdminPage() {
             {/* Scroll body */}
             <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
               <div className="mx-auto max-w-6xl">
-                {tab === "projects" && <ProjectsAdmin />}
-                {tab === "services" && <ServicesAdmin />}
-                {tab === "clients" && <ClientsAdmin />}
-                {tab === "testimonials" && <TestimonialsAdmin />}
-                {tab === "hero" && <HeroAdmin />}
-                {tab === "inquiries" && <InquiriesAdmin />}
+                <SearchCtx.Provider value={query}>
+                  {tab === "projects" && <ProjectsAdmin />}
+                  {tab === "services" && <ServicesAdmin />}
+                  {tab === "clients" && <ClientsAdmin />}
+                  {tab === "testimonials" && <TestimonialsAdmin />}
+                  {tab === "hero" && <HeroAdmin />}
+                  {tab === "inquiries" && <InquiriesAdmin />}
+                </SearchCtx.Provider>
               </div>
             </div>
           </section>
@@ -382,11 +509,20 @@ function genId(prefix: string) {
 function ProjectsAdmin() {
   const { items, isFromFirestore } = useProjects();
   const [editing, setEditing] = useState<Project | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((p) =>
+        [p.title, p.client, p.category, p.description].some((x) => (x ?? "").toLowerCase().includes(q)),
+      )
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_projects" defaults={DEFAULT_PROJECTS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Projects ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Projects ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button
           onClick={() => setEditing({ id: genId("p"), title: "", client: "", category: "Completed", image: "", description: "", order: items.length })}
           className="btn-primary !py-2 !px-4 !text-xs"
@@ -395,7 +531,7 @@ function ProjectsAdmin() {
         </button>
       </div>
       <div className="grid gap-3">
-        {items.map((p) => (
+        {filtered.map((p) => (
           <Card key={p.id} className="flex items-center gap-4">
             <img src={p.image} alt="" className="h-14 w-20 shrink-0 rounded object-cover" />
             <div className="min-w-0 flex-1">
@@ -469,15 +605,24 @@ function ProjectEditor({ initial, onClose }: { initial: Project; onClose: () => 
 function ServicesAdmin() {
   const { items, isFromFirestore } = useServices();
   const [editing, setEditing] = useState<Service | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((s) =>
+        [s.title, s.description, ...(s.useCases ?? [])].some((x) => (x ?? "").toLowerCase().includes(q)),
+      )
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_services" defaults={DEFAULT_SERVICES} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Services ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Services ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("s"), title: "", description: "", useCases: [], order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Service</button>
       </div>
       <div className="grid gap-3">
-        {items.map((s) => (
+        {filtered.map((s) => (
           <Card key={s.id}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
@@ -529,15 +674,20 @@ function ServiceEditor({ initial, onClose }: { initial: Service; onClose: () => 
 function ClientsAdmin() {
   const { items, isFromFirestore } = useClients();
   const [editing, setEditing] = useState<Client | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q ? items.filter((c) => c.name.toLowerCase().includes(q)) : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_clients" defaults={DEFAULT_CLIENTS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Clients ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Clients ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("c"), name: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Client</button>
       </div>
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((c) => (
+        {filtered.map((c) => (
           <Card key={c.id} className="flex items-center justify-between">
             <span className="text-sm font-medium text-foreground">{c.name}</span>
             <div className="flex gap-1">
@@ -584,15 +734,22 @@ function ClientForm({ initial, onClose }: { initial: Client; onClose: () => void
 function TestimonialsAdmin() {
   const { items, isFromFirestore } = useTestimonials();
   const [editing, setEditing] = useState<Testimonial | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((t) => [t.name, t.role, t.quote].some((x) => (x ?? "").toLowerCase().includes(q)))
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_testimonials" defaults={DEFAULT_TESTIMONIALS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Testimonials ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Testimonials ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("t"), quote: "", name: "", role: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Testimonial</button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
-        {items.map((t) => (
+        {filtered.map((t) => (
           <Card key={t.id}>
             <p className="text-sm text-muted-foreground">"{t.quote}"</p>
             <p className="mt-3 text-sm font-bold text-foreground">{t.name}</p>
@@ -636,15 +793,22 @@ function TestimonialForm({ initial, onClose }: { initial: Testimonial; onClose: 
 function HeroAdmin() {
   const { items, isFromFirestore } = useHeroSlides();
   const [editing, setEditing] = useState<HeroSlide | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((h) => [h.title, h.subtitle, h.description].some((x) => (x ?? "").toLowerCase().includes(q)))
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_hero_slides" defaults={DEFAULT_HERO_SLIDES} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Hero Slides ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Hero Slides ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("h"), image: "", subtitle: "", title: "", description: "", cta: "Get a Quote", ctaLink: "/contact", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Slide</button>
       </div>
       <div className="grid gap-3">
-        {items.map((h) => (
+        {filtered.map((h) => (
           <Card key={h.id} className="flex gap-4">
             <img src={h.image} alt="" className="h-20 w-32 shrink-0 rounded object-cover" />
             <div className="min-w-0 flex-1">
@@ -697,11 +861,23 @@ function HeroEditor({ initial, onClose }: { initial: HeroSlide; onClose: () => v
 // ============= Inquiries =============
 function InquiriesAdmin() {
   const { items, loading, error } = useInquiries();
-  const sorted = useMemo(() => items, [items]);
+  const q = useSearchQuery().toLowerCase();
+  const sorted = useMemo(
+    () =>
+      q
+        ? items.filter((i) =>
+            [i.name, i.email, i.phone, i.message].some((x) => (x ?? "").toLowerCase().includes(q)),
+          )
+        : items,
+    [items, q],
+  );
   return (
     <div>
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Contact Inquiries ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Contact Inquiries ({sorted.length}
+          {q && sorted.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
       </div>
       {error && <ErrorBox message={`${error}. Ensure Firestore rules allow authenticated reads of "contact_submissions".`} />}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
