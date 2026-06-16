@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { WhatsAppButton } from "./components/WhatsAppButton";
+import ScrollToTop from "./components/ScrollToTop";
 import { usePageTracking } from "./lib/analytics";
 
 import HomePage from "./routes/index";
@@ -34,6 +35,7 @@ export default function App() {
   const isAdmin = location.pathname.startsWith("/admin");
   return (
     <>
+      <ScrollToTop />
       {!isAdmin && <ScrollProgress />}
       {!isAdmin && <Navbar />}
       <main>
