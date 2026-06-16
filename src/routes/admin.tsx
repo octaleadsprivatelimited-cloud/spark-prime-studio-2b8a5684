@@ -509,11 +509,20 @@ function genId(prefix: string) {
 function ProjectsAdmin() {
   const { items, isFromFirestore } = useProjects();
   const [editing, setEditing] = useState<Project | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((p) =>
+        [p.title, p.client, p.category, p.description].some((x) => (x ?? "").toLowerCase().includes(q)),
+      )
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_projects" defaults={DEFAULT_PROJECTS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Projects ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Projects ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button
           onClick={() => setEditing({ id: genId("p"), title: "", client: "", category: "Completed", image: "", description: "", order: items.length })}
           className="btn-primary !py-2 !px-4 !text-xs"
@@ -522,7 +531,7 @@ function ProjectsAdmin() {
         </button>
       </div>
       <div className="grid gap-3">
-        {items.map((p) => (
+        {filtered.map((p) => (
           <Card key={p.id} className="flex items-center gap-4">
             <img src={p.image} alt="" className="h-14 w-20 shrink-0 rounded object-cover" />
             <div className="min-w-0 flex-1">
@@ -596,15 +605,24 @@ function ProjectEditor({ initial, onClose }: { initial: Project; onClose: () => 
 function ServicesAdmin() {
   const { items, isFromFirestore } = useServices();
   const [editing, setEditing] = useState<Service | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((s) =>
+        [s.title, s.description, ...(s.useCases ?? [])].some((x) => (x ?? "").toLowerCase().includes(q)),
+      )
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_services" defaults={DEFAULT_SERVICES} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Services ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Services ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("s"), title: "", description: "", useCases: [], order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Service</button>
       </div>
       <div className="grid gap-3">
-        {items.map((s) => (
+        {filtered.map((s) => (
           <Card key={s.id}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
@@ -656,15 +674,20 @@ function ServiceEditor({ initial, onClose }: { initial: Service; onClose: () => 
 function ClientsAdmin() {
   const { items, isFromFirestore } = useClients();
   const [editing, setEditing] = useState<Client | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q ? items.filter((c) => c.name.toLowerCase().includes(q)) : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_clients" defaults={DEFAULT_CLIENTS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Clients ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Clients ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("c"), name: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Client</button>
       </div>
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((c) => (
+        {filtered.map((c) => (
           <Card key={c.id} className="flex items-center justify-between">
             <span className="text-sm font-medium text-foreground">{c.name}</span>
             <div className="flex gap-1">
@@ -711,15 +734,22 @@ function ClientForm({ initial, onClose }: { initial: Client; onClose: () => void
 function TestimonialsAdmin() {
   const { items, isFromFirestore } = useTestimonials();
   const [editing, setEditing] = useState<Testimonial | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((t) => [t.name, t.role, t.quote].some((x) => (x ?? "").toLowerCase().includes(q)))
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_testimonials" defaults={DEFAULT_TESTIMONIALS} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Testimonials ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Testimonials ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("t"), quote: "", name: "", role: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Testimonial</button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
-        {items.map((t) => (
+        {filtered.map((t) => (
           <Card key={t.id}>
             <p className="text-sm text-muted-foreground">"{t.quote}"</p>
             <p className="mt-3 text-sm font-bold text-foreground">{t.name}</p>
@@ -763,15 +793,22 @@ function TestimonialForm({ initial, onClose }: { initial: Testimonial; onClose: 
 function HeroAdmin() {
   const { items, isFromFirestore } = useHeroSlides();
   const [editing, setEditing] = useState<HeroSlide | null>(null);
+  const q = useSearchQuery().toLowerCase();
+  const filtered = q
+    ? items.filter((h) => [h.title, h.subtitle, h.description].some((x) => (x ?? "").toLowerCase().includes(q)))
+    : items;
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_hero_slides" defaults={DEFAULT_HERO_SLIDES} />}
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Hero Slides ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Hero Slides ({filtered.length}
+          {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
         <button onClick={() => setEditing({ id: genId("h"), image: "", subtitle: "", title: "", description: "", cta: "Get a Quote", ctaLink: "/contact", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Slide</button>
       </div>
       <div className="grid gap-3">
-        {items.map((h) => (
+        {filtered.map((h) => (
           <Card key={h.id} className="flex gap-4">
             <img src={h.image} alt="" className="h-20 w-32 shrink-0 rounded object-cover" />
             <div className="min-w-0 flex-1">
@@ -824,11 +861,23 @@ function HeroEditor({ initial, onClose }: { initial: HeroSlide; onClose: () => v
 // ============= Inquiries =============
 function InquiriesAdmin() {
   const { items, loading, error } = useInquiries();
-  const sorted = useMemo(() => items, [items]);
+  const q = useSearchQuery().toLowerCase();
+  const sorted = useMemo(
+    () =>
+      q
+        ? items.filter((i) =>
+            [i.name, i.email, i.phone, i.message].some((x) => (x ?? "").toLowerCase().includes(q)),
+          )
+        : items,
+    [items, q],
+  );
   return (
     <div>
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-foreground">Contact Inquiries ({items.length})</h2>
+        <h2 className="font-heading text-xl font-bold text-foreground">
+          Contact Inquiries ({sorted.length}
+          {q && sorted.length !== items.length ? ` of ${items.length}` : ""})
+        </h2>
       </div>
       {error && <ErrorBox message={`${error}. Ensure Firestore rules allow authenticated reads of "contact_submissions".`} />}
       {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
