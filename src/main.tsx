@@ -10,6 +10,11 @@ if (typeof window !== "undefined" && localStorage.getItem("theme") === "dark") {
   document.documentElement.classList.add("dark");
 }
 
+// Disable right-click context menu site-wide
+if (typeof window !== "undefined") {
+  window.addEventListener("contextmenu", (e) => e.preventDefault());
+}
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
