@@ -106,9 +106,9 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
 ];
 
 export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
-  { id: "h1", image: hero1, subtitle: "Government Licensed Class-I Contractor", title: "Powering India's\nInfrastructure", description: "Premium electrical contracting for industrial, commercial, and government projects across Karnataka.", cta: "Get a Quote", ctaLink: "/contact" },
-  { id: "h2", image: hero2, subtitle: "HT/LT Electrification Experts", title: "Precision.\nPerformance.\nPower.", description: "State-of-the-art switchgear and panel solutions with certified safety compliance.", cta: "Our Services", ctaLink: "/services" },
-  { id: "h3", image: hero3, subtitle: "15+ Years of Excellence", title: "Expert Team.\nExpert Solutions.", description: "50+ skilled engineers delivering end-to-end electrical project management.", cta: "View Projects", ctaLink: "/projects" },
+  { id: "h1", image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&q=80", subtitle: "Government Licensed Class-I Contractor", title: "Powering India's\nInfrastructure", description: "Premium electrical contracting for industrial, commercial, and government projects across Karnataka.", cta: "Get a Quote", ctaLink: "/contact" },
+  { id: "h2", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1400&q=80", subtitle: "HT/LT Electrification Experts", title: "Precision.\nPerformance.\nPower.", description: "State-of-the-art switchgear and panel solutions with certified safety compliance.", cta: "Our Services", ctaLink: "/services" },
+  { id: "h3", image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1400&q=80", subtitle: "15+ Years of Excellence", title: "Expert Team.\nExpert Solutions.", description: "50+ skilled engineers delivering end-to-end electrical project management.", cta: "View Projects", ctaLink: "/projects" },
 ];
 
 // ============= Generic subscribe hook =============
