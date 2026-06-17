@@ -40,7 +40,7 @@ function ContactPage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover opacity-30"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:py-20 lg:px-6 lg:py-28">
           <SectionReveal>
             <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider opacity-60">
