@@ -72,9 +72,10 @@ export function Footer() {
   return (
     <footer className="section-dark">
       <div className="mx-auto max-w-7xl px-4 py-14 lg:px-6">
-        <div className="grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
-          {/* Brand */}
-          <div>
+        <div className="grid gap-0 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
+          {/* Brand - not collapsible */}
+          <div className="border-b border-brand-dark-foreground/10 py-4 md:border-b-0 md:py-0">
+
             <div className="flex items-center gap-2 mb-5">
               <img src={logoImg} alt="Nataraj Electricals Logo" className="h-14 w-auto bg-white p-1 rounded shadow-sm" />
             </div>
