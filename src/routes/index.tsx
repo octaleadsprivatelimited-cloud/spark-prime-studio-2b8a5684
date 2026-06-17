@@ -50,7 +50,16 @@ const featuredProjects = [
 
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 
-const clients = ["TVS Motor", "Havells India", "Mettlor Toledo", "Sonata Software", "Gokaldas Exports", "Cyient DLM", "BIAL", "KSSFCL"];
+const clients = [
+  { name: "TVS Motor", logo: "https://logo.clearbit.com/tvsmotor.com" },
+  { name: "Havells India", logo: "https://logo.clearbit.com/havells.com" },
+  { name: "Mettler Toledo", logo: "https://logo.clearbit.com/mt.com" },
+  { name: "Sonata Software", logo: "https://logo.clearbit.com/sonata-software.com" },
+  { name: "Gokaldas Exports", logo: "https://logo.clearbit.com/gokaldasexports.com" },
+  { name: "Cyient DLM", logo: "https://logo.clearbit.com/cyientdlm.com" },
+  { name: "BIAL", logo: "https://logo.clearbit.com/bengaluruairport.com" },
+  { name: "Biocon", logo: "https://logo.clearbit.com/biocon.com" },
+];
 
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
