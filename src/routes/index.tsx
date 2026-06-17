@@ -49,12 +49,13 @@ const services = [
 ];
 
 const featuredProjects = [
-  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
-  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
-  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
+  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", location: "Bangalore", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
+  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", location: "Hosur", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
+  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", location: "Bangalore", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
 ];
 
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
+const projectCategories = ["All Projects", "Ongoing", "Completed"];
 
 const clients = [
   { name: "TVS Motor", domain: "tvsmotor.com", initials: "TVS", color: "#1a4b8c" },
@@ -95,6 +96,11 @@ function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; s
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
   const [openService, setOpenService] = useState<number | null>(0);
+  const [projectFilter, setProjectFilter] = useState(0);
+
+  const filteredProjects = projectFilter === 0
+    ? featuredProjects
+    : featuredProjects.filter(p => p.category === projectCategories[projectFilter]);
 
   return (
     <>
@@ -368,11 +374,27 @@ function HomePage() {
               </Link>
             </div>
           </SectionReveal>
+
+          {/* Project filter tabs */}
+          <div className="tab-nav mt-8">
+            {projectCategories.map((cat, i) => (
+              <button key={cat} onClick={() => setProjectFilter(i)} className={`tab-item ${projectFilter === i ? "active" : ""}`}>
+                {cat}
+              </button>
+            ))}
+          </div>
+
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map((p, i) => (
+            {filteredProjects.map((p, i) => (
               <ProjectCard key={p.id} {...p} delay={i * 0.08} />
             ))}
           </div>
+
+          {filteredProjects.length === 0 && (
+            <div className="mt-8 rounded-lg border border-border bg-card py-12 text-center">
+              <p className="text-muted-foreground">No projects found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
 
