@@ -236,22 +236,16 @@ function HomePage() {
               {[...clients, ...clients].map((c, i) => (
                 <div
                   key={`${c.name}-${i}`}
-                  className="flex h-16 w-32 shrink-0 items-center justify-center rounded border border-border bg-card px-3"
+                  className="flex h-16 w-32 shrink-0 items-center justify-center gap-2 rounded border border-border bg-card px-3"
                   style={{ transform: `translateY(${i % 2 === 0 ? "-10px" : "10px"})` }}
                 >
-                  <img
-                    src={c.logo}
-                    alt={`${c.name} logo`}
-                    loading="lazy"
-                    className="max-h-8 max-w-[100px] object-contain opacity-80"
-                    onError={(e) => {
-                      const t = e.currentTarget;
-                      t.style.display = "none";
-                      const fallback = t.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = "block";
-                    }}
-                  />
-                  <span className="hidden text-xs font-bold text-muted-foreground">{c.name}</span>
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold text-white"
+                    style={{ backgroundColor: c.color }}
+                  >
+                    {c.initials}
+                  </span>
+                  <span className="text-[11px] font-bold text-muted-foreground">{c.name}</span>
                 </div>
               ))}
             </div>
