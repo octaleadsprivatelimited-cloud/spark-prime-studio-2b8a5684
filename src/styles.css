@@ -47,6 +47,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-brand-red: var(--brand-red);
   --color-brand-red-foreground: var(--brand-red-foreground);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-yellow-foreground: var(--brand-yellow-foreground);
   --color-brand-dark: var(--brand-dark);
   --color-brand-dark-foreground: var(--brand-dark-foreground);
   --color-surface-elevated: var(--surface-elevated);
