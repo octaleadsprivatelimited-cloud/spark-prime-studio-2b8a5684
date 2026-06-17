@@ -1,11 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useHeroSlides } from "../lib/content";
+import { DEFAULT_HERO_SLIDES, useHeroSlides } from "../lib/content";
+
+const isOldBundledHeroAsset = (image?: string) => image?.startsWith("/assets/hero-") ?? false;
+
+const getFallbackHeroImage = (index: number) =>
+  DEFAULT_HERO_SLIDES[index % DEFAULT_HERO_SLIDES.length]?.image ?? DEFAULT_HERO_SLIDES[0].image;
 
 export function HeroCarousel() {
   const { items: slides } = useHeroSlides();
   const [current, setCurrent] = useState(0);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % slides.length);
@@ -18,6 +24,13 @@ export function HeroCarousel() {
 
   if (slides.length === 0) return <section className="h-[85vh] min-h-[500px] bg-brand-dark" />;
   const slide = slides[current];
+  const imageKey = `${slide.id}-${slide.image}`;
+  const image = !slide.image || isOldBundledHeroAsset(slide.image) || failedImages[imageKey]
+    ? getFallbackHeroImage(current)
+    : slide.image;
+  const handleImageError = () => {
+    setFailedImages((prev) => (prev[imageKey] ? prev : { ...prev, [imageKey]: true }));
+  };
 
   return (
     <>
@@ -27,8 +40,9 @@ export function HeroCarousel() {
         <AnimatePresence mode="wait">
           <motion.img
             key={current}
-            src={slide.image}
+            src={image}
             alt=""
+            onError={handleImageError}
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
@@ -99,7 +113,7 @@ export function HeroCarousel() {
           transition={{ duration: 0.8 }}
           className="hero-slide absolute inset-0"
         >
-          <img src={slide.image} alt="" className="h-full w-full object-cover object-center" width={1920} height={800} />
+          <img src={image} alt="" onError={handleImageError} className="h-full w-full object-cover object-center" width={1920} height={800} />
         </motion.div>
       </AnimatePresence>
 
