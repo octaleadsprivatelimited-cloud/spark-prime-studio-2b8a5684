@@ -374,11 +374,27 @@ function HomePage() {
               </Link>
             </div>
           </SectionReveal>
+
+          {/* Project filter tabs */}
+          <div className="tab-nav mt-8">
+            {projectCategories.map((cat, i) => (
+              <button key={cat} onClick={() => setProjectFilter(i)} className={`tab-item ${projectFilter === i ? "active" : ""}`}>
+                {cat}
+              </button>
+            ))}
+          </div>
+
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map((p, i) => (
+            {filteredProjects.map((p, i) => (
               <ProjectCard key={p.id} {...p} delay={i * 0.08} />
             ))}
           </div>
+
+          {filteredProjects.length === 0 && (
+            <div className="mt-8 rounded-lg border border-border bg-card py-12 text-center">
+              <p className="text-muted-foreground">No projects found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
 
