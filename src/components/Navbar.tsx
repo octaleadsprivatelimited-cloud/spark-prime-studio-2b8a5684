@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sun, Moon } from "lucide-react";
 import logoImg from "../assets/logo.png";
 
 const navLinks = [
@@ -15,6 +16,9 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(
+    typeof window !== "undefined" && document.documentElement.classList.contains("dark"),
+  );
   const location = useLocation();
 
   useEffect(() => {
@@ -24,6 +28,19 @@ export function Navbar() {
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [location.pathname]);
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      localStorage.removeItem("theme");
+      setIsDark(false);
+    } else {
+      html.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDark(true);
+    }
+  };
 
   return (
     <>
@@ -62,26 +79,6 @@ export function Navbar() {
             ))}
           </nav>
 
-            {/* Dark mode toggle */}
-            <button
-              onClick={() => {
-                const html = document.documentElement;
-                if (html.classList.contains('dark')) {
-                  html.classList.remove('dark');
-                  localStorage.removeItem('theme');
-                } else {
-                  html.classList.add('dark');
-                  localStorage.setItem('theme', 'dark');
-                }
-              }}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red/10 text-brand-red hover:bg-brand-red hover:text-brand-red-foreground"
-              aria-label="Toggle dark mode"
-            >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                <circle cx="12" cy="12" r="5" />
-              </svg>
-            </button>
           <div className="hidden items-center gap-3 lg:flex">
             <a href="tel:+919902012565" className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground">
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -92,23 +89,56 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button onClick={() => setIsOpen(!isOpen)} className="flex h-10 w-10 items-center justify-center lg:hidden" aria-label="Menu">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {isOpen ? <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/> : <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>}
-            </svg>
-          </button>
+          {/* Mobile toggle + theme toggle */}
+          <div className="flex items-center gap-1 lg:hidden">
+            <button onClick={() => setIsOpen(!isOpen)} className="flex h-10 w-10 items-center justify-center text-foreground" aria-label="Menu">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                {isOpen ? <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/> : <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>}
+              </svg>
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-red/10 text-brand-red transition-colors hover:bg-brand-red hover:text-brand-red-foreground"
+              aria-label="Toggle theme"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={isDark ? "moon" : "sun"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="inline-flex"
+                >
+                  {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu (overlay, does not push hero) */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-border lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="absolute left-0 right-0 top-full z-40 origin-top border-t border-border bg-background shadow-lg lg:hidden"
+            >
               <nav className="flex flex-col px-4 py-3">
                 {navLinks.map((link) => (
-                  <NavLink key={link.to} to={link.to} end={link.to === "/"} className={({ isActive }) => isActive ? "border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" : "border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground"}>
-                    {link.label}
-                  </NavLink>
+                  <motion.div
+                    key={link.to}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.04 * navLinks.indexOf(link), duration: 0.2 }}
+                  >
+                    <NavLink to={link.to} end={link.to === "/"} className={({ isActive }) => isActive ? "block border-b border-border px-2 py-3 text-sm font-semibold text-brand-red" : "block border-b border-border px-2 py-3 text-sm font-medium text-muted-foreground"}>
+                      {link.label}
+                    </NavLink>
+                  </motion.div>
                 ))}
                 <Link to="/contact" className="btn-primary mt-4 text-center">Get a Quote</Link>
               </nav>
@@ -116,6 +146,26 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </header>
+
+      {/* Floating theme toggle (desktop corner) */}
+      <button
+        onClick={toggleTheme}
+        className="fixed bottom-24 right-6 z-[1000] hidden h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-lg transition-colors hover:bg-brand-red hover:text-brand-red-foreground lg:flex"
+        aria-label="Toggle theme"
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={isDark ? "moon" : "sun"}
+            initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+            animate={{ rotate: 0, opacity: 1, scale: 1 }}
+            exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+            transition={{ duration: 0.25 }}
+            className="inline-flex"
+          >
+            {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          </motion.span>
+        </AnimatePresence>
+      </button>
     </>
   );
 }
