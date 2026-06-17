@@ -483,7 +483,86 @@ function HomePage() {
                 </p>
               </SectionReveal>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4">
+              {/* Mobile: accordion cards */}
+              <div className="mt-8 flex flex-col gap-3 sm:hidden">
+                {[
+                  {
+                    title: "Government Licensed",
+                    desc: "Class-I licensed for projects of any scale and voltage.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+                  },
+                  {
+                    title: "15+ Years Experience",
+                    desc: "Proven track record since 2008 in complex projects.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+                  },
+                  {
+                    title: "Safety Compliance",
+                    desc: "Strict adherence to ISI standards and safety protocols.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>,
+                  },
+                  {
+                    title: "On-Time Delivery",
+                    desc: "Efficient project management and deadline commitment.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>,
+                  },
+                  {
+                    title: "End-to-End Solutions",
+                    desc: "Design to commissioning under one trusted roof.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg>,
+                  },
+                  {
+                    title: "24/7 Emergency Support",
+                    desc: "Round-the-clock maintenance and rapid response team.",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>,
+                  },
+                ].map((item, i) => {
+                  const isOpen = openAdvantage === i;
+                  return (
+                    <div
+                      key={item.title}
+                      className="overflow-hidden rounded-lg border border-brand-dark-foreground/10 bg-brand-dark-foreground/5"
+                    >
+                      <button
+                        onClick={() => setOpenAdvantage(isOpen ? null : i)}
+                        className="flex w-full items-center gap-3 p-4 text-left"
+                        aria-expanded={isOpen}
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-red text-brand-red-foreground">
+                          {item.icon}
+                        </div>
+                        <h3 className="flex-1 font-heading text-sm font-bold">{item.title}</h3>
+                        <motion.span
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="opacity-50"
+                        >
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </motion.span>
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            key="content"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <p className="px-4 pb-4 text-sm opacity-60">{item.desc}</p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Desktop: always expanded cards */}
+              <div className="mt-8 hidden gap-3 sm:grid sm:grid-cols-2 sm:gap-4">
                 {[
                   {
                     title: "Government Licensed",
@@ -517,8 +596,8 @@ function HomePage() {
                   },
                 ].map((item, i) => (
                   <SectionReveal key={item.title} delay={i * 0.05}>
-                    <div className="flex items-start gap-3 rounded-lg border border-brand-dark-foreground/10 bg-brand-dark-foreground/5 p-3.5 transition-colors hover:border-brand-red/30 hover:bg-brand-dark-foreground/10 sm:p-4">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-brand-red text-brand-red-foreground sm:h-10 sm:w-10">
+                    <div className="flex items-start gap-3 rounded-lg border border-brand-dark-foreground/10 bg-brand-dark-foreground/5 p-4 transition-colors hover:border-brand-red/30 hover:bg-brand-dark-foreground/10">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-red text-brand-red-foreground">
                         {item.icon}
                       </div>
                       <div>
