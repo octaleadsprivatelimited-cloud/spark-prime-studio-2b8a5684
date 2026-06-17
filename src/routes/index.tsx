@@ -51,14 +51,14 @@ const featuredProjects = [
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 
 const clients = [
-  { name: "TVS Motor", logo: "https://logo.clearbit.com/tvsmotor.com" },
-  { name: "Havells India", logo: "https://logo.clearbit.com/havells.com" },
-  { name: "Mettler Toledo", logo: "https://logo.clearbit.com/mt.com" },
-  { name: "Sonata Software", logo: "https://logo.clearbit.com/sonata-software.com" },
-  { name: "Gokaldas Exports", logo: "https://logo.clearbit.com/gokaldasexports.com" },
-  { name: "Cyient DLM", logo: "https://logo.clearbit.com/cyientdlm.com" },
-  { name: "BIAL", logo: "https://logo.clearbit.com/bengaluruairport.com" },
-  { name: "Biocon", logo: "https://logo.clearbit.com/biocon.com" },
+  { name: "TVS Motor", initials: "TVS", color: "#1a4b8c" },
+  { name: "Havells India", initials: "HV", color: "#c41230" },
+  { name: "Mettler Toledo", initials: "MT", color: "#003d79" },
+  { name: "Sonata Software", initials: "SS", color: "#e85d04" },
+  { name: "Gokaldas Exports", initials: "GE", color: "#2d6a4f" },
+  { name: "Cyient DLM", initials: "CD", color: "#5a189a" },
+  { name: "BIAL", initials: "BL", color: "#9d0208" },
+  { name: "Biocon", initials: "BC", color: "#0077b6" },
 ];
 
 function HomePage() {
