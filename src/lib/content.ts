@@ -93,7 +93,7 @@ export const DEFAULT_SERVICES: Service[] = [
 ];
 
 export const DEFAULT_CLIENTS: Client[] = [
-  { name: "Infosys", logo: "https://logo.clearbit.com/infosys.com" },
+  { name: "Infosys", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/200px-Infosys_logo.svg.png" },
   { name: "Wipro", logo: "https://logo.clearbit.com/wipro.com" },
   { name: "HAL", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Hindustan_Aeronautics_Limited_Logo.svg/180px-Hindustan_Aeronautics_Limited_Logo.svg.png" },
   { name: "BEML", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/BEML_Logo.svg/240px-BEML_Logo.svg.png" },
