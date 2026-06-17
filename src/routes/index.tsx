@@ -150,7 +150,13 @@ function HomePage() {
           {/* Desktop grid */}
           <div className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
-              <ServiceCard key={s.title} {...s} delay={i * 0.05} />
+              <ServiceCard
+                key={s.title}
+                icon={s.icon}
+                title={s.title}
+                description={s.description}
+                delay={i * 0.05}
+              />
             ))}
           </div>
 
