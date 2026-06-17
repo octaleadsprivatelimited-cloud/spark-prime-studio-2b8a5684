@@ -20,7 +20,7 @@ export function HeroCarousel() {
   const slide = slides[current];
 
   return (
-    <section className="relative h-[85vh] min-h-[500px] max-h-[800px] overflow-hidden bg-brand-dark">
+    <section className="relative h-[78vh] min-h-[460px] max-h-[800px] overflow-hidden bg-brand-dark">
       {/* Background Images */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -51,18 +51,18 @@ export function HeroCarousel() {
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 {slide.subtitle}
               </span>
-              <h1 className="mt-5 font-heading text-4xl font-extrabold leading-[1.1] text-brand-dark-foreground sm:text-5xl md:text-6xl whitespace-pre-line">
+              <h1 className="mt-4 font-heading text-3xl font-extrabold leading-[1.1] text-brand-dark-foreground sm:text-5xl md:text-6xl whitespace-pre-line">
                 {slide.title}
               </h1>
-              <p className="mt-5 max-w-lg text-base leading-relaxed text-brand-dark-foreground/70 md:text-lg">
+              <p className="mt-4 max-w-lg text-sm leading-relaxed text-brand-dark-foreground/70 sm:text-base md:text-lg">
                 {slide.description}
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link to={slide.ctaLink} className="btn-primary !py-3.5 !px-8">
+              <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
+                <Link to={slide.ctaLink} className="btn-primary sm:!py-3.5 sm:!px-8">
                   {slide.cta}
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </Link>
-                <a href="tel:+919876543210" className="btn-white !py-3.5 !px-8">
+                <a href="tel:+919876543210" className="btn-white sm:!py-3.5 sm:!px-8">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   Call Now
                 </a>

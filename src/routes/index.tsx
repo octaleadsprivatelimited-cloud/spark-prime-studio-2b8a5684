@@ -215,7 +215,7 @@ function HomePage() {
 
       {/* Why Choose Us */}
       <section className="section-dark">
-        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-6 lg:py-20">
           <SectionReveal>
             <div className="text-center">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Why Choose Us</span>
