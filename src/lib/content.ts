@@ -93,11 +93,23 @@ export const DEFAULT_SERVICES: Service[] = [
 ];
 
 export const DEFAULT_CLIENTS: Client[] = [
-  "Infosys", "Wipro", "HAL", "BEML", "KPTCL", "BEL",
-  "BHEL", "L&T", "Embassy Group", "Phoenix Group",
-  "Prestige Group", "Brigade Group", "Govt. of Karnataka",
-  "Indian Railways", "DRDO", "Biocon",
-].map((name, i) => ({ id: `client-${i}`, name, order: i }));
+  { name: "Infosys", logo: "https://logo.clearbit.com/infosys.com" },
+  { name: "Wipro", logo: "https://logo.clearbit.com/wipro.com" },
+  { name: "HAL", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Hindustan_Aeronautics_Limited_Logo.svg/180px-Hindustan_Aeronautics_Limited_Logo.svg.png" },
+  { name: "BEML", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/BEML_Logo.svg/240px-BEML_Logo.svg.png" },
+  { name: "KPTCL", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/45/Karnataka_Power_Transmission_Corporation_Limited_Logo.png/200px-Karnataka_Power_Transmission_Corporation_Limited_Logo.png" },
+  { name: "BEL", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Bharat_Electronics_Logo.svg/220px-Bharat_Electronics_Logo.svg.png" },
+  { name: "BHEL", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/Bharat_Heavy_Electricals_Limited_logo.svg/220px-Bharat_Heavy_Electricals_Limited_logo.svg.png" },
+  { name: "L&T", logo: "https://logo.clearbit.com/larsentoubro.com" },
+  { name: "Embassy Group", logo: "https://logo.clearbit.com/embassyindia.com" },
+  { name: "Phoenix Group", logo: "https://logo.clearbit.com/thephoenixmills.com" },
+  { name: "Prestige Group", logo: "https://logo.clearbit.com/prestigeconstructions.com" },
+  { name: "Brigade Group", logo: "https://logo.clearbit.com/brigadegroup.com" },
+  { name: "Govt. of Karnataka", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Seal_of_Karnataka.svg/200px-Seal_of_Karnataka.svg.png" },
+  { name: "Indian Railways", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Indian_Railways.svg/200px-Indian_Railways.svg.png" },
+  { name: "DRDO", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Defence_Research_and_Development_Organisation_Logo.svg/200px-Defence_Research_and_Development_Organisation_Logo.svg.png" },
+  { name: "Biocon", logo: "https://logo.clearbit.com/biocon.com" },
+].map((c, i) => ({ id: `client-${i}`, name: c.name, logo: c.logo, order: i }));
 
 export const DEFAULT_TESTIMONIALS: Testimonial[] = [
   { id: "t1", quote: "Nataraj Electricals delivered our factory electrification on time and within budget. Their HT systems expertise is unmatched.", name: "Rajesh Kumar", role: "Plant Manager, BEML" },
