@@ -169,6 +169,29 @@ export const useProjects = () => useCollection<Project>("site_projects", DEFAULT
 export const useServices = () => useCollection<Service>("site_services", DEFAULT_SERVICES);
 export const useClients = () => {
   const result = useCollection<Client>("site_clients", DEFAULT_CLIENTS);
+
+  // One-time heal: if Firestore docs are missing a `logo` but we have a
+  // default for that client name, write the logo back to Firestore so
+  // Firebase becomes the source of truth.
+  useEffect(() => {
+    if (!result.isFromFirestore) return;
+    const missing = result.items.filter(
+      (c) => !c.logo && DEFAULT_CLIENT_LOGOS_BY_NAME.get(c.name.toLowerCase())
+    );
+    if (missing.length === 0) return;
+    missing.forEach((c) => {
+      const logo = DEFAULT_CLIENT_LOGOS_BY_NAME.get(c.name.toLowerCase());
+      if (!logo) return;
+      setDoc(
+        doc(db, "site_clients", c.id),
+        { logo, updatedAt: serverTimestamp() },
+        { merge: true }
+      ).catch(() => {
+        /* ignore — falls back to client-side merge below */
+      });
+    });
+  }, [result.isFromFirestore, result.items]);
+
   return {
     ...result,
     items: result.items.map((client) => ({
