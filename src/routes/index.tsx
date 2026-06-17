@@ -51,15 +51,40 @@ const featuredProjects = [
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 
 const clients = [
-  { name: "TVS Motor", initials: "TVS", color: "#1a4b8c" },
-  { name: "Havells India", initials: "HV", color: "#c41230" },
-  { name: "Mettler Toledo", initials: "MT", color: "#003d79" },
-  { name: "Sonata Software", initials: "SS", color: "#e85d04" },
-  { name: "Gokaldas Exports", initials: "GE", color: "#2d6a4f" },
-  { name: "Cyient DLM", initials: "CD", color: "#5a189a" },
-  { name: "BIAL", initials: "BL", color: "#9d0208" },
-  { name: "Biocon", initials: "BC", color: "#0077b6" },
+  { name: "TVS Motor", domain: "tvsmotor.com", initials: "TVS", color: "#1a4b8c" },
+  { name: "Havells India", domain: "havells.com", initials: "HV", color: "#c41230" },
+  { name: "Mettler Toledo", domain: "mt.com", initials: "MT", color: "#003d79" },
+  { name: "Cyient DLM", domain: "cyientdlm.com", initials: "CD", color: "#5a189a" },
+  { name: "BIAL", domain: "bengaluruairport.com", initials: "BL", color: "#9d0208" },
+  { name: "Biocon", domain: "biocon.com", initials: "BC", color: "#0077b6" },
+  { name: "Tatsuno India", domain: "tatsuno-corporation.com", initials: "TI", color: "#0a3d62" },
+  { name: "GKB Vision", domain: "gkb.net", initials: "GK", color: "#e85d04" },
 ];
+
+function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; size?: "sm" | "md" }) {
+  const [failed, setFailed] = useState(false);
+  const dims = size === "sm" ? "h-7" : "h-10";
+  const initialsSize = size === "sm" ? "h-8 w-8 text-[10px]" : "h-9 w-9 text-xs";
+  if (failed) {
+    return (
+      <span
+        className={`flex ${initialsSize} shrink-0 items-center justify-center rounded-full font-extrabold text-white`}
+        style={{ backgroundColor: client.color }}
+      >
+        {client.initials}
+      </span>
+    );
+  }
+  return (
+    <img
+      src={`https://logo.clearbit.com/${client.domain}`}
+      alt={`${client.name} logo`}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`${dims} w-auto max-w-[110px] object-contain`}
+    />
+  );
+}
 
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -215,14 +240,8 @@ function HomePage() {
           <div className="mt-10 hidden grid-cols-4 gap-4 sm:grid">
             {clients.map((c, i) => (
               <SectionReveal key={c.name} delay={i * 0.04}>
-                <div className="flex h-20 items-center justify-center gap-3 rounded border border-border bg-card px-4 transition-all hover:border-brand-red/30 hover:shadow-sm">
-                  <span
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-extrabold text-white"
-                    style={{ backgroundColor: c.color }}
-                  >
-                    {c.initials}
-                  </span>
-                  <span className="font-heading text-sm font-bold text-muted-foreground">{c.name}</span>
+                <div className="flex h-24 items-center justify-center rounded border border-border bg-white px-4 transition-all hover:border-brand-red/30 hover:shadow-sm">
+                  <ClientLogo client={c} />
                 </div>
               </SectionReveal>
             ))}
@@ -236,16 +255,10 @@ function HomePage() {
               {[...clients, ...clients].map((c, i) => (
                 <div
                   key={`${c.name}-${i}`}
-                  className="flex h-16 w-32 shrink-0 items-center justify-center gap-2 rounded border border-border bg-card px-3"
+                  className="flex h-16 w-32 shrink-0 items-center justify-center rounded border border-border bg-white px-3"
                   style={{ transform: `translateY(${i % 2 === 0 ? "-10px" : "10px"})` }}
                 >
-                  <span
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold text-white"
-                    style={{ backgroundColor: c.color }}
-                  >
-                    {c.initials}
-                  </span>
-                  <span className="text-[11px] font-bold text-muted-foreground">{c.name}</span>
+                  <ClientLogo client={c} size="sm" />
                 </div>
               ))}
             </div>
