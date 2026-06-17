@@ -30,7 +30,7 @@ export default function ProjectDetailPage() {
         image={project.image}
       />
       <section className="section-dark">
-        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-6 lg:py-20">
           <SectionReveal>
             <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider opacity-50">
               <Link to="/" className="hover:opacity-100">Home</Link><span>/</span>
