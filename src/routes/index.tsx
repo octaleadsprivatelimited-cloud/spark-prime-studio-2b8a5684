@@ -49,12 +49,12 @@ const services = [
 ];
 
 const featuredProjects = [
-  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
-  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
-  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
+  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", location: "Bangalore", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
+  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", location: "Hosur", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
+  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", location: "Bangalore", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
 ];
 
-const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
+const projectCategories = ["All Projects", "Ongoing", "Completed"];
 
 const clients = [
   { name: "TVS Motor", domain: "tvsmotor.com", initials: "TVS", color: "#1a4b8c" },
