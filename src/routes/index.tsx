@@ -222,7 +222,7 @@ function HomePage() {
               <h2 className="mt-2 font-heading text-3xl font-bold md:text-4xl">The Nataraj Advantage</h2>
             </div>
           </SectionReveal>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { title: "Government Licensed", desc: "Class-I licensed for projects of any scale and voltage." },
               { title: "15+ Years Experience", desc: "Proven track record since 2008 in complex projects." },
@@ -230,19 +230,42 @@ function HomePage() {
               { title: "On-Time Delivery", desc: "Efficient management and deadline commitment." },
               { title: "End-to-End Solutions", desc: "Design to commissioning under one roof." },
               { title: "24/7 Emergency Support", desc: "Round-the-clock maintenance and response." },
-            ].map((item, i) => (
-              <SectionReveal key={item.title} delay={i * 0.05}>
-                <div className="flex items-start gap-4 rounded border border-brand-dark-foreground/10 p-5">
-                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded bg-brand-red text-brand-red-foreground">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+            ].map((item, i) => {
+              const [isOpen, setIsOpen] = useState(true);
+              return (
+                <SectionReveal key={item.title} delay={i * 0.05}>
+                  <div className="rounded border border-brand-dark-foreground/10 p-4 sm:p-5">
+                    <button
+                      onClick={() => setIsOpen(!isOpen)}
+                      className="flex w-full items-center gap-3 sm:cursor-default"
+                      aria-expanded={isOpen}
+                    >
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-brand-red text-brand-red-foreground">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                      <h3 className="flex-1 text-left font-heading text-sm font-bold">{item.title}</h3>
+                      <motion.span
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="opacity-50 sm:hidden"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                      </motion.span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      <motion.div
+                        initial={false}
+                        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="overflow-hidden sm:!h-auto sm:!opacity-100"
+                      >
+                        <p className="pl-11 pt-2 text-xs opacity-60 sm:pl-0">{item.desc}</p>
+                      </motion.div>
+                    </AnimatePresence>
                   </div>
-                  <div>
-                    <h3 className="font-heading text-sm font-bold">{item.title}</h3>
-                    <p className="mt-1 text-xs opacity-60">{item.desc}</p>
-                  </div>
-                </div>
-              </SectionReveal>
-            ))}
+                </SectionReveal>
+              );
+            })}
           </div>
         </div>
       </section>
