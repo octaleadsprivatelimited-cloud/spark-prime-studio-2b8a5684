@@ -54,6 +54,7 @@ const featuredProjects = [
   { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", location: "Bangalore", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
 ];
 
+const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 const projectCategories = ["All Projects", "Ongoing", "Completed"];
 
 const clients = [
