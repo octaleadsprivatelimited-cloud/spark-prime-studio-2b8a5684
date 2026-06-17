@@ -111,6 +111,10 @@ export const DEFAULT_CLIENTS: Client[] = [
   { name: "Biocon", logo: "https://logo.clearbit.com/biocon.com" },
 ].map((c, i) => ({ id: `client-${i}`, name: c.name, logo: c.logo, order: i }));
 
+const DEFAULT_CLIENT_LOGOS_BY_NAME = new Map(
+  DEFAULT_CLIENTS.map((client) => [client.name.toLowerCase(), client.logo])
+);
+
 export const DEFAULT_TESTIMONIALS: Testimonial[] = [
   { id: "t1", quote: "Nataraj Electricals delivered our factory electrification on time and within budget. Their HT systems expertise is unmatched.", name: "Rajesh Kumar", role: "Plant Manager, BEML" },
   { id: "t2", quote: "Professional, reliable, and safety-conscious. They've handled our AMC for 5 years with zero downtime.", name: "Priya Sharma", role: "Facilities Head, Embassy Group" },
@@ -163,7 +167,16 @@ function useCollection<T extends { id: string }>(
 // ============= Public hooks =============
 export const useProjects = () => useCollection<Project>("site_projects", DEFAULT_PROJECTS);
 export const useServices = () => useCollection<Service>("site_services", DEFAULT_SERVICES);
-export const useClients = () => useCollection<Client>("site_clients", DEFAULT_CLIENTS);
+export const useClients = () => {
+  const result = useCollection<Client>("site_clients", DEFAULT_CLIENTS);
+  return {
+    ...result,
+    items: result.items.map((client) => ({
+      ...client,
+      logo: client.logo || DEFAULT_CLIENT_LOGOS_BY_NAME.get(client.name.toLowerCase()),
+    })),
+  };
+};
 export const useTestimonials = () => useCollection<Testimonial>("site_testimonials", DEFAULT_TESTIMONIALS);
 export const useHeroSlides = () => useCollection<HeroSlide>("site_hero_slides", DEFAULT_HERO_SLIDES);
 
