@@ -215,20 +215,14 @@ function HomePage() {
           <div className="mt-10 hidden grid-cols-4 gap-4 sm:grid">
             {clients.map((c, i) => (
               <SectionReveal key={c.name} delay={i * 0.04}>
-                <div className="flex h-20 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/30 hover:shadow-sm">
-                  <img
-                    src={c.logo}
-                    alt={`${c.name} logo`}
-                    loading="lazy"
-                    className="max-h-10 max-w-[140px] object-contain opacity-80 transition hover:opacity-100"
-                    onError={(e) => {
-                      const t = e.currentTarget;
-                      t.style.display = "none";
-                      const fallback = t.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = "block";
-                    }}
-                  />
-                  <span className="hidden font-heading text-base font-bold text-muted-foreground">{c.name}</span>
+                <div className="flex h-20 items-center justify-center gap-3 rounded border border-border bg-card px-4 transition-all hover:border-brand-red/30 hover:shadow-sm">
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-extrabold text-white"
+                    style={{ backgroundColor: c.color }}
+                  >
+                    {c.initials}
+                  </span>
+                  <span className="font-heading text-sm font-bold text-muted-foreground">{c.name}</span>
                 </div>
               </SectionReveal>
             ))}
