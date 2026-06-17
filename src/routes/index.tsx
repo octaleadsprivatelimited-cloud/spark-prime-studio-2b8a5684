@@ -51,14 +51,14 @@ const featuredProjects = [
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 
 const clients = [
-  { name: "TVS Motor", logo: "https://logo.clearbit.com/tvsmotor.com" },
-  { name: "Havells India", logo: "https://logo.clearbit.com/havells.com" },
-  { name: "Mettler Toledo", logo: "https://logo.clearbit.com/mt.com" },
-  { name: "Sonata Software", logo: "https://logo.clearbit.com/sonata-software.com" },
-  { name: "Gokaldas Exports", logo: "https://logo.clearbit.com/gokaldasexports.com" },
-  { name: "Cyient DLM", logo: "https://logo.clearbit.com/cyientdlm.com" },
-  { name: "BIAL", logo: "https://logo.clearbit.com/bengaluruairport.com" },
-  { name: "Biocon", logo: "https://logo.clearbit.com/biocon.com" },
+  { name: "TVS Motor", initials: "TVS", color: "#1a4b8c" },
+  { name: "Havells India", initials: "HV", color: "#c41230" },
+  { name: "Mettler Toledo", initials: "MT", color: "#003d79" },
+  { name: "Sonata Software", initials: "SS", color: "#e85d04" },
+  { name: "Gokaldas Exports", initials: "GE", color: "#2d6a4f" },
+  { name: "Cyient DLM", initials: "CD", color: "#5a189a" },
+  { name: "BIAL", initials: "BL", color: "#9d0208" },
+  { name: "Biocon", initials: "BC", color: "#0077b6" },
 ];
 
 function HomePage() {
@@ -215,20 +215,14 @@ function HomePage() {
           <div className="mt-10 hidden grid-cols-4 gap-4 sm:grid">
             {clients.map((c, i) => (
               <SectionReveal key={c.name} delay={i * 0.04}>
-                <div className="flex h-20 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/30 hover:shadow-sm">
-                  <img
-                    src={c.logo}
-                    alt={`${c.name} logo`}
-                    loading="lazy"
-                    className="max-h-10 max-w-[140px] object-contain opacity-80 transition hover:opacity-100"
-                    onError={(e) => {
-                      const t = e.currentTarget;
-                      t.style.display = "none";
-                      const fallback = t.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = "block";
-                    }}
-                  />
-                  <span className="hidden font-heading text-base font-bold text-muted-foreground">{c.name}</span>
+                <div className="flex h-20 items-center justify-center gap-3 rounded border border-border bg-card px-4 transition-all hover:border-brand-red/30 hover:shadow-sm">
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-extrabold text-white"
+                    style={{ backgroundColor: c.color }}
+                  >
+                    {c.initials}
+                  </span>
+                  <span className="font-heading text-sm font-bold text-muted-foreground">{c.name}</span>
                 </div>
               </SectionReveal>
             ))}
@@ -242,22 +236,16 @@ function HomePage() {
               {[...clients, ...clients].map((c, i) => (
                 <div
                   key={`${c.name}-${i}`}
-                  className="flex h-16 w-32 shrink-0 items-center justify-center rounded border border-border bg-card px-3"
+                  className="flex h-16 w-32 shrink-0 items-center justify-center gap-2 rounded border border-border bg-card px-3"
                   style={{ transform: `translateY(${i % 2 === 0 ? "-10px" : "10px"})` }}
                 >
-                  <img
-                    src={c.logo}
-                    alt={`${c.name} logo`}
-                    loading="lazy"
-                    className="max-h-8 max-w-[100px] object-contain opacity-80"
-                    onError={(e) => {
-                      const t = e.currentTarget;
-                      t.style.display = "none";
-                      const fallback = t.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = "block";
-                    }}
-                  />
-                  <span className="hidden text-xs font-bold text-muted-foreground">{c.name}</span>
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold text-white"
+                    style={{ backgroundColor: c.color }}
+                  >
+                    {c.initials}
+                  </span>
+                  <span className="text-[11px] font-bold text-muted-foreground">{c.name}</span>
                 </div>
               ))}
             </div>

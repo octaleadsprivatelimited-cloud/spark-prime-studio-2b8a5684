@@ -36,8 +36,8 @@ export function HeroCarousel() {
             className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </AnimatePresence>
-        {/* readable gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-brand-dark/10" />
+        {/* readable gradient — lighter so image shows through */}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/50 to-brand-dark/20" />
 
         {/* content */}
         <div className="absolute inset-x-0 bottom-0 px-4 pb-10 pt-16">
