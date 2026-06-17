@@ -96,6 +96,11 @@ function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; s
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
   const [openService, setOpenService] = useState<number | null>(0);
+  const [projectFilter, setProjectFilter] = useState(0);
+
+  const filteredProjects = projectFilter === 0
+    ? featuredProjects
+    : featuredProjects.filter(p => p.category === projectCategories[projectFilter]);
 
   return (
     <>
