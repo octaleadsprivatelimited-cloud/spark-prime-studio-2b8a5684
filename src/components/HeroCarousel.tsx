@@ -20,7 +20,7 @@ export function HeroCarousel() {
   const slide = slides[current];
 
   return (
-    <section className="relative h-[78vh] min-h-[460px] max-h-[800px] overflow-hidden bg-brand-dark">
+    <section className="relative h-[62vh] min-h-[380px] sm:h-[70vh] sm:min-h-[420px] md:h-[78vh] md:min-h-[460px] max-h-[800px] overflow-hidden bg-brand-dark">
       {/* Background Images */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -36,8 +36,8 @@ export function HeroCarousel() {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 flex h-full items-center">
-        <div className="mx-auto w-full max-w-7xl px-4 lg:px-6">
+      <div className="relative z-10 flex h-full items-end sm:items-center">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-12 sm:pb-0 lg:px-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -47,17 +47,17 @@ export function HeroCarousel() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="max-w-2xl"
             >
-              <span className="inline-flex items-center gap-2 rounded-sm bg-brand-red px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-brand-red-foreground">
+              <span className="inline-flex items-center gap-2 rounded-sm bg-brand-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-red-foreground sm:text-xs">
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 {slide.subtitle}
               </span>
-              <h1 className="mt-4 font-heading text-3xl font-extrabold leading-[1.1] text-brand-dark-foreground sm:text-5xl md:text-6xl whitespace-pre-line">
+              <h1 className="mt-3 font-heading text-2xl font-extrabold leading-[1.15] text-brand-dark-foreground sm:mt-4 sm:text-5xl md:text-6xl whitespace-pre-line">
                 {slide.title}
               </h1>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-brand-dark-foreground/70 sm:text-base md:text-lg">
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-brand-dark-foreground/70 sm:mt-4 sm:text-base md:text-lg">
                 {slide.description}
               </p>
-              <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
+              <div className="mt-5 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                 <Link to={slide.ctaLink} className="btn-primary sm:!py-3.5 sm:!px-8">
                   {slide.cta}
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
