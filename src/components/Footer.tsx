@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import logoImg from "../assets/logo.png";
+
 
 const quickLinks = [
   { to: "/about" as const, label: "About Us" },
@@ -18,11 +22,46 @@ const services = [
   "BESCOM Approvals",
 ];
 
+function CollapsibleSection({ title, children }: { title: string; children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex w-full items-center justify-between md:cursor-default"
+        aria-expanded={isOpen}
+      >
+        <h4 className="mb-0 text-xs font-bold uppercase tracking-widest opacity-40 md:mb-4">{title}</h4>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="opacity-40 md:hidden"
+        >
+          <ChevronDown className="h-4 w-4" />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        <motion.div
+          initial={false}
+          animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="overflow-hidden md:!h-auto md:!opacity-100"
+        >
+          <div className="pb-4 pt-2 md:pb-0 md:pt-0">
+            {children}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="section-dark">
       <div className="mx-auto max-w-7xl px-4 py-14 lg:px-6">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-5">
@@ -41,8 +80,7 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest opacity-40">Quick Links</h4>
+          <CollapsibleSection title="Quick Links">
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.to}>
@@ -52,21 +90,19 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </CollapsibleSection>
 
           {/* Services */}
-          <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest opacity-40">Services</h4>
+          <CollapsibleSection title="Services">
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s} className="text-sm opacity-60">{s}</li>
               ))}
             </ul>
-          </div>
+          </CollapsibleSection>
 
           {/* Contact */}
-          <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest opacity-40">Contact</h4>
+          <CollapsibleSection title="Contact">
             <ul className="space-y-3 text-sm opacity-60">
               <li className="flex items-start gap-2">
                 <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -81,7 +117,7 @@ export function Footer() {
                 <a href="mailto:Sarveshkumarbc90@gmail.com" className="hover:text-foreground">Sarveshkumarbc90@gmail.com</a>
               </li>
             </ul>
-          </div>
+          </CollapsibleSection>
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand-dark-foreground/10 pt-8 md:flex-row">
