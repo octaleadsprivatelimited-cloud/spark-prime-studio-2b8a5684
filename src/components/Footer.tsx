@@ -22,21 +22,31 @@ const services = [
   "BESCOM Approvals",
 ];
 
-function CollapsibleSection({ title, children }: { title: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
+function CollapsibleSection({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div>
+    <div className="border-b border-brand-dark-foreground/10 last:border-b-0 md:border-b-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between md:cursor-default"
+        className="flex w-full items-center justify-between py-3 md:cursor-default md:py-0"
         aria-expanded={isOpen}
       >
-        <h4 className="mb-0 text-xs font-bold uppercase tracking-widest opacity-40 md:mb-4">{title}</h4>
+        <h4 className="text-xs font-bold uppercase tracking-widest opacity-70 md:mb-4 md:opacity-40">
+          {title}
+        </h4>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="opacity-40 md:hidden"
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          className="opacity-50 md:hidden"
         >
           <ChevronDown className="h-4 w-4" />
         </motion.span>
@@ -44,13 +54,14 @@ function CollapsibleSection({ title, children }: { title: string; children: Reac
       <AnimatePresence initial={false}>
         <motion.div
           initial={false}
-          animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
+          animate={{
+            height: isOpen ? "auto" : 0,
+            opacity: isOpen ? 1 : 0,
+          }}
+          transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
           className="overflow-hidden md:!h-auto md:!opacity-100"
         >
-          <div className="pb-4 pt-2 md:pb-0 md:pt-0">
-            {children}
-          </div>
+          <div className="pb-4 pt-1 md:pb-0 md:pt-0">{children}</div>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -61,9 +72,10 @@ export function Footer() {
   return (
     <footer className="section-dark">
       <div className="mx-auto max-w-7xl px-4 py-14 lg:px-6">
-        <div className="grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
-          {/* Brand */}
-          <div>
+        <div className="grid gap-0 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
+          {/* Brand - not collapsible */}
+          <div className="border-b border-brand-dark-foreground/10 py-4 md:border-b-0 md:py-0">
+
             <div className="flex items-center gap-2 mb-5">
               <img src={logoImg} alt="Nataraj Electricals Logo" className="h-14 w-auto bg-white p-1 rounded shadow-sm" />
             </div>
