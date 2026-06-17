@@ -97,6 +97,7 @@ function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
   const [openService, setOpenService] = useState<number | null>(0);
   const [projectFilter, setProjectFilter] = useState(0);
+  const [openAdvantage, setOpenAdvantage] = useState<number | null>(0);
 
   const filteredProjects = projectFilter === 0
     ? featuredProjects
