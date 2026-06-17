@@ -36,8 +36,8 @@ export function HeroCarousel() {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 flex h-full items-center">
-        <div className="mx-auto w-full max-w-7xl px-4 lg:px-6">
+      <div className="relative z-10 flex h-full items-end sm:items-center">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-12 sm:pb-0 lg:px-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
