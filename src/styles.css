@@ -110,6 +110,8 @@
   /* Brand Colors */
   --brand-red: oklch(0.52 0.22 25);
   --brand-red-foreground: oklch(1 0 0);
+  --brand-yellow: oklch(0.82 0.16 85);
+  --brand-yellow-foreground: oklch(0.20 0.05 25);
   --brand-dark: oklch(0.18 0.04 255);
   --brand-dark-foreground: oklch(1 0 0);
   --surface-elevated: oklch(0.98 0.003 260);
@@ -156,6 +158,8 @@
 
   --brand-red: oklch(0.62 0.22 25);
   --brand-red-foreground: oklch(1 0 0);
+  --brand-yellow: oklch(0.72 0.14 85);
+  --brand-yellow-foreground: oklch(0.96 0.005 25);
   --brand-dark: oklch(0.10 0.02 260);
   --brand-dark-foreground: oklch(0.96 0.005 260);
   --surface-elevated: oklch(0.20 0.02 260);
