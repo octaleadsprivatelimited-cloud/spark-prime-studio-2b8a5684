@@ -98,6 +98,33 @@ function HomePage() {
   const [openService, setOpenService] = useState<number | null>(0);
   const [projectFilter, setProjectFilter] = useState(0);
   const [openAdvantage, setOpenAdvantage] = useState<number | null>(0);
+  const advantageButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const handleAdvantageKeyDown = (
+    e: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+    count: number,
+  ) => {
+    let next = index;
+    switch (e.key) {
+      case "ArrowDown":
+        next = (index + 1) % count;
+        break;
+      case "ArrowUp":
+        next = (index - 1 + count) % count;
+        break;
+      case "Home":
+        next = 0;
+        break;
+      case "End":
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+    advantageButtonRefs.current[next]?.focus();
+  };
 
   const filteredProjects = projectFilter === 0
     ? featuredProjects
