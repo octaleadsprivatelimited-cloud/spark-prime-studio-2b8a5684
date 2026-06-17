@@ -3,6 +3,9 @@ import { PageHead } from "../components/PageHead";
 import { useState } from "react";
 import { SectionReveal } from "../components/SectionReveal";
 import { submitContactForm, trackEvent } from "../lib/firebase";
+import contactHero from "../assets/contact-hero.jpg";
+import contactSupport from "../assets/contact-support.jpg";
+import contactLocation from "../assets/contact-location.jpg";
 
 function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
@@ -29,14 +32,30 @@ function ContactPage() {
     <>
       <PageHead title="Contact Us — Nataraj Electricals" description="Get in touch with Nataraj Electricals for electrical contracting in Bangalore. Free quote available." />
 
-      <section className="section-dark">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-6 lg:py-20">
+      <section className="relative overflow-hidden section-dark">
+        <img
+          src={contactHero}
+          alt="Nataraj Electricals team consulting with clients"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 h-full w-full object-cover opacity-30"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:py-20 lg:px-6 lg:py-28">
           <SectionReveal>
-            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider opacity-50">
+            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider opacity-60">
               <Link to="/" className="hover:opacity-100">Home</Link><span>/</span><span>Contact</span>
             </div>
-            <h1 className="mt-4 font-heading text-4xl font-extrabold md:text-5xl">Contact Us</h1>
-            <p className="mt-3 max-w-xl text-base opacity-60">Get a free consultation and project estimate.</p>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-red">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
+              We're online now
+            </div>
+            <h1 className="mt-4 font-heading text-4xl font-extrabold md:text-6xl">Let's Power Your Next Project</h1>
+            <p className="mt-4 max-w-xl text-base opacity-70 md:text-lg">Talk to a licensed electrical contractor in Bangalore. Free consultation, transparent estimates, response within 24 hours.</p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href="tel:+919902012565" className="btn-primary">Call +91 99020 12565</a>
+              <a href="https://wa.me/919902012565" target="_blank" rel="noopener noreferrer" className="btn-yellow">WhatsApp Chat</a>
+            </div>
           </SectionReveal>
         </div>
       </section>
@@ -48,9 +67,15 @@ function ContactPage() {
             {/* Form */}
             <div className="lg:col-span-3">
               <SectionReveal>
-                <div className="rounded border border-border bg-card p-6 md:p-8">
-                  <h2 className="font-heading text-2xl font-bold text-foreground">Send Us a Message</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">We'll get back to you within 24 hours.</p>
+                <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm md:p-8">
+                  <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-red/10 blur-3xl" />
+                  <div className="relative flex items-start gap-4">
+                    <img src={contactSupport} alt="Support engineer" width={64} height={64} loading="lazy" className="h-16 w-16 flex-shrink-0 rounded-full border-2 border-brand-red/30 object-cover" />
+                    <div>
+                      <h2 className="font-heading text-2xl font-bold text-foreground">Send Us a Message</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">We'll get back to you within 24 hours.</p>
+                    </div>
+                  </div>
 
                   {submitted ? (
                     <div className="mt-8 rounded bg-brand-red/5 p-8 text-center">
@@ -61,7 +86,7 @@ function ContactPage() {
                       <p className="mt-2 text-sm text-muted-foreground">We've received your message and will contact you shortly.</p>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                    <form onSubmit={handleSubmit} className="relative mt-6 space-y-5">
                       <div className="grid gap-5 sm:grid-cols-2">
                         <div>
                           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">Full Name</label>
@@ -94,15 +119,18 @@ function ContactPage() {
             <div className="lg:col-span-2">
               <SectionReveal delay={0.1}>
                 <div className="space-y-5">
-                  <div className="rounded border border-border bg-card p-6">
-                    <h3 className="font-heading text-lg font-bold text-foreground">Office Address</h3>
+                  <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+                    <img src={contactLocation} alt="Bangalore skyline" width={1280} height={720} loading="lazy" className="h-32 w-full object-cover" />
+                    <div className="p-6">
+                      <h3 className="font-heading text-lg font-bold text-foreground">Office Address</h3>
                     <p className="mt-2 text-sm text-muted-foreground">
                       #243/3/1/, 1st main, 1st cross,<br />
                       BEML layout 5th stage, Rajarajeshwarinagar,<br />
                       Bangalore – 560098, Karnataka, India
                     </p>
+                    </div>
                   </div>
-                  <div className="rounded border border-border bg-card p-6">
+                  <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
                     <h3 className="font-heading text-lg font-bold text-foreground">Quick Contact</h3>
                     <div className="mt-3 space-y-3">
                       <a href="tel:+919902012565" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground">
@@ -125,7 +153,7 @@ function ContactPage() {
                       </a>
                     </div>
                   </div>
-                  <div className="rounded border border-border bg-card p-6">
+                  <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
                     <h3 className="font-heading text-lg font-bold text-foreground">Statutory Details</h3>
                     <div className="mt-3 space-y-2 text-sm text-muted-foreground">
                       <div className="flex justify-between gap-4"><span>Reg. Number</span><span className="font-semibold text-foreground text-right">Govt.Lic.Class-I, 1CL120193BNG</span></div>
@@ -134,7 +162,7 @@ function ContactPage() {
                       <div className="flex justify-between gap-4"><span>Bank</span><span className="font-semibold text-foreground text-right">Indian Bank, Basavanagudi</span></div>
                     </div>
                   </div>
-                  <div className="rounded border border-border bg-card p-6">
+                  <div className="rounded-lg border border-brand-red/30 bg-gradient-to-br from-brand-red/5 to-transparent p-6 shadow-sm">
                     <h3 className="font-heading text-lg font-bold text-foreground">Business Hours</h3>
                     <div className="mt-3 space-y-2 text-sm text-muted-foreground">
                       <div className="flex justify-between"><span>Mon – Sat</span><span className="font-medium text-foreground">9:00 AM – 6:00 PM</span></div>
