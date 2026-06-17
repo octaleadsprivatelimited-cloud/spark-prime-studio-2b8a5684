@@ -674,8 +674,43 @@ function ServiceEditor({ initial, onClose }: { initial: Service; onClose: () => 
 function ClientsAdmin() {
   const { items, isFromFirestore } = useClients();
   const [editing, setEditing] = useState<Client | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
   const q = useSearchQuery().toLowerCase();
   const filtered = q ? items.filter((c) => c.name.toLowerCase().includes(q)) : items;
+
+  async function resyncLogos() {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const byName = new Map(
+        DEFAULT_CLIENTS.map((c) => [c.name.toLowerCase(), c.logo])
+      );
+      let updated = 0;
+      for (const c of items) {
+        const defaultLogo = byName.get(c.name.toLowerCase());
+        if (defaultLogo && c.logo !== defaultLogo) {
+          await saveDoc("site_clients", { ...c, logo: defaultLogo });
+          updated++;
+        }
+      }
+      // Also add any default clients that are missing from Firestore
+      const existing = new Set(items.map((c) => c.name.toLowerCase()));
+      let added = 0;
+      for (const d of DEFAULT_CLIENTS) {
+        if (!existing.has(d.name.toLowerCase())) {
+          await saveDoc("site_clients", { ...d, order: items.length + added });
+          added++;
+        }
+      }
+      setSyncMsg(`Synced. Updated ${updated} logo${updated === 1 ? "" : "s"}, added ${added} missing client${added === 1 ? "" : "s"}.`);
+    } catch (e) {
+      setSyncMsg(`Error: ${(e as Error).message}`);
+    } finally {
+      setSyncing(false);
+    }
+  }
+
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_clients" defaults={DEFAULT_CLIENTS} />}
@@ -684,8 +719,21 @@ function ClientsAdmin() {
           Clients ({filtered.length}
           {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
         </h2>
-        <button onClick={() => setEditing({ id: genId("c"), name: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Client</button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={resyncLogos}
+            disabled={syncing}
+            className="rounded border border-border bg-background px-3 py-2 text-xs font-medium text-foreground disabled:opacity-50"
+            title="Push default logo URLs from code into Firestore for matching client names, and add any defaults that aren't in Firestore yet."
+          >
+            {syncing ? "Syncing…" : "Resync logos"}
+          </button>
+          <button onClick={() => setEditing({ id: genId("c"), name: "", order: items.length })} className="btn-primary !py-2 !px-4 !text-xs">+ Add Client</button>
+        </div>
       </div>
+      {syncMsg && (
+        <div className="mb-3 rounded border border-border bg-muted/40 px-3 py-2 text-xs text-foreground">{syncMsg}</div>
+      )}
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((c) => (
           <Card key={c.id} className="flex items-center justify-between">
