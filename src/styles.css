@@ -203,10 +203,14 @@
   background: var(--color-brand-red);
   color: var(--color-brand-red-foreground);
   font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  padding: 0.625rem 1.25rem;
+  white-space: nowrap;
   border-radius: var(--radius);
   transition: all 0.2s ease;
+}
+@media (min-width: 640px) {
+  .btn-primary { font-size: 0.875rem; padding: 0.75rem 2rem; }
 }
 .btn-primary:hover {
   filter: brightness(1.1);
@@ -221,11 +225,15 @@
   background: transparent;
   color: var(--color-foreground);
   font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  padding: 0.625rem 1.25rem;
+  white-space: nowrap;
   border-radius: var(--radius);
   border: 2px solid var(--color-border);
   transition: all 0.2s ease;
+}
+@media (min-width: 640px) {
+  .btn-outline { font-size: 0.875rem; padding: 0.75rem 2rem; }
 }
 .btn-outline:hover {
   border-color: var(--color-brand-red);
@@ -240,10 +248,14 @@
   background: oklch(1 0 0);
   color: var(--color-brand-dark);
   font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  padding: 0.625rem 1.25rem;
+  white-space: nowrap;
   border-radius: var(--radius);
   transition: all 0.2s ease;
+}
+@media (min-width: 640px) {
+  .btn-white { font-size: 0.875rem; padding: 0.75rem 2rem; }
 }
 .btn-white:hover {
   background: oklch(0.97 0 0);
@@ -251,16 +263,19 @@
 
 /* ── Section utility ── */
 .section-padding {
-  padding: 4rem 1rem;
+  padding: 2.5rem 1rem;
+}
+@media (min-width: 640px) {
+  .section-padding { padding: 3.5rem 1.25rem; }
 }
 @media (min-width: 768px) {
   .section-padding {
-    padding: 5rem 2rem;
+    padding: 4.5rem 2rem;
   }
 }
 @media (min-width: 1024px) {
   .section-padding {
-    padding: 6rem 2rem;
+    padding: 5.5rem 2rem;
   }
 }
 
