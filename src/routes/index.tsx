@@ -211,14 +211,56 @@ function HomePage() {
               </h2>
             </div>
           </SectionReveal>
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {/* Desktop grid */}
+          <div className="mt-10 hidden grid-cols-4 gap-4 sm:grid">
             {clients.map((c, i) => (
-              <SectionReveal key={c} delay={i * 0.04}>
-                <div className="flex h-20 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/20 hover:shadow-sm">
-                  <span className="font-heading text-lg font-bold text-muted-foreground">{c}</span>
+              <SectionReveal key={c.name} delay={i * 0.04}>
+                <div className="flex h-20 items-center justify-center rounded border border-border bg-card px-6 transition-all hover:border-brand-red/30 hover:shadow-sm">
+                  <img
+                    src={c.logo}
+                    alt={`${c.name} logo`}
+                    loading="lazy"
+                    className="max-h-10 max-w-[140px] object-contain opacity-80 transition hover:opacity-100"
+                    onError={(e) => {
+                      const t = e.currentTarget;
+                      t.style.display = "none";
+                      const fallback = t.nextElementSibling as HTMLElement | null;
+                      if (fallback) fallback.style.display = "block";
+                    }}
+                  />
+                  <span className="hidden font-heading text-base font-bold text-muted-foreground">{c.name}</span>
                 </div>
               </SectionReveal>
             ))}
+          </div>
+
+          {/* Mobile zig-zag scrolling marquee */}
+          <div className="mt-8 sm:hidden overflow-hidden relative -mx-4">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-surface-elevated to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-surface-elevated to-transparent" />
+            <div className="flex w-max animate-marquee gap-3 py-4">
+              {[...clients, ...clients].map((c, i) => (
+                <div
+                  key={`${c.name}-${i}`}
+                  className="flex h-16 w-32 shrink-0 items-center justify-center rounded border border-border bg-card px-3"
+                  style={{ transform: `translateY(${i % 2 === 0 ? "-10px" : "10px"})` }}
+                >
+                  <img
+                    src={c.logo}
+                    alt={`${c.name} logo`}
+                    loading="lazy"
+                    className="max-h-8 max-w-[100px] object-contain opacity-80"
+                    onError={(e) => {
+                      const t = e.currentTarget;
+                      t.style.display = "none";
+                      const fallback = t.nextElementSibling as HTMLElement | null;
+                      if (fallback) fallback.style.display = "block";
+                    }}
+                  />
+                  <span className="hidden text-xs font-bold text-muted-foreground">{c.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
