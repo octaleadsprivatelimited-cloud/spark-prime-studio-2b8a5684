@@ -14,31 +14,37 @@ const services = [
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
     title: "Designs",
     description: "Concurrent designs, engineering analysis early in design, scheduling, quality control and CAD support.",
+    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>,
     title: "Electrification",
     description: "H.T. and L.T Installations, Industrial wiring, Electrical Designing, Annual Maintenance, and Approvals.",
+    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811z" /></svg>,
     title: "Complete power solution",
     description: "Proficient in load audits, code compliance installations, and obtaining pre-commissioning approvals.",
+    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>,
     title: "Project management",
     description: "End-to-end management, site construction engineering, cable pulling, scaffolding, and light protection.",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.66-5.66M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
     title: "AMC management",
     description: "Preventive, breakdown, and routine maintenance contracts for critical electrical installations.",
+    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80",
   },
   {
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
     title: "Bescom Approvals",
     description: "Liaisoning and obtaining inspected approvals from BESCOM for H.T. installations.",
+    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&q=80",
   },
 ];
 
@@ -88,6 +94,7 @@ function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; s
 
 function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
+  const [openService, setOpenService] = useState<number | null>(0);
 
   return (
     <>
@@ -140,10 +147,97 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Desktop grid */}
+          <div className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
-              <ServiceCard key={s.title} {...s} delay={i * 0.05} />
+              <ServiceCard
+                key={s.title}
+                icon={s.icon}
+                title={s.title}
+                description={s.description}
+                delay={i * 0.05}
+              />
             ))}
+          </div>
+
+          {/* Mobile collapsible cards with images */}
+          <div className="mt-6 flex flex-col gap-3 sm:hidden">
+            {services.map((s, i) => {
+              const isOpen = openService === i;
+              return (
+                <div
+                  key={s.title}
+                  className="overflow-hidden rounded-lg border border-border bg-card shadow-sm"
+                >
+                  <button
+                    onClick={() => setOpenService(isOpen ? null : i)}
+                    className="flex w-full items-center gap-3 p-4 text-left"
+                    aria-expanded={isOpen}
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-red/10 text-brand-red">
+                      {s.icon}
+                    </div>
+                    <h3 className="flex-1 font-heading text-base font-bold text-card-foreground">
+                      {s.title}
+                    </h3>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="text-muted-foreground"
+                    >
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-4 pb-4">
+                          <div className="relative mb-3 aspect-[16/9] overflow-hidden rounded-md bg-muted">
+                            <img
+                              src={s.image}
+                              alt={s.title}
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          </div>
+                          <p className="text-sm leading-relaxed text-muted-foreground">
+                            {s.description}
+                          </p>
+                          <Link
+                            to="/contact"
+                            className="btn-yellow mt-4 !py-2.5 !px-5 !text-sm"
+                          >
+                            Get Quote
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile CTA — yellow medium button */}
+          <div className="mt-6 flex justify-center sm:hidden">
+            <Link to="/services" className="btn-yellow !py-3 !px-6 !text-sm">
+              View All Services
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
