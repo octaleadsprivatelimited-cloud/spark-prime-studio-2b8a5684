@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHead } from "../components/PageHead";
 import { HeroCarousel } from "../components/HeroCarousel";
