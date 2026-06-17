@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { PageHead } from "../components/PageHead";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { PageHead } from "../components/PageHead";
 import { HeroCarousel } from "../components/HeroCarousel";
 import { SectionReveal } from "../components/SectionReveal";
 import { ServiceCard } from "../components/ServiceCard";
