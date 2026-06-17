@@ -225,17 +225,33 @@
   position: relative;
   overflow: hidden;
 }
+.hero-slide img {
+  filter: brightness(1.15) contrast(1.05);
+}
 .hero-slide::after {
   content: '';
   position: absolute;
   inset: 0;
+  /* Mobile: bottom-to-top gradient (text sits at bottom) */
   background: linear-gradient(
-    90deg,
-    oklch(0.12 0.03 255 / 90%) 0%,
-    oklch(0.12 0.03 255 / 60%) 40%,
-    oklch(0.12 0.03 255 / 10%) 70%,
-    transparent 100%
+    0deg,
+    oklch(0.12 0.03 255 / 85%) 0%,
+    oklch(0.12 0.03 255 / 50%) 30%,
+    oklch(0.12 0.03 255 / 20%) 60%,
+    oklch(0.12 0.03 255 / 10%) 100%
   );
+}
+@media (min-width: 640px) {
+  .hero-slide::after {
+    /* Desktop: left-to-right gradient (text sits left/center) */
+    background: linear-gradient(
+      90deg,
+      oklch(0.12 0.03 255 / 80%) 0%,
+      oklch(0.12 0.03 255 / 50%) 40%,
+      oklch(0.12 0.03 255 / 15%) 70%,
+      oklch(0.12 0.03 255 / 5%) 100%
+    );
+  }
 }
 
 /* ── Buttons ── */

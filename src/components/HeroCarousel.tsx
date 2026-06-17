@@ -20,7 +20,7 @@ export function HeroCarousel() {
   const slide = slides[current];
 
   return (
-    <section className="relative h-[62vh] min-h-[380px] sm:h-[70vh] sm:min-h-[420px] md:h-[78vh] md:min-h-[460px] max-h-[800px] overflow-hidden bg-brand-dark">
+    <section className="relative h-[60vh] min-h-[360px] sm:h-[68vh] sm:min-h-[400px] md:h-[78vh] md:min-h-[460px] max-h-[800px] overflow-hidden bg-brand-dark">
       {/* Background Images */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -31,13 +31,13 @@ export function HeroCarousel() {
           transition={{ duration: 0.8 }}
           className="hero-slide absolute inset-0"
         >
-          <img src={slide.image} alt="" className="h-full w-full object-cover" width={1920} height={800} />
+          <img src={slide.image} alt="" className="h-full w-full object-cover object-center" width={1920} height={800} />
         </motion.div>
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 flex h-full items-end sm:items-center">
-        <div className="mx-auto w-full max-w-7xl px-4 pb-12 sm:pb-0 lg:px-6">
+      <div className="relative z-10 flex h-full items-end sm:items-center pb-safe">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:pb-0 lg:px-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
