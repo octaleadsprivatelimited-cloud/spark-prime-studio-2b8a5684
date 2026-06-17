@@ -247,8 +247,41 @@ function HomePage() {
       {/* About Preview */}
       <section className="section-padding bg-surface-elevated">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            {/* Left: Image side */}
             <SectionReveal>
+              <div className="relative">
+                {/* Main image */}
+                <div className="relative overflow-hidden rounded-xl shadow-xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80"
+                    alt="Nataraj Electricals - Industrial electrical work"
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                </div>
+                {/* Floating experience badge */}
+                <div className="absolute -bottom-4 -right-2 rounded-xl bg-brand-red p-4 shadow-lg sm:-right-4 sm:p-5">
+                  <div className="text-center text-brand-red-foreground">
+                    <div className="font-heading text-3xl font-extrabold sm:text-4xl">15+</div>
+                    <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider opacity-90 sm:text-xs">Years Experience</div>
+                  </div>
+                </div>
+                {/* Secondary small image */}
+                <div className="absolute -left-2 -top-3 hidden w-28 overflow-hidden rounded-lg border-2 border-white shadow-lg sm:block sm:w-32 md:w-36">
+                  <img
+                    src="https://images.unsplash.com/photo-1621905251189-3b35935955c0?w=400&q=80"
+                    alt="Electrical team at work"
+                    loading="lazy"
+                    className="aspect-square w-full object-cover"
+                  />
+                </div>
+              </div>
+            </SectionReveal>
+
+            {/* Right: Content side */}
+            <SectionReveal delay={0.15}>
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">About Nataraj</span>
               <h2 className="mt-2 font-heading text-3xl font-bold text-foreground md:text-4xl">
                 Building Trust Through Quality & Reliability
@@ -256,38 +289,62 @@ function HomePage() {
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                 Founded in 2008 in Bangalore, Nataraj Electricals began with the aim of redefining the infrastructure development domain with new electrical solutions. As Government Licensed Class-I Electrical Contractors, we are an exclusive one-stop solution for all types of electrical services including Design, Planning, Erection, Testing, Commissioning, and AMC for H.T. & L.T works.
               </p>
-              <div className="mt-6 grid grid-cols-2 gap-4">
+
+              {/* Stats grid with icons */}
+              <div className="mt-6 grid grid-cols-2 gap-3">
                 {[
-                  { label: "ISO Certified", value: "9001:2015" },
-                  { label: "License", value: "Class-I" },
-                  { label: "Support", value: "24/7" },
-                  { label: "Operations", value: "PAN India" },
+                  {
+                    label: "ISO Certified",
+                    value: "9001:2015",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>,
+                  },
+                  {
+                    label: "License",
+                    value: "Class-I",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+                  },
+                  {
+                    label: "Support",
+                    value: "24/7",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+                  },
+                  {
+                    label: "Operations",
+                    value: "PAN India",
+                    icon: <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>,
+                  },
                 ].map((item) => (
-                  <div key={item.label} className="rounded border border-border bg-card p-4">
-                    <div className="font-heading text-xl font-extrabold text-brand-red">{item.value}</div>
-                    <div className="mt-0.5 text-xs text-muted-foreground">{item.label}</div>
+                  <div key={item.label} className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:border-brand-red/30 sm:p-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-red/10 text-brand-red sm:h-11 sm:w-11">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <div className="font-heading text-lg font-extrabold text-foreground sm:text-xl">{item.value}</div>
+                      <div className="text-[11px] text-muted-foreground sm:text-xs">{item.label}</div>
+                    </div>
                   </div>
                 ))}
               </div>
-              <Link to="/about" className="btn-primary mt-6">
-                Learn More About Us
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </Link>
-            </SectionReveal>
-            <SectionReveal delay={0.15}>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { icon: "⚡", title: "Government Licensed", desc: "Class-I contractor for projects of any scale" },
-                  { icon: "🛡️", title: "Safety First", desc: "Strict adherence to IS standards" },
-                  { icon: "⏱️", title: "On-Time Delivery", desc: "Committed to project deadlines" },
-                  { icon: "🔧", title: "End-to-End", desc: "Design to commissioning under one roof" },
-                ].map((item) => (
-                  <div key={item.title} className="rounded border border-border bg-card p-5 transition-colors hover:border-brand-red/30">
-                    <span className="text-2xl">{item.icon}</span>
-                    <h4 className="mt-3 font-heading text-sm font-bold text-foreground">{item.title}</h4>
-                    <p className="mt-1 text-xs text-muted-foreground">{item.desc}</p>
-                  </div>
+
+              {/* Feature highlights row */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Govt. Licensed", "IS Standards", "On-Time Delivery", "End-to-End"].map((tag) => (
+                  <span key={tag} className="inline-flex items-center gap-1.5 rounded-full bg-brand-yellow/15 px-3 py-1.5 text-xs font-semibold text-brand-yellow-foreground">
+                    <svg className="h-3 w-3 text-brand-red" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    {tag}
+                  </span>
                 ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Link to="/about" className="btn-primary">
+                  Learn More About Us
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </Link>
+                <Link to="/contact" className="btn-yellow">
+                  Get In Touch
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                </Link>
               </div>
             </SectionReveal>
           </div>
