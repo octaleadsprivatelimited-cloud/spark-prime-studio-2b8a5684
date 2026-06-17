@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import logoImg from "../assets/logo.png";
+
 
 const quickLinks = [
   { to: "/about" as const, label: "About Us" },
