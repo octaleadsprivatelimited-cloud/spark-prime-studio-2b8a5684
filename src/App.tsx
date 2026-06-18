@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollProgress } from "./components/ScrollProgress";
@@ -21,7 +21,6 @@ import AdminPage, {
   HeroAdmin,
   InquiriesAdmin,
 } from "./routes/admin";
-import { Navigate } from "react-router-dom";
 import AdminLoginPage from "./routes/admin.login";
 
 function NotFound() {
