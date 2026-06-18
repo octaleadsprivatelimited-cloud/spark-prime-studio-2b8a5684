@@ -1,5 +1,5 @@
-import { useState, useMemo, FormEvent, createContext, useContext } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { useState, useMemo, createContext, useContext } from "react";
+import { Navigate, Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuthUser, adminSignOut } from "../lib/adminAuth";
 import {
   useProjects,
@@ -51,13 +51,13 @@ import {
 
 type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inquiries";
 
-const TABS: { id: Tab; label: string; icon: typeof LayoutGrid }[] = [
-  { id: "projects", label: "Projects", icon: LayoutGrid },
-  { id: "services", label: "Services", icon: Wrench },
-  { id: "clients", label: "Clients", icon: Users },
-  { id: "testimonials", label: "Reviews", icon: MessageSquareQuote },
-  { id: "hero", label: "Hero", icon: ImageIcon },
-  { id: "inquiries", label: "Inquiries", icon: Inbox },
+const TABS: { id: Tab; label: string; icon: typeof LayoutGrid; path: string }[] = [
+  { id: "projects", label: "Projects", icon: LayoutGrid, path: "/admin/projects" },
+  { id: "services", label: "Services", icon: Wrench, path: "/admin/services" },
+  { id: "clients", label: "Clients", icon: Users, path: "/admin/clients" },
+  { id: "testimonials", label: "Reviews", icon: MessageSquareQuote, path: "/admin/testimonials" },
+  { id: "hero", label: "Hero", icon: ImageIcon, path: "/admin/hero" },
+  { id: "inquiries", label: "Inquiries", icon: Inbox, path: "/admin/inquiries" },
 ];
 
 // Microsoft Teams brand palette
@@ -71,19 +71,25 @@ const TEAMS = {
 
 // Search query shared across tabs
 const SearchCtx = createContext<string>("");
-const useSearchQuery = () => useContext(SearchCtx);
+export const useSearchQuery = () => useContext(SearchCtx);
 
 export default function AdminPage() {
   const { user, loading } = useAuthUser();
-  const [tab, setTab] = useState<Tab>("projects");
   const [query, setQuery] = useState("");
   const { items: inquiryItems } = useInquiries();
   const unread = inquiryItems.length;
+  const location = useLocation();
 
   if (loading) return <div className="min-h-screen" />;
   if (!user) return <Navigate to="/admin/login" replace />;
 
-  const ActiveTab = TABS.find((t) => t.id === tab)!;
+  // Redirect bare /admin → /admin/projects
+  if (location.pathname === "/admin" || location.pathname === "/admin/") {
+    return <Navigate to="/admin/projects" replace />;
+  }
+
+  const ActiveTab =
+    TABS.find((t) => location.pathname.startsWith(t.path)) ?? TABS[0];
 
   async function seedAll() {
     await Promise.all([
@@ -143,32 +149,32 @@ export default function AdminPage() {
                 )}
               </button>
             </PopoverTrigger>
-            <PopoverContent align="end" className="w-80 p-0">
-              <div className="flex items-center justify-between border-b px-3 py-2">
-                <p className="text-sm font-semibold">Notifications</p>
-                <button
-                  onClick={() => setTab("inquiries")}
-                  className="text-xs text-primary hover:underline"
-                >
-                  View all
-                </button>
-              </div>
+              <PopoverContent align="end" className="w-80 p-0">
+                <div className="flex items-center justify-between border-b px-3 py-2">
+                  <p className="text-sm font-semibold">Notifications</p>
+                  <Link
+                    to="/admin/inquiries"
+                    className="text-xs text-primary hover:underline"
+                  >
+                    View all
+                  </Link>
+                </div>
               <div className="max-h-72 overflow-y-auto">
                 {inquiryItems.length === 0 && (
                   <p className="px-3 py-6 text-center text-xs text-muted-foreground">
                     No new inquiries.
                   </p>
                 )}
-                {inquiryItems.slice(0, 6).map((i) => (
-                  <button
-                    key={i.id}
-                    onClick={() => setTab("inquiries")}
-                    className="block w-full border-b px-3 py-2 text-left hover:bg-muted"
-                  >
-                    <p className="text-xs font-semibold text-foreground">{i.name}</p>
-                    <p className="line-clamp-1 text-[11px] text-muted-foreground">{i.message}</p>
-                  </button>
-                ))}
+                  {inquiryItems.slice(0, 6).map((i) => (
+                    <Link
+                      key={i.id}
+                      to="/admin/inquiries"
+                      className="block w-full border-b px-3 py-2 text-left hover:bg-muted"
+                    >
+                      <p className="text-xs font-semibold text-foreground">{i.name}</p>
+                      <p className="line-clamp-1 text-[11px] text-muted-foreground">{i.message}</p>
+                    </Link>
+                  ))}
               </div>
             </PopoverContent>
           </Popover>
@@ -247,24 +253,31 @@ export default function AdminPage() {
             <ul className="flex flex-col">
               {TABS.map((t) => {
                 const Icon = t.icon;
-                const active = tab === t.id;
                 return (
                   <li key={t.id} className="relative">
-                    {active && (
-                      <span
-                        className="absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 rounded-r"
-                        style={{ background: "#ffffff" }}
-                      />
-                    )}
-                    <button
-                      onClick={() => setTab(t.id)}
-                      className={`flex w-full flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
-                        active ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/5 hover:text-white"
-                      }`}
+                    <NavLink
+                      to={t.path}
+                      className={({ isActive }) =>
+                        `flex w-full flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
+                          isActive
+                            ? "bg-white/10 text-white"
+                            : "text-white/80 hover:bg-white/5 hover:text-white"
+                        }`
+                      }
                     >
-                      <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
-                      <span className="leading-tight">{t.label}</span>
-                    </button>
+                      {({ isActive }) => (
+                        <>
+                          {isActive && (
+                            <span
+                              className="absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 rounded-r"
+                              style={{ background: "#ffffff" }}
+                            />
+                          )}
+                          <Icon className="h-5 w-5" strokeWidth={isActive ? 2.4 : 1.8} />
+                          <span className="leading-tight">{t.label}</span>
+                        </>
+                      )}
+                    </NavLink>
                   </li>
                 );
               })}
@@ -321,12 +334,7 @@ export default function AdminPage() {
             <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
               <div className="mx-auto max-w-6xl">
                 <SearchCtx.Provider value={query}>
-                  {tab === "projects" && <ProjectsAdmin />}
-                  {tab === "services" && <ServicesAdmin />}
-                  {tab === "clients" && <ClientsAdmin />}
-                  {tab === "testimonials" && <TestimonialsAdmin />}
-                  {tab === "hero" && <HeroAdmin />}
-                  {tab === "inquiries" && <InquiriesAdmin />}
+                  <Outlet />
                 </SearchCtx.Provider>
               </div>
             </div>
@@ -506,7 +514,7 @@ function genId(prefix: string) {
 }
 
 // ============= Projects =============
-function ProjectsAdmin() {
+export function ProjectsAdmin() {
   const { items, isFromFirestore } = useProjects();
   const [editing, setEditing] = useState<Project | null>(null);
   const q = useSearchQuery().toLowerCase();
@@ -602,7 +610,7 @@ function ProjectEditor({ initial, onClose }: { initial: Project; onClose: () => 
 }
 
 // ============= Services =============
-function ServicesAdmin() {
+export function ServicesAdmin() {
   const { items, isFromFirestore } = useServices();
   const [editing, setEditing] = useState<Service | null>(null);
   const q = useSearchQuery().toLowerCase();
@@ -671,7 +679,7 @@ function ServiceEditor({ initial, onClose }: { initial: Service; onClose: () => 
 }
 
 // ============= Clients =============
-function ClientsAdmin() {
+export function ClientsAdmin() {
   const { items, isFromFirestore } = useClients();
   const [editing, setEditing] = useState<Client | null>(null);
   const [syncing, setSyncing] = useState(false);
@@ -779,7 +787,7 @@ function ClientForm({ initial, onClose }: { initial: Client; onClose: () => void
 }
 
 // ============= Testimonials =============
-function TestimonialsAdmin() {
+export function TestimonialsAdmin() {
   const { items, isFromFirestore } = useTestimonials();
   const [editing, setEditing] = useState<Testimonial | null>(null);
   const q = useSearchQuery().toLowerCase();
@@ -838,7 +846,7 @@ function TestimonialForm({ initial, onClose }: { initial: Testimonial; onClose: 
 }
 
 // ============= Hero =============
-function HeroAdmin() {
+export function HeroAdmin() {
   const { items, isFromFirestore } = useHeroSlides();
   const [editing, setEditing] = useState<HeroSlide | null>(null);
   const q = useSearchQuery().toLowerCase();
@@ -907,7 +915,7 @@ function HeroEditor({ initial, onClose }: { initial: HeroSlide; onClose: () => v
 }
 
 // ============= Inquiries =============
-function InquiriesAdmin() {
+export function InquiriesAdmin() {
   const { items, loading, error } = useInquiries();
   const q = useSearchQuery().toLowerCase();
   const sorted = useMemo(
