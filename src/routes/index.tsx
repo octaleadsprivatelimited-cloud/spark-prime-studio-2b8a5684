@@ -189,6 +189,7 @@ function HomePage() {
                 icon={s.icon}
                 title={s.title}
                 description={s.description}
+                image={s.image}
                 delay={i * 0.05}
               />
             ))}
