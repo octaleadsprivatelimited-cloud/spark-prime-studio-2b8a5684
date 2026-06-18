@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import electricalTeamImg from "../assets/electrical-team.jpg";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHead } from "../components/PageHead";
