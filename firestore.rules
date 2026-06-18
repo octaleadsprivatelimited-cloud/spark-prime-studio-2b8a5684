@@ -4,7 +4,8 @@ service cloud.firestore {
 
     // Allow anyone to submit the contact form (anonymous submissions)
     match /contact_submissions/{document} {
-      allow read: if false;  // Only admins should read via Firebase Console
+      // Authenticated admins can read inquiries inside the admin panel
+      allow read: if request.auth != null;
       allow create: if request.resource.data.keys().hasAll(['name', 'phone', 'email', 'message'])
                     && request.resource.data.name is string
                     && request.resource.data.phone is string
@@ -15,8 +16,16 @@ service cloud.firestore {
                     && request.resource.data.phone.size() <= 15
                     && request.resource.data.email.size() <= 255
                     && request.resource.data.message.size() <= 1000;
-      allow update, delete: if false;
+      allow update: if false;
+      allow delete: if request.auth != null;
     }
+
+    // Public site content — anyone can read, only authenticated admins can write
+    match /site_projects/{document}      { allow read: if true; allow write: if request.auth != null; }
+    match /site_services/{document}      { allow read: if true; allow write: if request.auth != null; }
+    match /site_clients/{document}       { allow read: if true; allow write: if request.auth != null; }
+    match /site_testimonials/{document}  { allow read: if true; allow write: if request.auth != null; }
+    match /site_hero_slides/{document}   { allow read: if true; allow write: if request.auth != null; }
 
     // Deny all other access by default
     match /{document=**} {
