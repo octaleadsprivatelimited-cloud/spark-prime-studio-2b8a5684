@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import electricalTeamImg from "../assets/electrical-team.jpg";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHead } from "../components/PageHead";
@@ -306,7 +307,7 @@ function HomePage() {
                 {/* Secondary small image */}
                 <div className="absolute -left-2 -top-3 hidden w-28 overflow-hidden rounded-lg border-2 border-white shadow-lg sm:block sm:w-32 md:w-36">
                   <img
-                    src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&q=80"
+                    src={electricalTeamImg}
                     alt="Electrical team at work"
                     loading="lazy"
                     className="aspect-square w-full object-cover"
