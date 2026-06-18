@@ -44,7 +44,7 @@ const services = [
     icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
     title: "Bescom Approvals",
     description: "Liaisoning and obtaining inspected approvals from BESCOM for H.T. installations.",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80",
   },
 ];
 
@@ -306,7 +306,7 @@ function HomePage() {
                 {/* Secondary small image */}
                 <div className="absolute -left-2 -top-3 hidden w-28 overflow-hidden rounded-lg border-2 border-white shadow-lg sm:block sm:w-32 md:w-36">
                   <img
-                    src="https://images.unsplash.com/photo-1621905251189-3b35935955c0?w=400&q=80"
+                    src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&q=80"
                     alt="Electrical team at work"
                     loading="lazy"
                     className="aspect-square w-full object-cover"
