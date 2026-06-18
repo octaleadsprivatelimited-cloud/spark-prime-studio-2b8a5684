@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import electricalTeamImg from "../assets/electrical-team.jpg";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHead } from "../components/PageHead";
@@ -303,15 +302,6 @@ function HomePage() {
                     <div className="font-heading text-3xl font-extrabold sm:text-4xl">15+</div>
                     <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider opacity-90 sm:text-xs">Years Experience</div>
                   </div>
-                </div>
-                {/* Secondary small image */}
-                <div className="absolute -left-2 -top-3 hidden w-28 overflow-hidden rounded-lg border-2 border-white shadow-lg sm:block sm:w-32 md:w-36">
-                  <img
-                    src={electricalTeamImg}
-                    alt="Electrical team at work"
-                    loading="lazy"
-                    className="aspect-square w-full object-cover"
-                  />
                 </div>
               </div>
             </SectionReveal>
