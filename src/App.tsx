@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollProgress } from "./components/ScrollProgress";
@@ -13,7 +13,14 @@ import ClientsPage from "./routes/clients";
 import ContactPage from "./routes/contact";
 import ProjectsPage from "./routes/projects";
 import ProjectDetailPage from "./routes/projects.$projectId";
-import AdminPage from "./routes/admin";
+import AdminPage, {
+  ProjectsAdmin,
+  ServicesAdmin,
+  ClientsAdmin,
+  TestimonialsAdmin,
+  HeroAdmin,
+  InquiriesAdmin,
+} from "./routes/admin";
 import AdminLoginPage from "./routes/admin.login";
 
 function NotFound() {
@@ -47,8 +54,16 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<Navigate to="/admin/projects" replace />} />
+            <Route path="projects" element={<ProjectsAdmin />} />
+            <Route path="services" element={<ServicesAdmin />} />
+            <Route path="clients" element={<ClientsAdmin />} />
+            <Route path="testimonials" element={<TestimonialsAdmin />} />
+            <Route path="hero" element={<HeroAdmin />} />
+            <Route path="inquiries" element={<InquiriesAdmin />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
