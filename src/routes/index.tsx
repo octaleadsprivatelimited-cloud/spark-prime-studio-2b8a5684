@@ -56,7 +56,7 @@ const featuredProjects = [
 ];
 
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
-const projectCategories = ["All Projects", "Ongoing", "Completed"];
+const projectCategories = ["All Projects", "Ongoing"];
 
 const clients = [
   { name: "TVS Motor", domain: "tvsmotor.com", initials: "TVS", color: "#1a4b8c" },
