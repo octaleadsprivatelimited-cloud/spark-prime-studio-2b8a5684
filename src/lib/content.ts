@@ -131,14 +131,15 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
 function useCollection<T extends { id: string }>(
   name: string,
   defaults: T[],
-  orderField: string = "order"
+  orderField: string = "order",
+  orderDirection: "asc" | "desc" = "asc"
 ): { items: T[]; loading: boolean; isFromFirestore: boolean } {
   const [items, setItems] = useState<T[]>(defaults);
   const [loading, setLoading] = useState(true);
   const [isFromFirestore, setIsFromFirestore] = useState(false);
 
   useEffect(() => {
-    const q = query(collection(db, name), orderBy(orderField, "asc"));
+    const q = query(collection(db, name), orderBy(orderField, orderDirection));
     const unsub = onSnapshot(
       q,
       (snap) => {
@@ -165,7 +166,7 @@ function useCollection<T extends { id: string }>(
 }
 
 // ============= Public hooks =============
-export const useProjects = () => useCollection<Project>("site_projects", DEFAULT_PROJECTS);
+export const useProjects = () => useCollection<Project>("site_projects", DEFAULT_PROJECTS, "order", "desc");
 export const useServices = () => useCollection<Service>("site_services", DEFAULT_SERVICES);
 export const useClients = () => {
   const result = useCollection<Client>("site_clients", DEFAULT_CLIENTS);

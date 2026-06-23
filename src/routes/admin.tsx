@@ -513,31 +513,99 @@ function genId(prefix: string) {
   return `${prefix}-${Date.now().toString(36)}`;
 }
 
-// ============= Projects =============
 export function ProjectsAdmin() {
   const { items, isFromFirestore } = useProjects();
   const [editing, setEditing] = useState<Project | null>(null);
   const q = useSearchQuery().toLowerCase();
+  const bulkInputRef = useRef<HTMLInputElement | null>(null);
+  const [bulkProgress, setBulkProgress] = useState<string | null>(null);
+
+  const maxOrder = useMemo(() => {
+    if (items.length === 0) return 0;
+    return Math.max(...items.map((item) => item.order ?? 0));
+  }, [items]);
+
   const filtered = q
     ? items.filter((p) =>
         [p.title, p.client, p.category, p.description].some((x) => (x ?? "").toLowerCase().includes(q)),
       )
     : items;
+
+  async function handleBulkUpload(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    setBulkProgress(`Uploading 0/${files.length} images...`);
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        setBulkProgress(`Compressing & saving ${i + 1}/${files.length}: ${file.name}...`);
+        const dataUrl = await compressImage(file, { maxWidth: 1280, maxHeight: 900, quality: 0.78 });
+        
+        // Clean up file name to use as title
+        const cleanName = file.name
+          .replace(/\.[^/.]+$/, "") // remove extension
+          .replace(/[-_]+/g, " ")  // replace hyphens/underscores with spaces
+          .split(" ")
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ")
+          .trim();
+
+        const newProject: Project = {
+          id: genId("p"),
+          title: cleanName || `Project ${items.length + i + 1}`,
+          client: "Nataraj Electricals",
+          category: "Completed",
+          image: dataUrl,
+          description: "Project details to be updated.",
+          order: maxOrder + (files.length - i),
+        };
+        await saveDoc("site_projects", newProject);
+      }
+      setBulkProgress(null);
+      alert(`Successfully added ${files.length} project(s).`);
+    } catch (err) {
+      console.error(err);
+      setBulkProgress(null);
+      alert(`Error uploading files: ${err instanceof Error ? err.message : err}`);
+    }
+  }
+
   return (
     <div>
       {!isFromFirestore && <SeedNotice collectionName="site_projects" defaults={DEFAULT_PROJECTS} />}
-      <div className="mb-5 flex items-center justify-between">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
         <h2 className="font-heading text-xl font-bold text-foreground">
           Projects ({filtered.length}
           {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
         </h2>
-        <button
-          onClick={() => setEditing({ id: genId("p"), title: "", client: "", category: "Completed", image: "", description: "", order: items.length })}
-          className="btn-primary !py-2 !px-4 !text-xs"
-        >
-          + Add Project
-        </button>
+        <div className="flex items-center gap-2">
+          <input
+            ref={bulkInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => handleBulkUpload(e.target.files)}
+          />
+          <button
+            onClick={() => bulkInputRef.current?.click()}
+            disabled={!!bulkProgress}
+            className="rounded border border-border bg-background px-3 py-2 text-xs font-medium text-foreground disabled:opacity-50"
+          >
+            {bulkProgress ? "Uploading..." : "+ Bulk Add Images"}
+          </button>
+          <button
+            onClick={() => setEditing({ id: genId("p"), title: "", client: "", category: "Completed", image: "", description: "", order: maxOrder + 1 })}
+            className="btn-primary !py-2 !px-4 !text-xs"
+          >
+            + Add Project
+          </button>
+        </div>
       </div>
+      {bulkProgress && (
+        <div className="mb-4 rounded bg-brand-red/10 px-4 py-3 text-xs text-brand-red animate-pulse font-medium">
+          {bulkProgress}
+        </div>
+      )}
       <div className="grid gap-3">
         {filtered.map((p) => (
           <Card key={p.id} className="flex items-center gap-4">

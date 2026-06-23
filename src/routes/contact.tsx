@@ -139,11 +139,11 @@ function ContactPage() {
                         </span>
                         +91 99020 12565
                       </a>
-                      <a href="mailto:Sarveshkumarbc90@gmail.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground">
+                      <a href="mailto:Sarvesh@natarajelectricals.in" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground">
                         <span className="flex h-9 w-9 items-center justify-center rounded bg-brand-red/10 text-brand-red">
                           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         </span>
-                        Sarveshkumarbc90@gmail.com
+                        Sarvesh@natarajelectricals.in
                       </a>
                       <a href="https://wa.me/919902012565" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground">
                         <span className="flex h-9 w-9 items-center justify-center rounded bg-brand-red/10 text-brand-red">
