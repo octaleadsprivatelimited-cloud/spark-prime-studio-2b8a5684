@@ -445,33 +445,25 @@ function HomePage() {
               </h2>
             </div>
           </SectionReveal>
-          {/* Desktop grid */}
-          <div className="mt-10 hidden grid-cols-4 gap-4 sm:grid">
-            {clients.map((c, i) => (
-              <SectionReveal key={c.name} delay={i * 0.04}>
-                <div className="flex h-24 items-center justify-center rounded border border-border bg-white px-4 transition-all hover:border-brand-red/30 hover:shadow-sm">
-                  <ClientLogo client={c} />
-                </div>
-              </SectionReveal>
-            ))}
-          </div>
-
-          {/* Mobile zig-zag scrolling marquee */}
-          <div className="mt-8 sm:hidden overflow-hidden relative -mx-4">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-surface-elevated to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-surface-elevated to-transparent" />
-            <div className="flex w-max animate-marquee gap-3 py-4">
-              {[...clients, ...clients].map((c, i) => (
-                <div
-                  key={`${c.name}-${i}`}
-                  className="flex h-16 w-32 shrink-0 items-center justify-center rounded border border-border bg-white px-3"
-                  style={{ transform: `translateY(${i % 2 === 0 ? "-10px" : "10px"})` }}
-                >
-                  <ClientLogo client={c} size="sm" />
-                </div>
-              ))}
+          {/* Carousel Slider (Unified for all screens) */}
+          <SectionReveal>
+            <div className="mt-10 overflow-hidden relative -mx-4 sm:-mx-6">
+              {/* Left and right shadow fades */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-surface-elevated to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface-elevated to-transparent" />
+              
+              <div className="flex w-max animate-marquee gap-4 py-2 hover:[animation-play-state:paused]">
+                {[...clients, ...clients, ...clients, ...clients].map((c, i) => (
+                  <div
+                    key={`${c.id || c.name}-${i}`}
+                    className="flex h-20 w-40 sm:h-24 sm:w-48 shrink-0 items-center justify-center rounded-xl border border-border bg-white px-6 transition-all hover:border-brand-red/30 hover:shadow-sm"
+                  >
+                    <ClientLogo client={c} />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </SectionReveal>
         </div>
       </section>
 
