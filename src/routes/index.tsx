@@ -8,83 +8,72 @@ import { ServiceCard } from "../components/ServiceCard";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { ProjectCard } from "../components/ProjectCard";
 import { CTASection } from "../components/CTASection";
-
-const services = [
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
-    title: "Designs",
-    description: "Concurrent designs, engineering analysis early in design, scheduling, quality control and CAD support.",
-    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
-  },
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>,
-    title: "Electrification",
-    description: "H.T. and L.T Installations, Industrial wiring, Electrical Designing, Annual Maintenance, and Approvals.",
-    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80",
-  },
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811z" /></svg>,
-    title: "Complete power solution",
-    description: "Proficient in load audits, code compliance installations, and obtaining pre-commissioning approvals.",
-    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80",
-  },
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>,
-    title: "Project management",
-    description: "End-to-end management, site construction engineering, cable pulling, scaffolding, and light protection.",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
-  },
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.66-5.66M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-    title: "AMC management",
-    description: "Preventive, breakdown, and routine maintenance contracts for critical electrical installations.",
-    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80",
-  },
-  {
-    icon: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
-    title: "Bescom Approvals",
-    description: "Liaisoning and obtaining inspected approvals from BESCOM for H.T. installations.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80",
-  },
-];
-
-const featuredProjects = [
-  { id: "o1", title: "Bannergatta Biological Park Electrification", client: "Bannergatta Biological Park", category: "Ongoing", location: "Bangalore", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&q=80" },
-  { id: "c22", title: "TVS Motor Factory Electrification", client: "TVS Motor Company Ltd.", category: "Completed", location: "Hosur", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" },
-  { id: "c23", title: "BIRA BIAL Airport Project", client: "BIAL, Bangalore", category: "Completed", location: "Bangalore", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" },
-];
+import { useSettings, useProjects, useServices, useClients } from "../lib/content";
 
 const serviceCategories = ["All Services", "Designs", "Electrification", "Project management"];
 const projectCategories = ["All Projects", "Ongoing"];
 
-const clients = [
-  { name: "TVS Motor", domain: "tvsmotor.com", initials: "TVS", color: "#1a4b8c" },
-  { name: "Havells India", domain: "havells.com", initials: "HV", color: "#c41230" },
-  { name: "Mettler Toledo", domain: "mt.com", initials: "MT", color: "#003d79" },
-  { name: "Cyient DLM", domain: "cyientdlm.com", initials: "CD", color: "#5a189a" },
-  { name: "BIAL", domain: "bengaluruairport.com", initials: "BL", color: "#9d0208" },
-  { name: "Biocon", domain: "biocon.com", initials: "BC", color: "#0077b6" },
-  { name: "Tatsuno India", domain: "tatsuno-corporation.com", initials: "TI", color: "#0a3d62" },
-  { name: "GKB Vision", domain: "gkb.net", initials: "GK", color: "#e85d04" },
-];
+const serviceIcons: Record<string, React.ReactNode> = {
+  designs: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
+  electrification: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>,
+  power: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811z" /></svg>,
+  pm: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>,
+  amc: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.66-5.66M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+  bescom: <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
+};
 
-function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; size?: "sm" | "md" }) {
+const serviceImages: Record<string, string> = {
+  designs: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
+  electrification: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80",
+  power: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80",
+  pm: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
+  amc: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80",
+  bescom: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80",
+};
+
+const fallbackIcon = (
+  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+  </svg>
+);
+
+const fallbackImage = "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80";
+
+function ClientLogo({ client, size = "md" }: { client: { name: string; logo?: string }; size?: "sm" | "md" }) {
   const [failed, setFailed] = useState(false);
   const dims = size === "sm" ? "h-7" : "h-10";
   const initialsSize = size === "sm" ? "h-8 w-8 text-[10px]" : "h-9 w-9 text-xs";
-  if (failed) {
+
+  // Generate initials and color if logo fails or is missing
+  const initials = client.name
+    .split(" ")
+    .map((n: string) => n[0])
+    .join("")
+    .slice(0, 3)
+    .toUpperCase();
+    
+  // Simple hash for color
+  const colors = ["#1a4b8c", "#c41230", "#003d79", "#5a189a", "#9d0208", "#0077b6", "#0a3d62", "#e85d04"];
+  let charCodeSum = 0;
+  for (let i = 0; i < client.name.length; i++) {
+    charCodeSum += client.name.charCodeAt(i);
+  }
+  const color = colors[charCodeSum % colors.length];
+
+  if (failed || !client.logo) {
     return (
       <span
         className={`flex ${initialsSize} shrink-0 items-center justify-center rounded-full font-extrabold text-white`}
-        style={{ backgroundColor: client.color }}
+        style={{ backgroundColor: color }}
       >
-        {client.initials}
+        {initials}
       </span>
     );
   }
+
   return (
     <img
-      src={`https://logo.clearbit.com/${client.domain}`}
+      src={client.logo}
       alt={`${client.name} logo`}
       loading="lazy"
       onError={() => setFailed(true)}
@@ -94,6 +83,11 @@ function ClientLogo({ client, size = "md" }: { client: typeof clients[number]; s
 }
 
 function HomePage() {
+  const { settings } = useSettings();
+  const { items: dbProjects } = useProjects();
+  const { items: dbServices } = useServices();
+  const { items: clients } = useClients();
+
   const [activeTab, setActiveTab] = useState(0);
   const [openService, setOpenService] = useState<number | null>(0);
   const [projectFilter, setProjectFilter] = useState(0);
@@ -126,6 +120,28 @@ function HomePage() {
     advantageButtonRefs.current[next]?.focus();
   };
 
+  // Map services with their respective icons/images
+  const services = dbServices.map((s) => ({
+    id: s.id,
+    title: s.title,
+    description: s.description,
+    icon: serviceIcons[s.id] || fallbackIcon,
+    image: serviceImages[s.id] || fallbackImage,
+  }));
+
+  // Filter services by activeTab category
+  const filteredServices = activeTab === 0
+    ? services
+    : services.filter(
+        (s) => s.title.toLowerCase() === serviceCategories[activeTab].toLowerCase()
+      );
+
+  // Get featured projects: filter by p.featured === true, fallback to first 3
+  let featuredProjects = dbProjects.filter((p) => p.featured === true);
+  if (featuredProjects.length === 0) {
+    featuredProjects = dbProjects.slice(0, 3);
+  }
+
   const filteredProjects = projectFilter === 0
     ? featuredProjects
     : featuredProjects.filter(p => p.category === projectCategories[projectFilter]);
@@ -141,10 +157,10 @@ function HomePage() {
       <section className="stats-bar">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-0 divide-x divide-brand-dark-foreground/10 md:grid-cols-4">
           {[
-            { value: "15+", label: "Years Experience" },
-            { value: "500+", label: "Projects Completed" },
-            { value: "200+", label: "Happy Clients" },
-            { value: "50+", label: "Expert Engineers" },
+            { value: settings.statYears, label: "Years Experience" },
+            { value: settings.statProjects, label: "Projects Completed" },
+            { value: settings.statClients, label: "Happy Clients" },
+            { value: settings.statEngineers, label: "Expert Engineers" },
           ].map((stat) => (
             <div key={stat.label} className="px-4 py-6 text-center md:py-8">
               <div className="font-heading text-2xl font-extrabold md:text-3xl">{stat.value}</div>
@@ -183,7 +199,7 @@ function HomePage() {
 
           {/* Desktop grid */}
           <div className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
+            {filteredServices.map((s, i) => (
               <ServiceCard
                 key={s.title}
                 icon={s.icon}
@@ -197,7 +213,7 @@ function HomePage() {
 
           {/* Mobile collapsible cards with images */}
           <div className="mt-6 flex flex-col gap-3 sm:hidden">
-            {services.map((s, i) => {
+            {filteredServices.map((s, i) => {
               const isOpen = openService === i;
               return (
                 <div
@@ -299,7 +315,7 @@ function HomePage() {
                 {/* Floating experience badge */}
                 <div className="absolute -bottom-4 -right-2 rounded-xl bg-brand-red p-4 shadow-lg sm:-right-4 sm:p-5">
                   <div className="text-center text-brand-red-foreground">
-                    <div className="font-heading text-3xl font-extrabold sm:text-4xl">15+</div>
+                    <div className="font-heading text-3xl font-extrabold sm:text-4xl">{settings.statYears}</div>
                     <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider opacity-90 sm:text-xs">Years Experience</div>
                   </div>
                 </div>
@@ -478,7 +494,7 @@ function HomePage() {
                 {/* Floating stat card */}
                 <div className="absolute -bottom-4 -right-2 rounded-xl bg-brand-yellow p-4 shadow-lg sm:-right-4 sm:p-5">
                   <div className="text-center text-brand-yellow-foreground">
-                    <div className="font-heading text-3xl font-extrabold sm:text-4xl">500+</div>
+                    <div className="font-heading text-3xl font-extrabold sm:text-4xl">{settings.statProjects}</div>
                     <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider opacity-80 sm:text-xs">Projects Done</div>
                   </div>
                 </div>

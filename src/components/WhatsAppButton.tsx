@@ -1,7 +1,10 @@
+import { useSettings } from "../lib/content";
+
 export function WhatsAppButton() {
+  const { settings } = useSettings();
   return (
     <a
-      href="https://wa.me/919902012565?text=Hello%2C%20I%27m%20interested%20in%20your%20electrical%20services"
+      href={`https://wa.me/${settings.whatsappNumber}?text=Hello%2C%20I%27m%20interested%20in%20your%20electrical%20services`}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-float"

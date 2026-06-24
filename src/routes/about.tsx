@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSettings } from "../lib/content";
 import { PageHead } from "../components/PageHead";
 import { SectionReveal } from "../components/SectionReveal";
 import { CTASection } from "../components/CTASection";
@@ -28,6 +29,7 @@ const certifications = [
 ];
 
 function AboutPage() {
+  const { settings } = useSettings();
   return (
     <>
       <PageHead title="About Us — Nataraj Electricals" description="Learn about Nataraj Electricals — our journey since 2008, mission, vision, and commitment to quality." />
@@ -325,7 +327,7 @@ function AboutPage() {
                     Partner With Us
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                   </Link>
-                  <a href="tel:+919902012565" className="btn-primary">
+                  <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="btn-primary">
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     Call Now
                   </a>

@@ -1,4 +1,5 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useSettings } from "../lib/content";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
@@ -14,6 +15,7 @@ const navLinks = [
 ];
 
 export function Navbar() {
+  const { settings } = useSettings();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(
@@ -47,9 +49,9 @@ export function Navbar() {
       {/* Announcement Bar */}
       <div className="announcement-bar hidden items-center justify-center gap-4 px-4 py-2 md:flex">
         <span className="opacity-70">Government Licensed Class-I Electrical Contractor — Serving Karnataka Since 2008</span>
-        <a href="tel:+919902012565" className="flex items-center gap-1.5 font-semibold opacity-90 hover:opacity-100">
+        <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="flex items-center gap-1.5 font-semibold opacity-90 hover:opacity-100">
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          +91 99020 12565
+          {settings.phone}
         </a>
       </div>
 
@@ -80,7 +82,7 @@ export function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a href="tel:+919902012565" className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground">
+            <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground">
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
               Call Us
             </a>

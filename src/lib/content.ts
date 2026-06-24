@@ -23,6 +23,7 @@ export type Project = {
   image: string;
   description: string;
   order?: number;
+  featured?: boolean;
 };
 
 export type Service = {
@@ -266,4 +267,66 @@ export async function seedCollection<T extends { id: string }>(
       createdAt: serverTimestamp(),
     });
   }
+}
+
+// ============= Settings =============
+export type SiteSettings = {
+  id: string;
+  phone: string;
+  email: string;
+  address: string;
+  gstNumber: string;
+  regNumber: string;
+  whatsappNumber: string;
+  statYears: string;
+  statProjects: string;
+  statClients: string;
+  statEngineers: string;
+};
+
+export const DEFAULT_SETTINGS: SiteSettings = {
+  id: "main",
+  phone: "+91 99020 12565",
+  email: "Sarvesh@natarajelectricals.in",
+  address: "#243/3/1/, 1st main, 1st cross, BEML layout 5th stage, Rajarajeshwarinagar, Bangalore – 560098",
+  gstNumber: "29AICPC8434G1ZC",
+  regNumber: "Govt.Lic.Class-I, 1CL120193BNG",
+  whatsappNumber: "919902012565",
+  statYears: "15+",
+  statProjects: "500+",
+  statClients: "200+",
+  statEngineers: "50+",
+};
+
+export function useSettings() {
+  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsub = onSnapshot(
+      doc(db, "site_settings", "main"),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          setSettings({ id: "main", ...(docSnap.data() as Omit<SiteSettings, "id">) });
+        } else {
+          setSettings(DEFAULT_SETTINGS);
+        }
+        setLoading(false);
+      },
+      () => {
+        setLoading(false);
+      }
+    );
+    return unsub;
+  }, []);
+
+  return { settings, loading };
+}
+
+export async function saveSettings(settings: SiteSettings) {
+  const { id, ...rest } = settings;
+  await setDoc(doc(db, "site_settings", "main"), {
+    ...rest,
+    updatedAt: serverTimestamp(),
+  });
 }

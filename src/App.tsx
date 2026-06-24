@@ -20,6 +20,7 @@ import AdminPage, {
   TestimonialsAdmin,
   HeroAdmin,
   InquiriesAdmin,
+  SettingsAdmin,
 } from "./routes/admin";
 import AdminLoginPage from "./routes/admin.login";
 
@@ -63,6 +64,7 @@ export default function App() {
             <Route path="testimonials" element={<TestimonialsAdmin />} />
             <Route path="hero" element={<HeroAdmin />} />
             <Route path="inquiries" element={<InquiriesAdmin />} />
+            <Route path="settings" element={<SettingsAdmin />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

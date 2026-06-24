@@ -1,4 +1,4 @@
-import { useState, useMemo, createContext, useContext } from "react";
+import { useState, useMemo, createContext, useContext, useEffect } from "react";
 import { Navigate, Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuthUser, adminSignOut } from "../lib/adminAuth";
 import {
@@ -21,6 +21,9 @@ import {
   Client,
   Testimonial,
   HeroSlide,
+  SiteSettings,
+  useSettings,
+  saveSettings,
 } from "../lib/content";
 import { PageHead } from "../components/PageHead";
 import { compressImage, CompressOptions } from "../lib/imageUpload";
@@ -49,7 +52,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inquiries";
+type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inquiries" | "settings";
 
 const TABS: { id: Tab; label: string; icon: typeof LayoutGrid; path: string }[] = [
   { id: "projects", label: "Projects", icon: LayoutGrid, path: "/admin/projects" },
@@ -58,6 +61,7 @@ const TABS: { id: Tab; label: string; icon: typeof LayoutGrid; path: string }[] 
   { id: "testimonials", label: "Reviews", icon: MessageSquareQuote, path: "/admin/testimonials" },
   { id: "hero", label: "Hero", icon: ImageIcon, path: "/admin/hero" },
   { id: "inquiries", label: "Inquiries", icon: Inbox, path: "/admin/inquiries" },
+  { id: "settings", label: "Settings", icon: Settings, path: "/admin/settings" },
 ];
 
 // Microsoft Teams brand palette
@@ -613,6 +617,7 @@ export function ProjectsAdmin() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
                 <span className="rounded bg-brand-red/10 px-2 py-0.5 text-[10px] font-bold uppercase text-brand-red">{p.category}</span>
+                {p.featured && <span className="rounded bg-brand-yellow/20 px-2 py-0.5 text-[10px] font-bold uppercase text-brand-yellow-foreground">Featured</span>}
                 <p className="truncate text-sm font-bold text-foreground">{p.title}</p>
               </div>
               <p className="truncate text-xs text-muted-foreground">{p.client}</p>
@@ -670,6 +675,16 @@ function ProjectEditor({ initial, onClose }: { initial: Project; onClose: () => 
           compress={{ maxWidth: 1280, maxHeight: 900, quality: 0.78 }}
         />
         <div><Label>Description</Label><TextArea rows={4} value={p.description} onChange={(e) => setP({ ...p, description: e.target.value })} /></div>
+        <div className="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            id="project-featured"
+            checked={!!p.featured}
+            onChange={(e) => setP({ ...p, featured: e.target.checked })}
+            className="rounded border-border text-brand-red focus:ring-brand-red h-4 w-4"
+          />
+          <label htmlFor="project-featured" className="text-xs font-bold uppercase tracking-wider text-muted-foreground cursor-pointer">Show on Home Page (Featured)</label>
+        </div>
         <div><Label>Order</Label><Input type="number" value={p.order ?? 0} onChange={(e) => setP({ ...p, order: Number(e.target.value) })} /></div>
       </div>
       <ModalActions onCancel={onClose} onSave={save} saving={saving} />
@@ -812,9 +827,16 @@ export function ClientsAdmin() {
       )}
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((c) => (
-          <Card key={c.id} className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">{c.name}</span>
-            <div className="flex gap-1">
+          <Card key={c.id} className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              {c.logo ? (
+                <img src={c.logo} alt="" className="h-8 w-12 shrink-0 rounded object-contain bg-white p-0.5 border" />
+              ) : (
+                <div className="h-8 w-12 shrink-0 rounded bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground">No Logo</div>
+              )}
+              <span className="truncate text-sm font-medium text-foreground">{c.name}</span>
+            </div>
+            <div className="flex shrink-0 gap-1">
               <button onClick={() => setEditing({ ...c })} className="rounded border border-border bg-background px-2 py-1 text-xs">Edit</button>
               {isFromFirestore && (
                 <button onClick={async () => { if (confirm(`Delete ${c.name}?`)) await removeDoc("site_clients", c.id); }} className="rounded border border-brand-red/30 bg-background px-2 py-1 text-xs text-brand-red">Delete</button>
@@ -1061,4 +1083,106 @@ function ModalActions({ onCancel, onSave, saving }: { onCancel: () => void; onSa
 
 function initialTitle(name: string, kind: string) {
   return name ? `Edit ${kind}` : `Add ${kind}`;
+}
+
+// ============= Settings =============
+export function SettingsAdmin() {
+  const { settings, loading } = useSettings();
+  const [s, setS] = useState<SiteSettings | null>(null);
+  const { saving, error, run } = useSaveHandler();
+
+  useEffect(() => {
+    if (!loading && settings) {
+      setS(settings);
+    }
+  }, [loading, settings]);
+
+  if (loading || !s) {
+    return <p className="text-sm text-muted-foreground">Loading settings…</p>;
+  }
+
+  async function save() {
+    await run(async () => {
+      if (s) {
+        await saveSettings(s);
+        alert("Settings saved successfully.");
+      }
+    });
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="font-heading text-xl font-bold text-foreground">General Settings</h2>
+        <button
+          onClick={save}
+          disabled={saving}
+          className="btn-primary !py-2 !px-6 !text-xs disabled:opacity-50"
+        >
+          {saving ? "Saving…" : "Save Changes"}
+        </button>
+      </div>
+
+      {error && <ErrorBox message={error} />}
+
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Contact info card */}
+        <Card className="space-y-4">
+          <h3 className="font-bold text-foreground text-sm border-b pb-2 mb-3">Contact Information</h3>
+          <div>
+            <Label>Phone Number (Display)</Label>
+            <Input value={s.phone} onChange={(e) => setS({ ...s, phone: e.target.value })} />
+          </div>
+          <div>
+            <Label>Email Address</Label>
+            <Input value={s.email} onChange={(e) => setS({ ...s, email: e.target.value })} />
+          </div>
+          <div>
+            <Label>WhatsApp Number (Country code + number, e.g. 919902012565)</Label>
+            <Input value={s.whatsappNumber} onChange={(e) => setS({ ...s, whatsappNumber: e.target.value })} />
+          </div>
+          <div>
+            <Label>Office Address</Label>
+            <TextArea rows={3} value={s.address} onChange={(e) => setS({ ...s, address: e.target.value })} />
+          </div>
+        </Card>
+
+        {/* Statutory info card */}
+        <Card className="space-y-4">
+          <h3 className="font-bold text-foreground text-sm border-b pb-2 mb-3">Statutory Details</h3>
+          <div>
+            <Label>GST Number</Label>
+            <Input value={s.gstNumber} onChange={(e) => setS({ ...s, gstNumber: e.target.value })} />
+          </div>
+          <div>
+            <Label>Registration / License Number</Label>
+            <Input value={s.regNumber} onChange={(e) => setS({ ...s, regNumber: e.target.value })} />
+          </div>
+        </Card>
+
+        {/* Stats card */}
+        <Card className="space-y-4 md:col-span-2">
+          <h3 className="font-bold text-foreground text-sm border-b pb-2 mb-3">Homepage Statistics Counters</h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <Label>Years Experience (e.g. 15+)</Label>
+              <Input value={s.statYears} onChange={(e) => setS({ ...s, statYears: e.target.value })} />
+            </div>
+            <div>
+              <Label>Projects Completed (e.g. 500+)</Label>
+              <Input value={s.statProjects} onChange={(e) => setS({ ...s, statProjects: e.target.value })} />
+            </div>
+            <div>
+              <Label>Happy Clients (e.g. 200+)</Label>
+              <Input value={s.statClients} onChange={(e) => setS({ ...s, statClients: e.target.value })} />
+            </div>
+            <div>
+              <Label>Expert Engineers (e.g. 50+)</Label>
+              <Input value={s.statEngineers} onChange={(e) => setS({ ...s, statEngineers: e.target.value })} />
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
 }
