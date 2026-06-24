@@ -57,7 +57,7 @@ type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inqu
 const TABS: { id: Tab; label: string; icon: typeof LayoutGrid; path: string }[] = [
   { id: "projects", label: "Projects", icon: LayoutGrid, path: "/admin/projects" },
   { id: "services", label: "Services", icon: Wrench, path: "/admin/services" },
-  { id: "clients", label: "Leading Organizations", icon: Users, path: "/admin/clients" },
+  { id: "clients", label: "Clients", icon: Users, path: "/admin/clients" },
   { id: "testimonials", label: "Reviews", icon: MessageSquareQuote, path: "/admin/testimonials" },
   { id: "hero", label: "Hero", icon: ImageIcon, path: "/admin/hero" },
   { id: "inquiries", label: "Inquiries", icon: Inbox, path: "/admin/inquiries" },
