@@ -57,7 +57,7 @@ type Tab = "projects" | "services" | "clients" | "testimonials" | "hero" | "inqu
 const TABS: { id: Tab; label: string; icon: typeof LayoutGrid; path: string }[] = [
   { id: "projects", label: "Projects", icon: LayoutGrid, path: "/admin/projects" },
   { id: "services", label: "Services", icon: Wrench, path: "/admin/services" },
-  { id: "clients", label: "Clients", icon: Users, path: "/admin/clients" },
+  { id: "clients", label: "Leading Organizations", icon: Users, path: "/admin/clients" },
   { id: "testimonials", label: "Reviews", icon: MessageSquareQuote, path: "/admin/testimonials" },
   { id: "hero", label: "Hero", icon: ImageIcon, path: "/admin/hero" },
   { id: "inquiries", label: "Inquiries", icon: Inbox, path: "/admin/inquiries" },
@@ -807,7 +807,7 @@ export function ClientsAdmin() {
       {!isFromFirestore && <SeedNotice collectionName="site_clients" defaults={DEFAULT_CLIENTS} />}
       <div className="mb-5 flex items-center justify-between">
         <h2 className="font-heading text-xl font-bold text-foreground">
-          Clients ({filtered.length}
+          Leading Organizations ({filtered.length}
           {q && filtered.length !== items.length ? ` of ${items.length}` : ""})
         </h2>
         <div className="flex items-center gap-2">
@@ -1179,53 +1179,6 @@ export function SettingsAdmin() {
             <div>
               <Label>Expert Engineers (e.g. 50+)</Label>
               <Input value={s.statEngineers} onChange={(e) => setS({ ...s, statEngineers: e.target.value })} />
-            </div>
-          </div>
-        </Card>
-
-        {/* Section wording headers card */}
-        <Card className="space-y-4 md:col-span-2">
-          <h3 className="font-bold text-foreground text-sm border-b pb-2 mb-3">Homepage Section Titles & Subtitles</h3>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <Label>Clients Section Subtitle (e.g. Trusted By)</Label>
-              <Input value={s.clientsSubtitle ?? ""} onChange={(e) => setS({ ...s, clientsSubtitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Clients Section Title (e.g. Leading Organizations)</Label>
-              <Input value={s.clientsTitle ?? ""} onChange={(e) => setS({ ...s, clientsTitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Services Section Subtitle (e.g. Our Services)</Label>
-              <Input value={s.servicesSubtitle ?? ""} onChange={(e) => setS({ ...s, servicesSubtitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Services Section Title (e.g. What We Do Best)</Label>
-              <Input value={s.servicesTitle ?? ""} onChange={(e) => setS({ ...s, servicesTitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Projects Section Subtitle (e.g. Featured Projects)</Label>
-              <Input value={s.projectsSubtitle ?? ""} onChange={(e) => setS({ ...s, projectsSubtitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Projects Section Title (e.g. Our Recent Work)</Label>
-              <Input value={s.projectsTitle ?? ""} onChange={(e) => setS({ ...s, projectsTitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>About Preview Section Subtitle (e.g. About Nataraj)</Label>
-              <Input value={s.aboutPreviewSubtitle ?? ""} onChange={(e) => setS({ ...s, aboutPreviewSubtitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>About Preview Section Title</Label>
-              <Input value={s.aboutPreviewTitle ?? ""} onChange={(e) => setS({ ...s, aboutPreviewTitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Advantage Section Subtitle (e.g. Why Choose Us)</Label>
-              <Input value={s.advantageSubtitle ?? ""} onChange={(e) => setS({ ...s, advantageSubtitle: e.target.value })} />
-            </div>
-            <div>
-              <Label>Advantage Section Title (e.g. The Nataraj Advantage)</Label>
-              <Input value={s.advantageTitle ?? ""} onChange={(e) => setS({ ...s, advantageTitle: e.target.value })} />
             </div>
           </div>
         </Card>

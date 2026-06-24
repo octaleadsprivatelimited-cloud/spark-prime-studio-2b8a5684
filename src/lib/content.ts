@@ -282,16 +282,6 @@ export type SiteSettings = {
   statProjects: string;
   statClients: string;
   statEngineers: string;
-  clientsSubtitle: string;
-  clientsTitle: string;
-  servicesSubtitle: string;
-  servicesTitle: string;
-  projectsSubtitle: string;
-  projectsTitle: string;
-  advantageSubtitle: string;
-  advantageTitle: string;
-  aboutPreviewSubtitle: string;
-  aboutPreviewTitle: string;
 };
 
 export const DEFAULT_SETTINGS: SiteSettings = {
@@ -306,16 +296,6 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   statProjects: "500+",
   statClients: "200+",
   statEngineers: "50+",
-  clientsSubtitle: "Trusted By",
-  clientsTitle: "Leading Organizations",
-  servicesSubtitle: "Our Services",
-  servicesTitle: "What We Do Best",
-  projectsSubtitle: "Featured Projects",
-  projectsTitle: "Our Recent Work",
-  advantageSubtitle: "Why Choose Us",
-  advantageTitle: "The Nataraj Advantage",
-  aboutPreviewSubtitle: "About Nataraj",
-  aboutPreviewTitle: "Building Trust Through Quality & Reliability",
 };
 
 export function useSettings() {
@@ -327,7 +307,11 @@ export function useSettings() {
       doc(db, "site_settings", "main"),
       (docSnap) => {
         if (docSnap.exists()) {
-          setSettings({ id: "main", ...(docSnap.data() as Omit<SiteSettings, "id">) });
+          setSettings({
+            ...DEFAULT_SETTINGS,
+            ...(docSnap.data() as Omit<SiteSettings, "id">),
+            id: "main",
+          });
         } else {
           setSettings(DEFAULT_SETTINGS);
         }

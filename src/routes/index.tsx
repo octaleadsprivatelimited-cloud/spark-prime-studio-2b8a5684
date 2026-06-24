@@ -176,9 +176,9 @@ function HomePage() {
           <SectionReveal>
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{settings.servicesSubtitle}</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Our Services</span>
                 <h2 className="mt-2 font-heading text-3xl font-bold text-foreground md:text-4xl">
-                  {settings.servicesTitle}
+                  What We Do Best
                 </h2>
               </div>
               <Link to="/services" className="btn-outline !py-2 !px-5 !text-xs">
@@ -324,9 +324,9 @@ function HomePage() {
 
             {/* Right: Content side */}
             <SectionReveal delay={0.15}>
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{settings.aboutPreviewSubtitle}</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">About Nataraj</span>
               <h2 className="mt-2 font-heading text-3xl font-bold text-foreground md:text-4xl">
-                {settings.aboutPreviewTitle}
+                Building Trust Through Quality & Reliability
               </h2>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                 Founded in 2008 in Bangalore, Nataraj Electricals began with the aim of redefining the infrastructure development domain with new electrical solutions. As Government Licensed Class-I Electrical Contractors, we are an exclusive one-stop solution for all types of electrical services including Design, Planning, Erection, Testing, Commissioning, and AMC for H.T. & L.T works.
@@ -399,9 +399,9 @@ function HomePage() {
           <SectionReveal>
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{settings.projectsSubtitle}</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Featured Projects</span>
                 <h2 className="mt-2 font-heading text-3xl font-bold text-foreground md:text-4xl">
-                  {settings.projectsTitle}
+                  Our Recent Work
                 </h2>
               </div>
               <Link to="/projects" className="btn-outline !py-2 !px-5 !text-xs">
@@ -439,9 +439,9 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <SectionReveal>
             <div className="text-center">
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{settings.clientsSubtitle}</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Trusted By</span>
               <h2 className="mt-2 font-heading text-3xl font-bold text-foreground md:text-4xl">
-                {settings.clientsTitle}
+                Leading Organizations
               </h2>
             </div>
           </SectionReveal>
@@ -511,8 +511,8 @@ function HomePage() {
             {/* Right: Content side */}
             <div>
               <SectionReveal>
-                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{settings.advantageSubtitle}</span>
-                <h2 className="mt-2 font-heading text-3xl font-bold md:text-4xl">{settings.advantageTitle}</h2>
+                <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Why Choose Us</span>
+                <h2 className="mt-2 font-heading text-3xl font-bold md:text-4xl">The Nataraj Advantage</h2>
                 <p className="mt-3 text-sm leading-relaxed opacity-60 sm:text-base">
                   We combine technical expertise with unwavering commitment to deliver electrical solutions that power India's growth safely and efficiently.
                 </p>
