@@ -52,7 +52,7 @@ function AboutPage() {
               <span className="text-white/80">About Us</span>
             </div>
             <h1 className="mt-4 font-heading text-4xl font-extrabold text-white md:text-5xl lg:text-6xl">About Nataraj Electricals</h1>
-            <p className="mt-4 max-w-2xl text-base text-white/70 sm:text-lg">15+ years of powering progress across Karnataka and beyond with safety, precision, and reliability.</p>
+            <p className="mt-4 max-w-2xl text-base text-white/70 sm:text-lg">{settings.statYears} years of powering progress across Karnataka and beyond with safety, precision, and reliability.</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link to="/services" className="btn-yellow">
                 Explore Services
@@ -123,10 +123,10 @@ function AboutPage() {
 
                 <div className="grid grid-cols-2 gap-3 mt-4">
                   {[
-                    { val: "500+", label: "Projects Delivered", accent: "from-brand-red/20" },
-                    { val: "200+", label: "Clients Served", accent: "from-blue-500/10" },
-                    { val: "50+", label: "Expert Engineers", accent: "from-emerald-500/10" },
-                    { val: "15+", label: "Years of Trust", accent: "from-amber-500/10" },
+                    { val: settings.statProjects, label: "Projects Delivered", accent: "from-brand-red/20" },
+                    { val: settings.statClients, label: "Clients Served", accent: "from-blue-500/10" },
+                    { val: settings.statEngineers, label: "Expert Engineers", accent: "from-emerald-500/10" },
+                    { val: settings.statYears, label: "Years of Trust", accent: "from-amber-500/10" },
                   ].map((s) => (
                     <div
                       key={s.label}
